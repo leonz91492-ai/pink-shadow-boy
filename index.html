@@ -366,7 +366,6 @@
       box-shadow: 0 8px 16px rgba(255, 101, 156, 0.15);
     }
 
-    /* 選取時呈現粉紅色外框與高亮背景 */
     .option-card.selected {
       background: #fff4f8;
       border-color: var(--primary-pink);
@@ -424,7 +423,7 @@
       display: block;
     }
 
-    /* 遊戲二：勇敢說出心裡話 (3D 翻轉卡片) */
+    /* 遊戲二：勇敢說出心裡話 */
     .cards-flow {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
@@ -557,7 +556,7 @@
       background: #fff;
       border: 3px solid #ffccd9;
       border-radius: var(--radius-lg);
-      padding: 36px 32px;
+      padding: 32px 28px;
       box-shadow: 0 12px 36px rgba(255, 101, 156, 0.15);
       position: relative;
     }
@@ -565,7 +564,7 @@
     .cert-inner {
       border: 2px dashed #ff99bb;
       border-radius: 16px;
-      padding: 32px 28px;
+      padding: 26px 24px;
       text-align: center;
       position: relative;
     }
@@ -588,7 +587,7 @@
       justify-content: center;
       align-items: center;
       gap: 8px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
       font-size: 1.1rem;
       font-weight: 700;
@@ -626,10 +625,10 @@
     }
 
     .cert-body-p {
-      font-size: 1.15rem;
-      line-height: 1.8;
+      font-size: 1.1rem;
+      line-height: 1.75;
       color: #444;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       text-align: justify;
       text-justify: inter-ideograph;
     }
@@ -639,14 +638,14 @@
       flex-wrap: wrap;
       gap: 8px;
       justify-content: center;
-      margin: 16px 0 24px;
-      min-height: 40px;
+      margin: 14px 0 20px;
+      min-height: 38px;
     }
 
     .badge-chip {
       background: var(--soft-pink);
       color: var(--deep-pink);
-      padding: 6px 14px;
+      padding: 5px 14px;
       border-radius: 20px;
       font-size: 0.95rem;
       font-weight: 700;
@@ -657,16 +656,16 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      margin-top: 32px;
-      padding-top: 20px;
+      margin-top: 24px;
+      padding-top: 16px;
       border-top: 1px solid #ffe3ec;
       font-size: 1rem;
       color: #555;
     }
 
     .cert-stamp {
-      width: 86px;
-      height: 86px;
+      width: 82px;
+      height: 82px;
       border: 3px double var(--primary-pink);
       border-radius: 50%;
       display: flex;
@@ -740,7 +739,7 @@
       font-weight: 800;
       cursor: pointer;
       transition: all 0.2s ease;
-      white-space: nowrap; /* 保持單列排版 */
+      white-space: nowrap;
       flex-shrink: 0;
     }
 
@@ -754,14 +753,17 @@
       box-shadow: 0 4px 14px rgba(255, 101, 156, 0.3);
     }
 
-    /* 🎯 專門優化的純證書列印樣式 */
+    /* 🎯 專門優化：確保 100% 單頁 A4 列印，徹底避免多出第 2 頁空白頁 */
     @media print {
       @page {
         size: A4 portrait;
-        margin: 15mm;
+        margin: 10mm;
       }
 
-      body {
+      html, body {
+        width: 100% !important;
+        height: 100% !important;
+        overflow: hidden !important;
         background: #ffffff !important;
         padding: 0 !important;
         margin: 0 !important;
@@ -772,17 +774,28 @@
       .bottom-bar,
       .section-head,
       .cert-actions,
+      .cert-form,
       .no-print,
+      canvas, /* 隱藏 confetti 產生的畫布，避免高度撐開 */
       #tab-story,
       #tab-game1,
       #tab-game2 {
         display: none !important;
       }
 
+      main {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+      }
+
       #tab-certificate {
         display: block !important;
         margin: 0 !important;
         padding: 0 !important;
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
       }
 
       .certificate-wrap {
@@ -790,27 +803,49 @@
         box-shadow: none !important;
         margin: 0 auto !important;
         width: 100% !important;
-        max-width: 100% !important;
-        padding: 24px !important;
+        max-width: 95% !important;
+        padding: 24px 20px !important;
         page-break-inside: avoid !important;
+        page-break-after: avoid !important;
       }
 
       .cert-inner {
         border: 2px dashed #ff99bb !important;
-        padding: 24px !important;
+        padding: 20px 18px !important;
       }
 
-      /* 列印時將輸入框轉為乾淨的文字顯示 */
-      .cert-form {
-        display: none !important;
+      .cert-title {
+        font-size: 1.85rem !important;
+        margin-bottom: 6px !important;
       }
 
       .cert-print-title {
         display: block !important;
-        font-size: 1.45rem;
-        font-weight: 800;
-        margin-bottom: 20px;
-        color: #d81b60;
+        font-size: 1.35rem !important;
+        font-weight: 800 !important;
+        margin-bottom: 16px !important;
+        color: #d81b60 !important;
+      }
+
+      .cert-body-p {
+        font-size: 1.02rem !important;
+        line-height: 1.65 !important;
+        margin-bottom: 16px !important;
+      }
+
+      .badge-chip {
+        padding: 4px 10px !important;
+        font-size: 0.88rem !important;
+      }
+
+      .cert-footer {
+        margin-top: 20px !important;
+        padding-top: 12px !important;
+      }
+
+      .cert-stamp {
+        width: 76px !important;
+        height: 76px !important;
       }
     }
   </style>
@@ -866,7 +901,6 @@
       </div>
 
       <div class="game1-layout">
-        <!-- 左側：影子動態舞台 -->
         <div class="shadow-stage">
           <div class="stage-canvas">
             <div class="avatar-shadow" id="avatarShadow" style="color: #ff659c;">
@@ -882,7 +916,6 @@
           <p style="font-size:0.85rem; color:#888; margin-top:8px;">★ 自由挑選你的愛好，把勇氣裝進影子裡！</p>
         </div>
 
-        <!-- 右側：10 大喜好選擇庫 -->
         <div class="options-grid" id="optionsGrid"></div>
       </div>
     </section>
@@ -924,7 +957,7 @@
             </button>
           </div>
 
-          <!-- 列印時顯示的乾淨抬頭 -->
+          <!-- 列印專屬乾淨抬頭 -->
           <div class="cert-print-title" id="certPrintTitle" style="display:none;">
             恭喜 二年 <span id="printClassName" style="color:var(--deep-pink); text-decoration: underline;">1</span> 班 
             <span id="printStudentName" style="color:var(--deep-pink); text-decoration: underline;">小勇士</span> 同學
@@ -936,7 +969,7 @@
 
           <div style="font-size: 0.95rem; font-weight: 700; color: #555;">我的影子超能力（我最喜歡的探索）：</div>
           <div class="cert-tags-box" id="certTags">
-            <!-- 動態同步遊戲一所選擇的項目 -->
+            <!-- 動態同步項目名稱（已去除「探索：」前綴） -->
           </div>
 
           <!-- 底部資訊：僅保留認證日期與三民國小 -->
@@ -1020,11 +1053,10 @@
     ];
 
     /* ============================================================
-       全域狀態與多選集合
+       全域狀態
     ============================================================ */
     let isTeacherMode = false;
     let isMuted = false;
-    // 使用 Set 儲存小朋友選取的多個項目
     let selectedItemIds = new Set([1]); // 預設選取粉紅色
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -1136,7 +1168,7 @@
       lucide.createIcons();
     }
 
-    /* 渲染遊戲一：可多選、可取消 */
+    /* 渲染遊戲一 */
     function renderGame1() {
       const grid = document.getElementById('optionsGrid');
       grid.innerHTML = game1Options.map(opt => {
@@ -1167,36 +1199,27 @@
       if (!opt) return;
 
       if (selectedItemIds.has(id)) {
-        // 取消選取
         selectedItemIds.delete(id);
         card.classList.remove('selected');
         playNoteSound(380, 0.1);
       } else {
-        // 新增選取
         selectedItemIds.add(id);
         card.classList.add('selected');
         playNoteSound(650, 0.12);
         speakText(opt.text);
       }
 
-      // 更新選項卡片上的勾選圖示
       renderGame1();
-
-      // 更新左側舞台影子
       updateAvatarStage(opt, selectedItemIds.has(id));
-
-      // 同步至證書探索標籤庫
       updateCertTags();
     }
 
-    /* 更新左側影子樣式 */
     function updateAvatarStage(lastOpt, isAdded) {
       const avatar = document.getElementById('avatarShadow');
       const skirt = document.getElementById('shadowSkirt');
       const speech = document.getElementById('avatarSpeech');
 
       if (selectedItemIds.size === 0) {
-        // 當全部取消時
         avatar.style.color = '#ff659c';
         skirt.style.display = 'none';
         speech.innerText = '「選你喜歡的，都可以喔！」';
@@ -1208,7 +1231,6 @@
         skirt.style.display = lastOpt.hasSkirt ? 'block' : 'none';
         speech.innerText = `「${lastOpt.text}」`;
       } else {
-        // 如果是取消，取目前剩下最後一個被選取的項目
         const remainingIds = Array.from(selectedItemIds);
         const lastId = remainingIds[remainingIds.length - 1];
         const nextOpt = game1Options.find(o => o.id === lastId);
@@ -1219,7 +1241,6 @@
         }
       }
 
-      // 影子跳躍動畫
       avatar.style.transform = 'scale(1.1) translateY(-6px)';
       setTimeout(() => {
         avatar.style.transform = 'scale(1) translateY(0)';
@@ -1274,14 +1295,14 @@
       }
     }
 
-    /* 更新證書上的標籤 */
+    /* 更新證書上的標籤：已去除「探索：」前綴，只保留純項目名稱 */
     function updateCertTags() {
       const container = document.getElementById('certTags');
       if (selectedItemIds.size === 0) {
         container.innerHTML = `
-          <span class="badge-chip">💖 接納真實自我</span>
-          <span class="badge-chip">🌟 尊重多元色彩</span>
-          <span class="badge-chip">🛡️ 自信堅定發聲</span>
+          <span class="badge-chip">✨ 接納真實自我</span>
+          <span class="badge-chip">✨ 尊重多元色彩</span>
+          <span class="badge-chip">✨ 自信堅定發聲</span>
         `;
         return;
       }
@@ -1290,7 +1311,7 @@
       selectedItemIds.forEach(id => {
         const item = game1Options.find(o => o.id === id);
         if (item) {
-          chips.push(`<span class="badge-chip">✨ 探索：${item.name}</span>`);
+          chips.push(`<span class="badge-chip">✨ ${item.name}</span>`);
         }
       });
       container.innerHTML = chips.join('');
