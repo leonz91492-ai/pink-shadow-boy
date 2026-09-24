@@ -7,7 +7,7 @@
   <!-- Google Fonts: 適合低年級的圓潤繁體中文字體 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Noto+Sans+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <!-- Canvas Confetti 彩帶特效 -->
@@ -184,7 +184,7 @@
       font-size: 1.05rem;
     }
 
-    /* 繪本區 (Story Section) */
+    /* 繪本區 */
     .story-card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -356,6 +356,8 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
+      position: relative;
+      user-select: none;
     }
 
     .option-card:hover {
@@ -364,10 +366,11 @@
       box-shadow: 0 8px 16px rgba(255, 101, 156, 0.15);
     }
 
+    /* 選取時呈現粉紅色外框與高亮背景 */
     .option-card.selected {
       background: #fff4f8;
       border-color: var(--primary-pink);
-      box-shadow: 0 0 0 3px rgba(255, 101, 156, 0.3);
+      box-shadow: 0 0 0 3px rgba(255, 101, 156, 0.35);
     }
 
     .card-top {
@@ -383,6 +386,14 @@
       color: #666;
       padding: 2px 8px;
       border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .option-card.selected .badge-no {
+      background: #ff659c;
+      color: white;
     }
 
     .opt-name {
@@ -452,7 +463,6 @@
       border: 2px solid #ffe3ee;
     }
 
-    /* 正面：他人質疑 */
     .card-front {
       background: linear-gradient(145deg, #ffffff, #fff6f8);
       color: #333;
@@ -491,7 +501,6 @@
       gap: 4px;
     }
 
-    /* 背面：我的自信回應 */
     .card-back {
       background: linear-gradient(145deg, #fff0f6, #ffe3ec);
       transform: rotateY(180deg);
@@ -573,35 +582,46 @@
       margin-bottom: 8px;
     }
 
-    .cert-sub {
-      font-size: 1rem;
-      color: #777;
-      margin-bottom: 24px;
-    }
-
+    /* 輸入表單區 */
     .cert-form {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
       margin-bottom: 24px;
       flex-wrap: wrap;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #444;
     }
 
-    .cert-input {
-      padding: 10px 16px;
+    .cert-input-sm {
+      padding: 6px 8px;
       border: 2px solid #ffd1df;
-      border-radius: 12px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #333;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--deep-pink);
       outline: none;
+      width: 58px;
+      text-align: center;
       transition: border 0.2s;
+    }
+
+    .cert-input-name {
+      padding: 6px 14px;
+      border: 2px solid #ffd1df;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--deep-pink);
+      outline: none;
       width: 140px;
       text-align: center;
+      transition: border 0.2s;
     }
 
-    .cert-input:focus {
+    .cert-input-sm:focus, .cert-input-name:focus {
       border-color: var(--primary-pink);
     }
 
@@ -640,8 +660,8 @@
       margin-top: 32px;
       padding-top: 20px;
       border-top: 1px solid #ffe3ec;
-      font-size: 0.95rem;
-      color: #666;
+      font-size: 1rem;
+      color: #555;
     }
 
     .cert-stamp {
@@ -691,17 +711,7 @@
       box-shadow: 0 10px 22px rgba(255, 101, 156, 0.45);
     }
 
-    .action-btn.outline {
-      background: #fff;
-      border: 2px solid #ffd0df;
-      color: var(--deep-pink);
-    }
-
-    .action-btn.outline:hover {
-      background: var(--soft-pink);
-    }
-
-    /* 底部導覽列 (Bottom Nav) */
+    /* 底部導覽列 */
     .bottom-bar {
       position: fixed;
       bottom: 0;
@@ -730,7 +740,7 @@
       font-weight: 800;
       cursor: pointer;
       transition: all 0.2s ease;
-      white-space: nowrap; /* 確保按鈕內容維持單列不換行 */
+      white-space: nowrap; /* 保持單列排版 */
       flex-shrink: 0;
     }
 
@@ -758,16 +768,14 @@
         display: block !important;
       }
 
-      /* 隱藏除了證書卡片以外的所有元件 */
       header,
       .bottom-bar,
       .section-head,
-      .cert-form,
       .cert-actions,
+      .no-print,
       #tab-story,
       #tab-game1,
-      #tab-game2,
-      .no-print {
+      #tab-game2 {
         display: none !important;
       }
 
@@ -792,10 +800,14 @@
         padding: 24px !important;
       }
 
-      /* 列印時將輸入框替代為乾淨純文字 */
+      /* 列印時將輸入框轉為乾淨的文字顯示 */
+      .cert-form {
+        display: none !important;
+      }
+
       .cert-print-title {
         display: block !important;
-        font-size: 1.4rem;
+        font-size: 1.45rem;
         font-weight: 800;
         margin-bottom: 20px;
         color: #d81b60;
@@ -843,20 +855,18 @@
         <p>跟著小男孩一同探索影子的秘密，想一想心裡面的神奇提問！</p>
       </div>
 
-      <div class="story-card-grid" id="storyGrid">
-        <!-- 由 JavaScript 動態生成 8 大情節卡片 -->
-      </div>
+      <div class="story-card-grid" id="storyGrid"></div>
     </section>
 
-    <!-- 1. 遊戲一：喜歡什麼，都可以！ -->
+    <!-- 1. 遊戲一：喜歡什麼都可以！ -->
     <section id="tab-game1" class="tab-section">
       <div class="section-head">
         <h2><i data-lucide="heart-handshake"></i> 遊戲一：喜歡什麼都可以！</h2>
-        <p>點選你喜歡的卡片，看看你的專屬影子會有什麼神奇的大變化！</p>
+        <p>點選你喜歡的卡片（可選多項，再點一次可取消），看看你的專屬影子的大變化！</p>
       </div>
 
       <div class="game1-layout">
-        <!-- 左側：影子動態更衣室 -->
+        <!-- 左側：影子動態舞台 -->
         <div class="shadow-stage">
           <div class="stage-canvas">
             <div class="avatar-shadow" id="avatarShadow" style="color: #ff659c;">
@@ -869,13 +879,11 @@
           <div class="avatar-speech" id="avatarSpeech">
             「我是世界上獨一無二的影子！」
           </div>
-          <p style="font-size:0.85rem; color:#888; margin-top:8px;">★ 點擊右方喜好卡片，裝飾專屬於你的自信能量</p>
+          <p style="font-size:0.85rem; color:#888; margin-top:8px;">★ 自由挑選你的愛好，把勇氣裝進影子裡！</p>
         </div>
 
         <!-- 右側：10 大喜好選擇庫 -->
-        <div class="options-grid" id="optionsGrid">
-          <!-- 由 JS 渲染 10 個選項 -->
-        </div>
+        <div class="options-grid" id="optionsGrid"></div>
       </div>
     </section>
 
@@ -886,9 +894,7 @@
         <p>生活中有時會遇到質疑，點擊卡片翻轉看看，學會充滿自信的回答！</p>
       </div>
 
-      <div class="cards-flow" id="cardsGrid">
-        <!-- 由 JS 渲染 8 題情境卡片 -->
-      </div>
+      <div class="cards-flow" id="cardsGrid"></div>
     </section>
 
     <!-- 3. 自信小勇士證書 -->
@@ -906,20 +912,22 @@
           <div style="font-size: 0.85rem; font-weight: 800; color: #ff85b3; letter-spacing: 2px;">★ CERTIFICATE OF SELF-BELIEF ★</div>
           <h1 class="cert-title">自信影子榮譽證書</h1>
 
-          <!-- 輸入資訊區（列印時自動隱藏） -->
+          <!-- 輸入資訊區：二年［ ］班 + 小勇士姓名 -->
           <div class="cert-form">
-            <span>二年級班級：</span>
-            <input type="text" id="certClass" class="cert-input" value="二年" placeholder="例如：二年3班">
-            <span>小勇士姓名：</span>
-            <input type="text" id="certName" class="cert-input" value="小勇士" placeholder="請輸入名字">
-            <button class="action-btn pink" style="padding:8px 18px; font-size:0.9rem;" onclick="triggerConfetti()">
-              <i data-lucide="party-popper"></i> 放煙火慶祝！
+            <span>二年</span>
+            <input type="text" id="certClassNum" class="cert-input-sm" value="1" placeholder="班級">
+            <span>班</span>
+            <span style="margin-left: 12px;">小勇士姓名：</span>
+            <input type="text" id="certName" class="cert-input-name" value="小勇士" placeholder="請輸入姓名">
+            <button class="action-btn pink" style="padding:6px 16px; font-size:0.9rem;" onclick="triggerConfetti()">
+              <i data-lucide="party-popper"></i> 放煙火！
             </button>
           </div>
 
-          <!-- 列印專屬抬頭（螢幕瀏覽隱藏、列印時顯示） -->
+          <!-- 列印時顯示的乾淨抬頭 -->
           <div class="cert-print-title" id="certPrintTitle" style="display:none;">
-            恭喜 <span id="printClassName">二年 1 班</span> <span id="printStudentName" style="color:var(--deep-pink); text-decoration: underline;">小勇士</span> 同學
+            恭喜 二年 <span id="printClassName" style="color:var(--deep-pink); text-decoration: underline;">1</span> 班 
+            <span id="printStudentName" style="color:var(--deep-pink); text-decoration: underline;">小勇士</span> 同學
           </div>
 
           <p class="cert-body-p">
@@ -928,16 +936,14 @@
 
           <div style="font-size: 0.95rem; font-weight: 700; color: #555;">我的影子超能力（我最喜歡的探索）：</div>
           <div class="cert-tags-box" id="certTags">
-            <span class="badge-chip">💖 接納真實自我</span>
-            <span class="badge-chip">🌟 尊重多元色彩</span>
-            <span class="badge-chip">🛡️ 自信堅定發聲</span>
+            <!-- 動態同步遊戲一所選擇的項目 -->
           </div>
 
+          <!-- 底部資訊：僅保留認證日期與三民國小 -->
           <div class="cert-footer">
-            <div style="text-align: left;">
+            <div style="text-align: left; line-height: 1.6;">
               <div>認證日期：<span id="certDate">2026年9月24日</span></div>
-              <!-- 已修改：移除「導引學校」四字，並更改為「三民國小」 -->
-              <div>三民國小 二年級成長班</div>
+              <div style="font-weight: 700; color: #333;">三民國小</div>
             </div>
 
             <div class="cert-stamp">
@@ -963,7 +969,6 @@
     <button class="nav-btn active" onclick="switchTab('story', this)">
       <i data-lucide="book-open"></i> 繪本故事角
     </button>
-    <!-- 已優化：保持單列不折行 -->
     <button class="nav-btn" onclick="switchTab('game1', this)">
       <i data-lucide="heart"></i> 遊戲一：喜歡什麼都可以！
     </button>
@@ -977,54 +982,19 @@
 
   <script>
     /* ============================================================
-       繪本與遊戲題目資料庫 (依據上傳之兩份 PDF 文件內容完整編整)
+       繪本與遊戲題目資料庫 (依據上傳 PDF 內容)
     ============================================================ */
-
-    // 繪本 8 頁故事與魔法問句
     const storyList = [
-      {
-        step: "第 1 幕",
-        text: "每個人都有影子，但我的影子... 藏著一個小秘密！",
-        question: "找找看，你的影子現在是什麼顏色呢？"
-      },
-      {
-        step: "第 2 幕",
-        text: "大家都一樣的【藍色影子】又高又壯、威武冷靜；我的專屬【粉紅影子】最愛聽故事、獨角獸、和美麗的公主！",
-        question: "左邊和右邊，你最喜歡哪一種影子？"
-      },
-      {
-        step: "第 3 幕",
-        text: "轉啊轉！閃閃發光的秘密！只要穿上最愛的黃色裙子，影子就會開心地跳躍！",
-        question: "你最喜歡穿什麼衣服跳舞呢？"
-      },
-      {
-        step: "第 4 幕",
-        text: "穿上最愛的裙子去上學！爸爸看起來好擔心... 大家都盯著我看，沒有人跟我說話。",
-        question: "如果是你走進這間教室，心裡會有什麼感覺？"
-      },
-      {
-        step: "第 5 幕",
-        text: "砰！爸爸竟然也穿著裙子？！「我再也不要穿裙子了！」爸爸牽起我的手說。",
-        question: "看到爸爸穿裙子，男孩會覺得開心還是嚇一跳呢？"
-      },
-      {
-        step: "第 6 幕",
-        text: "「其實，我們每個人都會把真實的影子藏起來喔。」原來大家的心裡，都住著一個不一樣的自己！",
-        question: "猜猜看，你爸爸媽媽的隱藏影子會喜歡什麼？"
-      },
-      {
-        step: "第 7 幕",
-        text: "「你的影子就是你自己。粉紅色又怎樣？大聲說：這就是我！」牽起爸爸的手，我們一起勇敢前進！",
-        question: "有人牽著手的時候，是不是覺得自己變勇敢了？"
-      },
-      {
-        step: "第 8 幕",
-        text: "「我知道我不一樣，但這樣才特別！」世上本來就會有人喜歡你，也會有人討厭你。沒關係，儘管做獨一無二的自己，我們愛你。",
-        question: "你想跟我們一起自信大步玩耍嗎？"
-      }
+      { step: "第 1 幕", text: "每個人都有影子，但我的影子... 藏著一個小秘密！", question: "找找看，你的影子現在是什麼顏色呢？" },
+      { step: "第 2 幕", text: "大家都一樣的【藍色影子】又高又壯、威武冷靜；我的專屬【粉紅影子】最愛聽故事、獨角獸、和美麗的公主！", question: "左邊和右邊，你最喜歡哪一種影子？" },
+      { step: "第 3 幕", text: "轉啊轉！閃閃發光的秘密！只要穿上最愛的黃色裙子，影子就會開心地跳躍！", question: "你最喜歡穿什麼衣服跳舞呢？" },
+      { step: "第 4 幕", text: "穿上最愛的裙子去上學！爸爸看起來好擔心... 大家都盯著我看，沒有人跟我說話。", question: "如果是你走進這間教室，心裡會有什麼感覺？" },
+      { step: "第 5 幕", text: "砰！爸爸竟然也穿著裙子？！「我再也不要穿裙子了！」爸爸牽起我的手說。", question: "看到爸爸穿裙子，男孩會覺得開心還是嚇一跳呢？" },
+      { step: "第 6 幕", text: "「其實，我們每個人都會把真實的影子藏起來喔。」原來大家的心裡，都住著一個不一樣的自己！", question: "猜猜看，你爸爸媽媽的隱藏影子會喜歡什麼？" },
+      { step: "第 7 幕", text: "「你的影子就是你自己。粉紅色又怎樣？大聲說：這就是我！」牽起爸爸的手，我們一起勇敢前進！", question: "有人牽著手的時候，是不是覺得自己變勇敢了？" },
+      { step: "第 8 幕", text: "「我知道我不一樣，但這樣才特別！」世上本來就會有人喜歡你，也會有人討厭你。沒關係，儘管做獨一無二的自己，我們愛你。", question: "你想跟我們一起自信大步玩耍嗎？" }
     ];
 
-    // 遊戲一：10 項趣味選擇庫
     const game1Options = [
       { id: 1, name: "粉紅色", text: "我喜歡溫柔漂亮的粉紅色。", note: "顏色是自然的禮物，任何人都可以喜歡任何顏色。", color: "#ff659c", hasSkirt: true },
       { id: 2, name: "藍黑色", text: "我喜歡帥氣沉穩的深色系。", note: "喜歡酷酷、沉穩的顏色很棒，展現專屬自己的風格。", color: "#34495e", hasSkirt: false },
@@ -1038,72 +1008,24 @@
       { id: 10, name: "觀察大自然", text: "我喜歡看小昆蟲、撿漂亮的落葉和小石頭。", note: "擁有敏銳細膩的觀察力，對世界萬物充滿好奇心。", color: "#20bf6b", hasSkirt: false }
     ];
 
-    // 遊戲二：8 題卡片應對題目
     const game2Questions = [
-      {
-        id: 1,
-        title: "色彩偏好的質疑",
-        front: "「你選這個顏色好奇怪，大家都不會選這個顏色！」",
-        back: "「每一種顏色都有它的美麗，只要我喜歡，就是最棒的顏色。」",
-        note: "顏色就像彩虹一樣多采多姿，沒有哪一種顏色是專屬於誰的。只要看著它會讓自己感到開心、舒服，那就是最適合你的顏色。"
-      },
-      {
-        id: 2,
-        title: "玩具與遊戲的限制",
-        front: "「你玩的東西好無聊，那不是你該玩的，快放下啦！」",
-        back: "「每個人想探索的都不一樣，玩得開心、懂得愛護就是好遊戲。」",
-        note: "玩具的發明是為了帶來樂趣與學習。不管是拼積木、玩娃娃還是踢球，每個人都可以自由探索，不需要照著別人的刻板標籤走。"
-      },
-      {
-        id: 3,
-        title: "穿著與外表的指指點點",
-        front: "「你今天的衣服好特別喔，怎麼跟我們穿得都不一樣？」",
-        back: "「我穿這件覺得很自在、很喜歡，穿出自己的風格最開心！」",
-        note: "衣服是穿在自己身上的，重點在於整齊、舒適和自己的喜愛。每個人有不同的穿衣風格，懂得欣賞彼此的不一樣，世界才會更有趣。"
-      },
-      {
-        id: 4,
-        title: "情緒表達的壓抑",
-        front: "「跌倒了不可以哭！哭哭是一件很丟臉的事情。」",
-        back: "「痛痛或難過時可以哭一哭，等眼淚擦乾，我還是可以很勇敢！」",
-        note: "眼淚是每個人都有的正常心情反應，就像天上下雨一樣自然。哭泣不是軟弱，能誠實說出『我需要休息一下或抱抱』，是非常勇敢的表現。"
-      },
-      {
-        id: 5,
-        title: "個性特質的刻板印象",
-        front: "「你怎麼都不大聲講話？你太膽小、太文靜了啦！」",
-        back: "「我喜歡溫柔、安靜地思考，文靜也是一種很棒的力量。」",
-        note: "有的人像熱情的小太陽，有的人像溫柔的小月亮。安靜不代表膽小，懂得專心聆聽、細心觀察的人，也是團隊裡很重要的好夥伴。"
-      },
-      {
-        id: 6,
-        title: "力氣大小與能力的預設",
-        front: "「這個搬不動啦！你那麼瘦小，肯定幫不上忙。」",
-        back: "「每個人能幫忙的方式不一樣，大家分工合作力量最大！」",
-        note: "幫忙不一定只有力氣大的人才能做。幫忙扶著門、整理桌面、引路，或者兩個人一起分擔重量，都是非常有價值的付出。"
-      },
-      {
-        id: 7,
-        title: "動作與活動風格的偏好",
-        front: "「下課應該去跑跑跳跳，你一直扭來扭去跳舞做什麼？」",
-        back: "「身體跟著節奏跳舞讓我很放鬆，每個人動動身體的方式都不同。」",
-        note: "運動有非常多種形式，跑步、踢球很棒，體操、跳舞也一樣能活動身體、維持健康。只要能讓身心舒暢，就是最棒的下課活動。"
-      },
-      {
-        id: 8,
-        title: "分組與同儕合作的界線",
-        front: "「我們不要跟你同一組，因為你的想法跟我們都不一樣！」",
-        back: "「不一樣的想法聚在一起，我們可以想出更多更棒的好點子！」",
-        note: "分組合作最棒的地方，正是每個人帶來的視角都不同。學會傾聽別人的想法，也清楚分享自己的點子，互相激盪才能完成最精彩的作品。"
-      }
+      { id: 1, title: "色彩偏好的質疑", front: "「你選這個顏色好奇怪，大家都不會選這個顏色！」", back: "「每一種顏色都有它的美麗，只要我喜歡，就是最棒的顏色。」", note: "顏色就像彩虹一樣多采多姿，沒有哪一種顏色是專屬於誰的。只要看著它會讓自己感到開心、舒服，那就是最適合你的顏色。" },
+      { id: 2, title: "玩具與遊戲的限制", front: "「你玩的東西好無聊，那不是你該玩的，快放下啦！」", back: "「每個人想探索的都不一樣，玩得開心、懂得愛護就是好遊戲。」", note: "玩具的發明是為了帶來樂趣與學習。不管是拼積木、玩娃娃還是踢球，每個人都可以自由探索，不需要照著別人的刻板標籤走。" },
+      { id: 3, title: "穿著與外表的指指點點", front: "「你今天的衣服好特別喔，怎麼跟我們穿得都不一樣？」", back: "「我穿這件覺得很自在、很喜歡，穿出自己的風格最開心！」", note: "衣服是穿在自己身上的，重點在於整齊、舒適和自己的喜愛。每個人有不同的穿衣風格，懂得欣賞彼此的不一樣，世界才會更有趣。" },
+      { id: 4, title: "情緒表達的壓抑", front: "「跌倒了不可以哭！哭哭是一件很丟臉的事情。」", back: "「痛痛或難過時可以哭一哭，等眼淚擦乾，我還是可以很勇敢！」", note: "眼淚是每個人都有的正常心情反應，就像天上下雨一樣自然。哭泣不是軟弱，能誠實說出『我需要休息一下或抱抱』，是非常勇敢的表現。" },
+      { id: 5, title: "個性特質的刻板印象", front: "「你怎麼都不大聲講話？你太膽小、太文靜了啦！」", back: "「我喜歡溫柔、安靜地思考，文靜也是一種很棒的力量。」", note: "有的人像熱情的小太陽，有的人像溫柔的小月亮。安靜不代表膽小，懂得專心聆聽、細心觀察的人，也是團隊裡很重要的好夥伴。" },
+      { id: 6, title: "力氣大小與能力的預設", front: "「這個搬不動啦！你那麼瘦小，肯定幫不上忙。」", back: "「每個人能幫忙的方式不一樣，大家分工合作力量最大！」", note: "幫忙不一定只有力氣大的人才能做。幫忙扶著門、整理桌面、引路，或者兩個人一起分擔重量，都是非常有價值的付出。" },
+      { id: 7, title: "動作與活動風格的偏好", front: "「下課應該去跑跑跳跳，你一直扭來扭去跳舞做什麼？」", back: "「身體跟著節奏跳舞讓我很放鬆，每個人動動身體的方式都不同。」", note: "運動有非常多種形式，跑步、踢球很棒，體操、跳舞也一樣能活動身體、維持健康。只要能讓身心舒暢，就是最棒的下課活動。" },
+      { id: 8, title: "分組與同儕合作的界線", front: "「我們不要跟你同一組，因為你的想法跟我們都不一樣！」", back: "「不一樣的想法聚在一起，我們可以想出更多更棒的好點子！」", note: "分組合作最棒的地方，正是每個人帶來的視角都不同。學會傾聽別人的想法，也清楚分享自己的點子，互相激盪才能完成最精彩的作品。" }
     ];
 
     /* ============================================================
-       全域變數與初始化
+       全域狀態與多選集合
     ============================================================ */
     let isTeacherMode = false;
     let isMuted = false;
-    let selectedInterests = new Set(["粉紅色"]);
+    // 使用 Set 儲存小朋友選取的多個項目
+    let selectedItemIds = new Set([1]); // 預設選取粉紅色
 
     document.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
@@ -1111,9 +1033,9 @@
       renderGame1();
       renderGame2();
       updateCertDate();
+      updateCertTags();
     });
 
-    // 設定證書今日日期
     function updateCertDate() {
       const today = new Date();
       const dateStr = `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日`;
@@ -1121,7 +1043,6 @@
       if (dateEl) dateEl.innerText = dateStr;
     }
 
-    /* 頁籤切換 */
     function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-section').forEach(sec => sec.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -1133,7 +1054,6 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    /* 教師引導模式切換 */
     function toggleTeacherMode() {
       isTeacherMode = !isTeacherMode;
       document.body.classList.toggle('teacher-mode', isTeacherMode);
@@ -1148,14 +1068,13 @@
       }
     }
 
-    /* 語音朗讀支援 (Web Speech API) */
     function speakText(text) {
       if (isMuted || !('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
       const utter = new SpeechSynthesisUtterance(text);
       utter.lang = 'zh-TW';
       utter.rate = 0.95;
-      utter.pitch = 1.1; // 輕快親切童音頻率
+      utter.pitch = 1.1;
       window.speechSynthesis.speak(utter);
     }
 
@@ -1167,12 +1086,11 @@
         window.speechSynthesis.cancel();
       } else {
         icon.setAttribute('data-lucide', 'volume-2');
-        speakText('聲音朗讀已開啟！');
+        speakText('聲音已開啟！');
       }
       lucide.createIcons();
     }
 
-    /* 全螢幕切換 */
     function toggleFullscreen() {
       if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen().catch(() => {});
@@ -1181,7 +1099,6 @@
       }
     }
 
-    /* Web Audio API 提示音效 */
     function playNoteSound(freq = 520, duration = 0.15) {
       if (isMuted) return;
       try {
@@ -1198,11 +1115,7 @@
       } catch (e) {}
     }
 
-    /* ============================================================
-       區塊渲染功能
-    ============================================================ */
-
-    // 1. 渲染繪本區
+    /* 渲染故事區 */
     function renderStory() {
       const grid = document.getElementById('storyGrid');
       grid.innerHTML = storyList.map(item => `
@@ -1223,62 +1136,102 @@
       lucide.createIcons();
     }
 
-    // 2. 渲染遊戲一
+    /* 渲染遊戲一：可多選、可取消 */
     function renderGame1() {
       const grid = document.getElementById('optionsGrid');
-      grid.innerHTML = game1Options.map((opt, idx) => `
-        <div class="option-card ${idx === 0 ? 'selected' : ''}" id="opt-${opt.id}" onclick="selectGame1Option(${opt.id})">
-          <div class="card-top">
-            <div class="opt-name">${opt.name}</div>
-            <span class="badge-no">選項 ${opt.id < 10 ? '0' + opt.id : opt.id}</span>
+      grid.innerHTML = game1Options.map(opt => {
+        const isSelected = selectedItemIds.has(opt.id);
+        return `
+          <div class="option-card ${isSelected ? 'selected' : ''}" id="opt-${opt.id}" onclick="toggleGame1Option(${opt.id})">
+            <div class="card-top">
+              <div class="opt-name">${opt.name}</div>
+              <span class="badge-no">
+                <i data-lucide="${isSelected ? 'check-circle-2' : 'circle'}" style="width:14px; height:14px;"></i>
+                選項 ${opt.id < 10 ? '0' + opt.id : opt.id}
+              </span>
+            </div>
+            <div class="opt-desc">${opt.text}</div>
+            <div class="teacher-note">
+              <strong>👩‍🏫 引導要點：</strong>${opt.note}
+            </div>
           </div>
-          <div class="opt-desc">${opt.text}</div>
-          <div class="teacher-note">
-            <strong>👩‍🏫 引導要點：</strong>${opt.note}
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
       lucide.createIcons();
     }
 
-    // 點選遊戲一選項
-    function selectGame1Option(id) {
+    /* 切換選取／取消選取功能 */
+    function toggleGame1Option(id) {
+      const card = document.getElementById(`opt-${id}`);
       const opt = game1Options.find(o => o.id === id);
       if (!opt) return;
 
-      document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-      const activeCard = document.getElementById(`opt-${id}`);
-      if (activeCard) activeCard.classList.add('selected');
+      if (selectedItemIds.has(id)) {
+        // 取消選取
+        selectedItemIds.delete(id);
+        card.classList.remove('selected');
+        playNoteSound(380, 0.1);
+      } else {
+        // 新增選取
+        selectedItemIds.add(id);
+        card.classList.add('selected');
+        playNoteSound(650, 0.12);
+        speakText(opt.text);
+      }
 
+      // 更新選項卡片上的勾選圖示
+      renderGame1();
+
+      // 更新左側舞台影子
+      updateAvatarStage(opt, selectedItemIds.has(id));
+
+      // 同步至證書探索標籤庫
+      updateCertTags();
+    }
+
+    /* 更新左側影子樣式 */
+    function updateAvatarStage(lastOpt, isAdded) {
       const avatar = document.getElementById('avatarShadow');
       const skirt = document.getElementById('shadowSkirt');
       const speech = document.getElementById('avatarSpeech');
 
-      avatar.style.color = opt.color;
-      skirt.style.display = opt.hasSkirt ? 'block' : 'none';
-      speech.innerText = `「${opt.text}」`;
+      if (selectedItemIds.size === 0) {
+        // 當全部取消時
+        avatar.style.color = '#ff659c';
+        skirt.style.display = 'none';
+        speech.innerText = '「選你喜歡的，都可以喔！」';
+        return;
+      }
 
-      // 彈跳動畫
+      if (isAdded && lastOpt) {
+        avatar.style.color = lastOpt.color;
+        skirt.style.display = lastOpt.hasSkirt ? 'block' : 'none';
+        speech.innerText = `「${lastOpt.text}」`;
+      } else {
+        // 如果是取消，取目前剩下最後一個被選取的項目
+        const remainingIds = Array.from(selectedItemIds);
+        const lastId = remainingIds[remainingIds.length - 1];
+        const nextOpt = game1Options.find(o => o.id === lastId);
+        if (nextOpt) {
+          avatar.style.color = nextOpt.color;
+          skirt.style.display = nextOpt.hasSkirt ? 'block' : 'none';
+          speech.innerText = `「${nextOpt.text}」`;
+        }
+      }
+
+      // 影子跳躍動畫
       avatar.style.transform = 'scale(1.1) translateY(-6px)';
       setTimeout(() => {
         avatar.style.transform = 'scale(1) translateY(0)';
       }, 300);
-
-      playNoteSound(650, 0.12);
-      speakText(opt.text);
-
-      // 同步更新到證書探索標籤庫
-      selectedInterests.add(opt.name);
-      updateCertTags();
     }
 
-    // 3. 渲染遊戲二 (3D 卡片)
+    /* 渲染遊戲二 (3D 卡片) */
     function renderGame2() {
       const grid = document.getElementById('cardsGrid');
       grid.innerHTML = game2Questions.map(q => `
         <div class="scene-card" id="scene-${q.id}" onclick="flipSceneCard(${q.id})">
           <div class="card-inner">
-            <!-- 正面 -->
             <div class="card-face card-front">
               <div class="face-tag">
                 <i data-lucide="message-circle-warning" style="width:14px; height:14px;"></i>
@@ -1290,7 +1243,6 @@
               </div>
             </div>
 
-            <!-- 背面 -->
             <div class="card-face card-back">
               <div class="face-tag">
                 <i data-lucide="sparkles" style="width:14px; height:14px;"></i>
@@ -1310,7 +1262,6 @@
       lucide.createIcons();
     }
 
-    // 翻轉卡片
     function flipSceneCard(id) {
       const card = document.getElementById(`scene-${id}`);
       if (!card) return;
@@ -1323,37 +1274,50 @@
       }
     }
 
-    // 更新證書底部的喜好徽章
+    /* 更新證書上的標籤 */
     function updateCertTags() {
       const container = document.getElementById('certTags');
-      const tags = Array.from(selectedInterests);
-      container.innerHTML = tags.map(tag => `<span class="badge-chip">✨ 探索：${tag}</span>`).join('');
+      if (selectedItemIds.size === 0) {
+        container.innerHTML = `
+          <span class="badge-chip">💖 接納真實自我</span>
+          <span class="badge-chip">🌟 尊重多元色彩</span>
+          <span class="badge-chip">🛡️ 自信堅定發聲</span>
+        `;
+        return;
+      }
+
+      const chips = [];
+      selectedItemIds.forEach(id => {
+        const item = game1Options.find(o => o.id === id);
+        if (item) {
+          chips.push(`<span class="badge-chip">✨ 探索：${item.name}</span>`);
+        }
+      });
+      container.innerHTML = chips.join('');
     }
 
-    /* 慶祝彩帶特效 */
+    /* 放煙火特效 */
     function triggerConfetti() {
       if (typeof confetti === 'function') {
         confetti({
-          particleCount: 100,
-          spread: 70,
+          particleCount: 110,
+          spread: 75,
           origin: { y: 0.6 }
         });
       }
       playNoteSound(800, 0.25);
     }
 
-    /* 列印證書：精準設定學生班級姓名，並觸發專屬列印 */
+    /* 列印證書 */
     function printCertificateOnly() {
-      const cls = document.getElementById('certClass').value.trim() || '二年級';
+      const clsNum = document.getElementById('certClassNum').value.trim() || '1';
       const name = document.getElementById('certName').value.trim() || '小勇士';
 
-      document.getElementById('printClassName').innerText = cls;
+      document.getElementById('printClassName').innerText = clsNum;
       document.getElementById('printStudentName').innerText = name;
 
-      // 觸發彩帶慶祝
       triggerConfetti();
 
-      // 呼叫系統列印對話框
       setTimeout(() => {
         window.print();
       }, 350);
