@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>粉紅色影子的男孩：影子變變變 - 二年級繪本互動遊戲</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Google Fonts: 圓體與俏皮字體風格 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            maru: ['"Zen Maru Gothic"', '"Noto Sans TC"', 'sans-serif'],
+            display: ['"Mochiy Pop One"', '"Noto Sans TC"', 'cursive'],
+          },
+          colors: {
+            pinkShadow: '#FF69B4',
+            pinkLight: '#FFF0F5',
+            blueShadow: '#3B82F6',
+            warmYellow: '#FCD34D',
+            pastelPurple: '#C084FC',
+            mintGreen: '#34D399',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Zen Maru Gothic', 'Noto Sans TC', sans-serif;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* 3D 卡片翻轉效果 */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+
+    /* 浮動微動效 */
+    @keyframes gentle-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .animate-float {
+      animation: gentle-bounce 3.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+    .shadow-glow {
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+
+    /* 自訂捲軸 */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FFE4E6;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #FDA4AF;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-rose-50 via-sky-50 to-indigo-50 min-h-screen text-slate-800 flex flex-col antialiased">
+
+  <!-- 頂部導覽列 -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b-4 border-pink-200 px-4 py-3 shadow-md">
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <!-- 標題與 Logo -->
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('intro')">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-pink-400 to-amber-300 flex items-center justify-center text-white text-2xl shadow-lg transform rotate-3 hover:rotate-0 transition">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </div>
+        <div>
+          <h1 class="text-xl md:text-2xl font-black text-rose-500 tracking-wide font-display flex items-center gap-2">
+            粉紅色影子的男孩
+            <span class="text-xs md:text-sm font-maru px-2.5 py-0.5 rounded-full bg-pink-100 text-pink-700 border border-pink-300">
+              影子變變變 ✨
+            </span>
+          </h1>
+          <p class="text-xs text-slate-500 hidden sm:block">國小二年級繪本延伸互動體驗營 ‧ 展現獨一無二的自己</p>
+        </div>
+      </div>
+
+      <!-- 功能控制區 (教學提示開關、語音、全螢幕) -->
+      <div class="flex items-center space-x-2">
+        <!-- 老師教學提示模式開關 -->
+        <button id="teacherModeBtn" onclick="toggleTeacherMode()" class="px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1.5 border-2 border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100" title="開啟或隱藏老師教學引導重點">
+          <i class="fa-solid fa-chalkboard-user"></i>
+          <span>教師引導模式：<b id="teacherStatus">關閉</b></span>
+        </button>
+
+        <!-- 語音輔助朗讀 (針對二年級注音與識字) -->
+        <button id="ttsGlobalBtn" onclick="toggleTTSVoice()" class="w-9 h-9 rounded-full bg-pink-100 text-pink-600 hover:bg-pink-200 flex items-center justify-center transition" title="朗讀語音狀態">
+          <i class="fa-solid fa-volume-high text-sm"></i>
+        </button>
+
+        <!-- 全螢幕切換 -->
+        <button onclick="toggleFullScreen()" class="w-9 h-9 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center justify-center transition" title="全螢幕模式">
+          <i class="fa-solid fa-expand text-sm"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- 標籤頁籤切換按鈕 -->
+    <div class="max-w-4xl mx-auto mt-3 flex justify-around gap-2 px-1">
+      <button onclick="switchTab('intro')" id="tab-intro" class="nav-tab active-tab flex-1 py-2 rounded-2xl font-bold text-sm md:text-base flex items-center justify-center gap-2 transition duration-200">
+        <i class="fa-solid fa-book-open"></i> 繪本故事角
+      </button>
+      <button onclick="switchTab('game1')" id="tab-game1" class="nav-tab flex-1 py-2 rounded-2xl font-bold text-sm md:text-base flex items-center justify-center gap-2 transition duration-200">
+        <i class="fa-solid fa-heart"></i> 遊戲一：喜歡什麼都可以！
+      </button>
+      <button onclick="switchTab('game2')" id="tab-game2" class="nav-tab flex-1 py-2 rounded-2xl font-bold text-sm md:text-base flex items-center justify-center gap-2 transition duration-200">
+        <i class="fa-solid fa-shield-cat"></i> 遊戲二：勇敢說出心裡話
+      </button>
+      <button onclick="switchTab('cert')" id="tab-cert" class="nav-tab flex-1 py-2 rounded-2xl font-bold text-sm md:text-base flex items-center justify-center gap-2 transition duration-200">
+        <i class="fa-solid fa-award"></i> 自信小證書
+      </button>
+    </div>
+  </header>
+
+  <style>
+    .active-tab {
+      background-color: #EC4899 !important;
+      color: white !important;
+      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.35);
+    }
+    .nav-tab:not(.active-tab) {
+      background-color: #F8FAFC;
+      color: #64748B;
+      border: 1px solid #E2E8F0;
+    }
+    .nav-tab:not(.active-tab):hover {
+      background-color: #FCE7F3;
+      color: #DB2777;
+    }
+  </style>
+
+  <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 mb-12">
+
+    <!-- ==============================================
+         分頁 0：繪本導讀與魔法問句 (PDF 2《粉紅色影子的男孩討論內容》)
+         ============================================== -->
+    <section id="section-intro" class="tab-content block">
+      <div class="bg-white/80 backdrop-blur rounded-3xl p-6 md:p-8 shadow-xl border-4 border-pink-100 relative overflow-hidden">
+        <!-- 背景小彩蛋裝飾 -->
+        <div class="absolute -top-10 -right-10 w-44 h-44 bg-pink-100 rounded-full opacity-40 blur-xl pointer-events-none"></div>
+        <div class="absolute -bottom-10 -left-10 w-44 h-44 bg-blue-100 rounded-full opacity-40 blur-xl pointer-events-none"></div>
+
+        <div class="text-center max-w-2xl mx-auto mb-8">
+          <span class="inline-block px-4 py-1.5 rounded-full bg-pink-100 text-pink-700 text-sm font-extrabold mb-3">
+            ✨ 繪本互動討論時光 ✨
+          </span>
+          <h2 class="text-2xl md:text-3xl font-black text-slate-800">走進小男孩的內心世界</h2>
+          <p class="text-sm md:text-base text-slate-600 mt-2">
+            每個人都有影子，但是每個人的影子都長得一樣嗎？點擊卡片聽聽小秘密與魔法問句喔！
+          </p>
+        </div>
+
+        <!-- 8大繪本情境卡片滑軌／網格 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="storyCardsGrid">
+          <!-- 藉由 JS 動態生成 8 張故事卡，方便維護與朗讀 -->
+        </div>
+
+        <!-- 進入遊戲引導大按鈕 -->
+        <div class="mt-8 text-center bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-blue-500/10 rounded-2xl p-6 border-2 border-dashed border-pink-300">
+          <p class="text-base font-bold text-slate-700 mb-3">
+            🌈 準備好探索自己的特別影子了嗎？
+          </p>
+          <button onclick="switchTab('game1')" class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 text-white font-black text-lg shadow-lg hover:shadow-pink-300/50 hover:scale-105 active:scale-95 transition">
+            開始第一個挑戰：【喜歡什麼，都可以！】 🚀
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         分頁 1：遊戲一【喜歡什麼，都可以！】 (PDF 1 遊戲一)
+         ============================================== -->
+    <section id="section-game1" class="tab-content hidden">
+      <div class="bg-white/85 backdrop-blur rounded-3xl p-6 md:p-8 shadow-xl border-4 border-amber-100">
+        <!-- 頂部標題說明 -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-amber-200">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="bg-amber-400 text-amber-950 font-black px-3 py-1 rounded-xl text-xs">遊戲一</span>
+              <h2 class="text-2xl md:text-3xl font-black text-slate-800">喜歡什麼，都可以！🎨</h2>
+            </div>
+            <p class="text-slate-600 text-sm mt-1">
+              點擊你喜歡的事物，看看右邊（或下方）的小男孩影子會發生什麼神奇變化！
+            </p>
+          </div>
+          <!-- 統計已選數量 -->
+          <div class="flex items-center gap-3 bg-amber-50 px-4 py-2 rounded-2xl border border-amber-200">
+            <i class="fa-solid fa-wand-magic-sparkles text-amber-500 text-xl"></i>
+            <div>
+              <div class="text-xs text-slate-500 font-bold">已收集的喜好能量</div>
+              <div class="text-lg font-black text-amber-600"><span id="selectedCount">0</span> / 10</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 主體：左邊選擇庫，右邊魔法影子試衣間/展示台 -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6 items-start">
+          
+          <!-- 左側：10項多元興趣選擇庫 (佔7欄) -->
+          <div class="lg:col-span-7">
+            <h3 class="text-sm font-extrabold text-slate-500 mb-3 flex items-center justify-between">
+              <span>🌟 點選你想探索或喜歡的卡片（可複選）：</span>
+              <button onclick="clearAllSelections()" class="text-xs text-rose-500 hover:underline font-bold">重新選擇</button>
+            </h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5" id="game1OptionsList">
+              <!-- JS 動態帶入 10 個趣味選項 -->
+            </div>
+          </div>
+
+          <!-- 右側：影子神奇魔鏡與互動引導 (佔5欄) -->
+          <div class="lg:col-span-5 sticky top-24">
+            <div class="bg-gradient-to-b from-indigo-900 via-slate-800 to-indigo-950 rounded-3xl p-6 text-white text-center shadow-2xl border-4 border-indigo-200 relative overflow-hidden">
+              
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-xs font-bold text-indigo-300 tracking-wider">🌟 你的心靈影子魔鏡</span>
+                <span id="shadowBadgeText" class="text-xs font-bold bg-pink-500/80 px-2.5 py-0.5 rounded-full text-white">
+                  獨特光芒
+                </span>
+              </div>
+
+              <!-- 影子人形動畫畫布/容器 -->
+              <div class="relative w-full h-64 flex items-center justify-center my-2">
+                <!-- 影子背後光環 -->
+                <div id="shadowGlow" class="absolute w-44 h-44 rounded-full bg-pink-500/30 blur-2xl transition-all duration-700"></div>
+
+                <!-- 向量小男孩與變色影子 -->
+                <div class="relative z-10 flex flex-col items-center">
+                  <!-- 漂浮道具泡泡 -->
+                  <div id="propBubble" class="absolute -top-6 bg-white text-slate-800 px-3 py-1 rounded-full shadow-lg text-xs font-extrabold flex items-center gap-1.5 animate-bounce transition-all">
+                    <span>✨ 自由探索中...</span>
+                  </div>
+
+                  <!-- 影子立體 SVG 人偶 -->
+                  <svg id="shadowSvg" class="w-40 h-44 transition-all duration-500 drop-shadow-xl" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 身體輪廓 -->
+                    <circle id="shadowHead" cx="50" cy="25" r="16" fill="#FF69B4" class="transition-colors duration-500"/>
+                    <path id="shadowBody" d="M35 48 C35 44 42 42 50 42 C58 42 65 44 65 48 L68 78 C68 82 62 84 50 84 C38 84 32 82 32 78 Z" fill="#FF69B4" class="transition-colors duration-500"/>
+                    <!-- 裙子/外袍效果（可動態開關） -->
+                    <path id="shadowSkirt" d="M28 72 L72 72 L80 94 C80 96 76 98 50 98 C24 98 20 96 20 94 Z" fill="#FCD34D" opacity="0.9" class="transition-all duration-500 scale-0 origin-top"/>
+                    <!-- 雙腿 -->
+                    <rect id="shadowLegL" x="38" y="84" width="8" height="28" rx="4" fill="#FF69B4" class="transition-colors duration-500"/>
+                    <rect id="shadowLegR" x="54" y="84" width="8" height="28" rx="4" fill="#FF69B4" class="transition-colors duration-500"/>
+                    <!-- 手臂動態 -->
+                    <path id="shadowArmL" d="M35 46 C25 55 20 65 24 75" stroke="#FF69B4" stroke-width="7" stroke-linecap="round" class="transition-colors duration-500"/>
+                    <path id="shadowArmR" d="M65 46 C75 55 80 65 76 75" stroke="#FF69B4" stroke-width="7" stroke-linecap="round" class="transition-colors duration-500"/>
+                  </svg>
+                  
+                  <!-- 地面影子倒影圓盤 -->
+                  <div id="groundShadow" class="w-36 h-4 bg-pink-500/40 rounded-[100%] blur-sm -mt-2 transition-colors duration-500"></div>
+                </div>
+              </div>
+
+              <!-- 即時引導語音與解說小對話框 -->
+              <div class="bg-indigo-950/80 rounded-2xl p-3 border border-indigo-400/40 text-left mt-3">
+                <div class="flex items-center justify-between text-xs text-amber-300 font-bold mb-1">
+                  <span>💡 影子的心靈悄悄話：</span>
+                  <button onclick="readCurrentGuidance()" class="text-pink-300 hover:text-white flex items-center gap-1 text-xs">
+                    <i class="fa-solid fa-volume-high"></i> 讀給我聽
+                  </button>
+                </div>
+                <p id="shadowVoiceText" class="text-xs md:text-sm text-slate-200 leading-relaxed font-maru">
+                  「顏色和喜好是世界上最自由的禮物！點選左邊卡片，看看我的影子對你說什麼喔！」
+                </p>
+              </div>
+
+              <!-- 教師引導小板塊（可透過上方開關切換顯示） -->
+              <div id="teacherCardBoxGame1" class="hidden mt-3 bg-amber-400 text-amber-950 text-xs text-left p-3 rounded-xl font-bold shadow animate-fade-in">
+                <div class="flex items-center gap-1 text-rose-800 mb-0.5">
+                  <i class="fa-solid fa-chalkboard-user"></i>
+                  <span>【教師教學同理引導重點】</span>
+                </div>
+                <p id="teacherGuidanceText">
+                  每位孩子都有自己獨特的靈魂色彩，引導孩子理解「喜歡沒有男生女生之分，勇敢展現自我就是美」。
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- 下一關快捷鍵 -->
+        <div class="mt-8 flex justify-end">
+          <button onclick="switchTab('game2')" class="px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold flex items-center gap-2 shadow-lg transition">
+            前往遊戲二：有人這樣說，我可以怎麼辦？ <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         分頁 2：遊戲二【有人這樣說，我可以怎麼辦？】 (PDF 1 遊戲二)
+         ============================================== -->
+    <section id="section-game2" class="tab-content hidden">
+      <div class="bg-white/85 backdrop-blur rounded-3xl p-6 md:p-8 shadow-xl border-4 border-indigo-100">
+        
+        <!-- 標題與情境說明 -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-indigo-200">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="bg-indigo-500 text-white font-black px-3 py-1 rounded-xl text-xs">遊戲二</span>
+              <h2 class="text-2xl md:text-3xl font-black text-slate-800">有人這樣說，我可以怎麼辦？🛡️</h2>
+            </div>
+            <p class="text-slate-600 text-sm mt-1">
+              當別人對我們指指點點時別害怕！點擊卡片【翻面】，換你用充滿勇氣的自信力量回應他！
+            </p>
+          </div>
+          <!-- 完成進度 -->
+          <div class="flex items-center gap-3 bg-indigo-50 px-4 py-2 rounded-2xl border border-indigo-200">
+            <i class="fa-solid fa-shield-halved text-indigo-500 text-xl"></i>
+            <div>
+              <div class="text-xs text-slate-500 font-bold">翻轉勇氣卡片</div>
+              <div class="text-lg font-black text-indigo-600"><span id="flippedCount">0</span> / 8</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 遊戲操作提示 -->
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-2 bg-pink-50 p-3 rounded-2xl border border-pink-200 text-xs md:text-sm text-pink-800">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-lightbulb text-amber-500 text-lg"></i>
+            <span>小秘訣：點擊卡片即可 <b>3D翻轉</b>；點擊小喇叭 <i class="fa-solid fa-volume-high text-indigo-600"></i> 可以直接朗讀語音喔！</span>
+          </div>
+          <button onclick="flipAllCards()" class="px-3 py-1 rounded-lg bg-pink-200 text-pink-800 font-bold hover:bg-pink-300 transition text-xs">
+            全部翻面 / 復原
+          </button>
+        </div>
+
+        <!-- 8道情境卡片展示區 (3D Flip Cards) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-6" id="game2CardsGrid">
+          <!-- 由 JS 動態生成 8 題目卡片 -->
+        </div>
+
+        <!-- 底部結業引導 -->
+        <div class="mt-10 p-6 rounded-3xl bg-gradient-to-r from-purple-100 via-pink-100 to-amber-100 border-2 border-pink-200 text-center">
+          <h3 class="text-lg font-black text-slate-800 mb-2">🎉 你太棒了！學會了好多保護自己與同理他人的勇氣話語！</h3>
+          <p class="text-xs md:text-sm text-slate-600 mb-4">現在就去領取屬於你個人的「做獨一無二的自己」榮譽小證書吧！</p>
+          <button onclick="switchTab('cert')" class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-black shadow-lg hover:scale-105 active:scale-95 transition">
+            領取我的影子自信證書 🎖️
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==============================================
+         分頁 3：自信影子榮譽證書 (個人化成果、列印與分享)
+         ============================================== -->
+    <section id="section-cert" class="tab-content hidden">
+      <div class="max-w-3xl mx-auto bg-white rounded-3xl p-6 md:p-8 shadow-2xl border-4 border-pink-200">
+        <div class="text-center mb-6">
+          <span class="bg-rose-100 text-rose-700 font-bold px-3 py-1 rounded-full text-xs">🏆 學習成果榮譽榜</span>
+          <h2 class="text-2xl md:text-3xl font-black text-slate-800 mt-2">獨一無二・自信影子小勇士證書</h2>
+          <p class="text-xs md:text-sm text-slate-500 mt-1">寫下你的名字，把今天學到的勇氣化作專屬勛章！</p>
+        </div>
+
+        <!-- 輸入學生姓名與班級 -->
+        <div class="bg-pink-50/70 p-4 rounded-2xl border border-pink-200 mb-6 flex flex-wrap gap-4 items-center justify-center">
+          <div class="flex items-center gap-2">
+            <label class="text-xs font-bold text-slate-700">二年級班級：</label>
+            <input type="text" id="studentClass" value="二年" class="bg-white border border-pink-300 rounded-xl px-3 py-1.5 text-sm font-bold w-24 text-center focus:ring-2 focus:ring-pink-400 outline-none">
+            <span class="text-xs text-slate-600 font-bold">班</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <label class="text-xs font-bold text-slate-700">小勇士姓名：</label>
+            <input type="text" id="studentName" placeholder="請輸入姓名" value="林小葵" class="bg-white border border-pink-300 rounded-xl px-3 py-1.5 text-sm font-bold w-36 text-center focus:ring-2 focus:ring-pink-400 outline-none" oninput="updateCertPreview()">
+          </div>
+          <button onclick="triggerConfetti()" class="px-4 py-1.5 rounded-xl bg-pink-500 hover:bg-pink-600 text-white font-bold text-xs shadow flex items-center gap-1">
+            <i class="fa-solid fa-sparkles"></i> 放煙火慶祝！
+          </button>
+        </div>
+
+        <!-- 證書視覺卡（可截圖或列印） -->
+        <div id="printableCertificate" class="relative bg-gradient-to-br from-pink-50 via-amber-50 to-indigo-50 border-8 border-double border-pink-300 rounded-3xl p-6 md:p-8 text-center shadow-inner overflow-hidden">
+          <!-- 邊角裝飾花紋 -->
+          <div class="absolute top-2 left-2 text-pink-300 text-2xl"><i class="fa-solid fa-crown"></i></div>
+          <div class="absolute top-2 right-2 text-pink-300 text-2xl"><i class="fa-solid fa-star"></i></div>
+          <div class="absolute bottom-2 left-2 text-pink-300 text-2xl"><i class="fa-solid fa-heart"></i></div>
+          <div class="absolute bottom-2 right-2 text-pink-300 text-2xl"><i class="fa-solid fa-rainbow"></i></div>
+
+          <div class="space-y-4">
+            <div class="text-pink-600 font-display text-sm tracking-widest uppercase">★ Certificate of Self-Belief ★</div>
+            <h3 class="text-2xl md:text-4xl font-black text-slate-800 tracking-wider font-display">自信影子榮譽證書</h3>
+
+            <div class="text-lg md:text-xl font-bold text-indigo-900 border-b-2 border-indigo-200 pb-2 max-w-sm mx-auto">
+              恭喜 <span id="certClassDisplay" class="text-pink-600 underline font-black">二年 </span> 
+              <span id="certNameDisplay" class="text-pink-600 underline font-black">林小葵</span> 同學
+            </div>
+
+            <p class="text-xs md:text-sm text-slate-700 leading-relaxed max-w-lg mx-auto">
+              在完成《粉紅色影子的男孩》繪本探索後，不僅學會勇敢接納自己的喜好，更懂得用溫柔與自信回應世界。
+              請永遠記住：<b>「你的影子就是你自己，儘管做獨一無二的自己，我們都愛你！」</b>
+            </p>
+
+            <!-- 學生在遊戲一中選出的喜歡項目標籤 -->
+            <div class="pt-2">
+              <div class="text-xs font-extrabold text-slate-500 mb-2">我的影子超能力（我最喜歡的探索）：</div>
+              <div id="certFavoriteTags" class="flex flex-wrap justify-center gap-2">
+                <span class="px-3 py-1 rounded-full text-xs font-bold bg-pink-200 text-pink-800">粉紅色與溫柔</span>
+                <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-200 text-sky-800">自由自在地畫畫</span>
+                <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-200 text-amber-800">勇敢說心裡話</span>
+              </div>
+            </div>
+
+            <!-- 印章與簽名欄 -->
+            <div class="flex justify-between items-end pt-6 px-4">
+              <div class="text-left text-xs text-slate-500">
+                <div>認證日期：<span id="certDate">2026年9月25日</span></div>
+                <div>導引學校：幸福國小 二年級成長班</div>
+              </div>
+
+              <!-- 燙金印章感 -->
+              <div class="w-20 h-20 rounded-full border-4 border-red-500 flex flex-col items-center justify-center text-red-500 font-black text-xs rotate-[-12deg] shadow-sm bg-red-50/50">
+                <span>★ 榮譽 ★</span>
+                <span class="text-sm">這就是我</span>
+                <span>最棒影子</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 下方列印與重玩按鈕 -->
+        <div class="mt-6 flex flex-wrap justify-center gap-4">
+          <button onclick="window.print()" class="px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-bold text-sm shadow flex items-center gap-2">
+            <i class="fa-solid fa-print"></i> 列印 / 儲存為 PDF
+          </button>
+          <button onclick="switchTab('intro')" class="px-6 py-2.5 rounded-xl bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold text-sm flex items-center gap-2">
+            <i class="fa-solid fa-rotate-left"></i> 再玩一次！
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 教師教學重點總覽彈出視窗 (Modal) -->
+  <div id="teacherModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border-4 border-indigo-200 max-h-[85vh] flex flex-col">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-200">
+        <h3 class="text-lg font-black text-indigo-900 flex items-center gap-2">
+          <i class="fa-solid fa-graduation-cap text-indigo-600"></i>
+          二年級教師教學引導總說明手冊
+        </h3>
+        <button onclick="closeTeacherModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:bg-rose-100 hover:text-rose-600 flex items-center justify-center font-bold">✕</button>
+      </div>
+
+      <div class="overflow-y-auto space-y-4 py-4 text-xs md:text-sm text-slate-700 leading-relaxed font-maru pr-2">
+        <div class="p-3 bg-indigo-50 rounded-2xl border border-indigo-100">
+          <h4 class="font-extrabold text-indigo-900 mb-1">🎯 本互動學習設計理念：</h4>
+          <p>
+            國小二年級學童正處於同儕社交認同形成的關鍵期，容易受到「男生一定要怎樣、女生一定要怎樣」的刻板標籤影響。本教材透過《粉紅色影子的男孩》，從<b>自我探索（遊戲一）</b>進階到<b>人際抗挫與同理回應（遊戲二）</b>，強化孩子「肯定自我、尊重相異」的情緒素養（SEL）。
+          </p>
+        </div>
+
+        <div class="p-3 bg-amber-50 rounded-2xl border border-amber-100">
+          <h4 class="font-extrabold text-amber-900 mb-1">💡 課堂互動教學建議：</h4>
+          <ul class="list-disc pl-5 space-y-1">
+            <li><b>大螢幕全班共讀：</b> 使用投影機，讓全班輪流上台點選自己喜歡的事物，觀察全班的影子是否五彩繽紛。</li>
+            <li><b>角色扮演（遊戲二）：</b> 老師或一位同學唸出「他人這樣說（正面）」，全班再一起點開卡片背面大聲朗讀「我的自信回應」，體驗語言的堅定力量。</li>
+            <li><b>個別平板操作：</b> 每位孩子完成自己的喜好搭配，並在最後證書寫上名字，讓每位同學感受到被肯定與珍視。</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-slate-200 text-right">
+        <button onclick="closeTeacherModal()" class="px-5 py-2 rounded-xl bg-indigo-600 text-white font-bold text-xs hover:bg-indigo-700">我瞭解了</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ============================================================
+       資料庫定義：依照使用者上傳的 2 個 PDF 完整收錄
+       ============================================================ */
+
+    // 1. PDF 2: 繪本討論內容（8大情境與魔法問句）
+    const STORY_DISCUSSIONS = [
+      {
+        page: 1,
+        title: "影子的秘密",
+        icon: "fa-regular fa-sun",
+        text: "每個人都有影子，但我的影子...藏著一個小秘密！",
+        magicQuestion: "找找看，你的影子現在是什麼顏色呢？",
+        color: "from-amber-200 to-rose-200",
+        shadowColor: "#F472B6"
+      },
+      {
+        page: 2,
+        title: "藍色與粉紅影子",
+        icon: "fa-solid fa-arrows-split-up-and-left",
+        text: "大家都一樣的【藍色影子】又高又壯、威武冷靜；我的專屬【粉紅影子】最愛聽故事、獨角獸、和美麗的公主！",
+        magicQuestion: "左邊和右邊，你最喜歡哪一種影子？",
+        color: "from-sky-200 to-pink-200",
+        shadowColor: "#EC4899"
+      },
+      {
+        page: 3,
+        title: "閃閃發光的秘密",
+        icon: "fa-solid fa-sparkles",
+        text: "轉啊轉！只要穿上最愛的黃色裙子，影子就會開心地跳躍！",
+        magicQuestion: "你最喜歡穿什麼衣服跳舞呢？",
+        color: "from-yellow-200 to-amber-200",
+        shadowColor: "#F59E0B"
+      },
+      {
+        page: 4,
+        title: "穿上裙子去上學",
+        icon: "fa-solid fa-school",
+        text: "爸爸看起來好擔心...大家都盯著我看，沒有人跟我說話。",
+        magicQuestion: "如果是你走進這間教室，心裡會有什麼感覺？",
+        color: "from-slate-200 to-rose-200",
+        shadowColor: "#94A3B8"
+      },
+      {
+        page: 5,
+        title: "爸爸竟然也...？！",
+        icon: "fa-solid fa-heart-pulse",
+        text: "砰！爸爸竟然也穿著裙子出現在學校校門口？！「我再也不要穿裙子了！」",
+        magicQuestion: "看到爸爸穿裙子，男孩會覺得開心還是嚇一跳呢？",
+        color: "from-orange-200 to-rose-300",
+        shadowColor: "#FB7185"
+      },
+      {
+        page: 6,
+        title: "真實的影子",
+        icon: "fa-solid fa-eye",
+        text: "「其實，我們每個人都會把真實的影子藏起來喔。」原來大家的心裡，都住著一個不一樣的自己！",
+        magicQuestion: "猜猜看，你爸爸媽媽的隱藏影子會喜歡什麼？",
+        color: "from-indigo-200 to-purple-200",
+        shadowColor: "#A855F7"
+      },
+      {
+        page: 7,
+        title: "這就是我！",
+        icon: "fa-solid fa-hands-holding-child",
+        text: "「你的影子就是你自己。粉紅色又怎樣？大聲說：這就是我！」牽起爸爸的手，我們一起勇敢前進！",
+        magicQuestion: "有人牽著手的時候，是不是覺得自己變勇敢了？",
+        color: "from-pink-300 to-rose-400",
+        shadowColor: "#E11D48"
+      },
+      {
+        page: 8,
+        title: "獨一無二的自己",
+        icon: "fa-solid fa-rainbow",
+        text: "「我知道我不一樣，但這樣才特別！」世上本來就會有人喜歡你，也會有人討厭你。沒關係，儘管做獨一無二的自己，我們愛你。",
+        magicQuestion: "你想跟我們一起玩嗎？",
+        color: "from-teal-200 to-pink-200",
+        shadowColor: "#06B6D4"
+      }
+    ];
+
+    // 2. PDF 1: 遊戲一【喜歡什麼，都可以！】（10項多元擴充選擇庫）
+    const GAME1_OPTIONS = [
+      {
+        id: "01",
+        name: "粉紅色",
+        icon: "fa-solid fa-palette",
+        colorTheme: "#FF69B4",
+        badge: "溫柔粉紅",
+        voiceText: "我喜歡溫柔漂亮的粉紅色。",
+        teacherFocus: "顏色是自然的禮物，任何人都可以喜歡任何顏色。"
+      },
+      {
+        id: "02",
+        name: "藍黑色",
+        icon: "fa-solid fa-moon",
+        colorTheme: "#1E3A8A",
+        badge: "沉穩深藍",
+        voiceText: "我喜歡帥氣沉穩的深色系。",
+        teacherFocus: "喜歡酷酷、沉穩的顏色很棒，展現專屬自己的風格。"
+      },
+      {
+        id: "03",
+        name: "玩洋娃娃",
+        icon: "fa-solid fa-person-dress",
+        colorTheme: "#F43F5E",
+        badge: "溫柔照顧",
+        voiceText: "我喜歡幫娃娃梳頭髮、換衣服、說故事。",
+        teacherFocus: "照顧娃娃是愛心與想像力的展現，學會溫柔照顧他人。"
+      },
+      {
+        id: "04",
+        name: "踢球運動",
+        icon: "fa-solid fa-futbol",
+        colorTheme: "#10B981",
+        badge: "奔跑活力",
+        voiceText: "我喜歡在操場上奔跑、傳球流汗。",
+        teacherFocus: "盡情奔跑、享受運動的活力，鍛鍊強健健康的體魄。"
+      },
+      {
+        id: "05",
+        name: "積木組裝",
+        icon: "fa-solid fa-cubes",
+        colorTheme: "#F59E0B",
+        badge: "空間建造",
+        voiceText: "我喜歡動手拼出機器人和大城堡。",
+        teacherFocus: "空間建構與邏輯探索，每一次拼搭都是小小工程師。"
+      },
+      {
+        id: "06",
+        name: "動手做料理",
+        icon: "fa-solid fa-utensils",
+        colorTheme: "#EA580C",
+        badge: "美味大廚",
+        voiceText: "我喜歡扮家家酒，當個厲害的小小廚師。",
+        teacherFocus: "模擬烹飪是生活自理的起步，享受調配美味的樂趣。"
+      },
+      {
+        id: "07",
+        name: "唱歌跳舞",
+        icon: "fa-solid fa-music",
+        colorTheme: "#8B5CF6",
+        badge: "節奏躍動",
+        voiceText: "我喜歡跟著音樂擺動身體和大聲唱。",
+        teacherFocus: "用身體與歌聲自由表達情緒，感受節奏帶來的快樂。"
+      },
+      {
+        id: "08",
+        name: "畫畫塗鴉",
+        icon: "fa-solid fa-paintbrush",
+        colorTheme: "#06B6D4",
+        badge: "奇思妙想",
+        voiceText: "我喜歡用各種顏色畫出天馬行空的想像。",
+        teacherFocus: "畫紙上沒有標準答案，任何奇思妙想都值得被畫出來。"
+      },
+      {
+        id: "09",
+        name: "閱讀故事書",
+        icon: "fa-solid fa-book-bookmark",
+        colorTheme: "#3B82F6",
+        badge: "安靜力量",
+        voiceText: "我喜歡安靜地看書、走進奇妙的繪本世界。",
+        teacherFocus: "安靜專注也是一種力量，在故事裡自由冒險。"
+      },
+      {
+        id: "10",
+        name: "觀察大自然",
+        icon: "fa-solid fa-leaf",
+        colorTheme: "#84CC16",
+        badge: "細膩好奇",
+        voiceText: "我喜歡看小昆蟲、撿漂亮的落葉和小石頭。",
+        teacherFocus: "擁有敏銳細膩的觀察力，對世界萬物充滿好奇心。"
+      }
+    ];
+
+    // 3. PDF 1: 遊戲二【有人這樣說，我可以怎麼辦？】（8大情境反思卡）
+    const GAME2_QUESTIONS = [
+      {
+        id: 1,
+        topic: "色彩偏好的質疑",
+        icon: "fa-solid fa-paint-roller",
+        tag: "題目1",
+        front: "你選這個顏色好奇怪，大家都不會選這個顏色！",
+        back: "每一種顏色都有它的美麗，只要我喜歡，就是最棒的顏色。",
+        guide: "顏色就像彩虹一樣多采多姿，沒有哪一種顏色是專屬於誰的。只要看著它會讓自己感到開心、舒服，那就是最適合你的顏色。"
+      },
+      {
+        id: 2,
+        topic: "玩具與遊戲的限制",
+        icon: "fa-solid fa-puzzle-piece",
+        tag: "題目2",
+        front: "你玩的東西好無聊，那不是你該玩的，快放下啦！",
+        back: "每個人想探索的都不一樣，玩得開心、懂得愛護就是好遊戲。",
+        guide: "玩具的發明是為了帶來樂趣與學習。不管是拼積木、玩娃娃還是踢球，每個人都可以自由探索，不需要照著別人的刻板標籤走。"
+      },
+      {
+        id: 3,
+        topic: "穿著與外表的指指點點",
+        icon: "fa-solid fa-shirt",
+        tag: "題目3",
+        front: "你今天的衣服好特別喔，怎麼跟我們穿得都不一樣？",
+        back: "我穿這件覺得很自在、很喜歡，穿出自己的風格最開心！",
+        guide: "衣服是穿在自己身上的，重點在於整齊、舒適和自己的喜愛。每個人有不同的穿衣風格，懂得欣賞彼此的不一樣，世界才會更有趣。"
+      },
+      {
+        id: 4,
+        topic: "情緒表達的壓抑",
+        icon: "fa-solid fa-face-sad-tear",
+        tag: "題目4",
+        front: "跌倒了不可以哭！哭哭是一件很丟臉的事情。",
+        back: "痛痛或難過時可以哭一哭，等眼淚擦乾，我還是可以很勇敢！",
+        guide: "眼淚是每個人都有的正常心情反應，就像天上下雨一樣自然。哭泣不是軟弱，能誠實說出「我需要休息一下或抱抱」，是非常勇敢的表現。"
+      },
+      {
+        id: 5,
+        topic: "個性特質的刻板印象",
+        icon: "fa-solid fa-volume-low",
+        tag: "題目5",
+        front: "你怎麼都不大聲講話？你太膽小、太文靜了啦！",
+        back: "我喜歡溫柔、安靜地思考，文靜也是一種很棒的力量。",
+        guide: "有的人像熱情的小太陽，有的人像溫柔的小月亮。安靜不代表膽小，懂得專心聆聽、細心觀察的人，也是團隊裡很重要的好夥伴。"
+      },
+      {
+        id: 6,
+        topic: "力氣大小與能力的預設",
+        icon: "fa-solid fa-hand-holding-hand",
+        tag: "題目6",
+        front: "這個搬不動啦！你那麼瘦小，肯定幫不上忙。",
+        back: "每個人能幫忙的方式不一樣，大家分工合作力量最大！",
+        guide: "幫忙不一定只有力氣大的人才能做。幫忙扶著門、整理桌面、引路，或者兩個人一起分擔重量，都是非常有價值的付出。"
+      },
+      {
+        id: 7,
+        topic: "動作與身體活動風格的偏好",
+        icon: "fa-solid fa-person-running",
+        tag: "題目7",
+        front: "下課應該去跑跑跳跳，你一直扭來扭去跳舞做什麼？",
+        back: "身體跟著節奏跳舞讓我很放鬆，每個人動動身體的方式都不同。",
+        guide: "運動有非常多種形式，跑步、踢球很棒，體操、跳舞也一樣能活動身體、維持健康。只要能讓身心舒暢，就是最棒的下課活動。"
+      },
+      {
+        id: 8,
+        topic: "分組與同儕合作的界線",
+        icon: "fa-solid fa-users",
+        tag: "題目8",
+        front: "我們不要跟你同一組，因為你的想法跟我們都不一樣！",
+        back: "不一樣的想法聚在一起，我們可以想出更多更棒的好點子！",
+        guide: "分組合作最棒的地方，正是每個人帶來的視角都不同。學會傾聽別人的想法，也清楚分享自己的點子，互相激盪才能完成最精彩的作品。"
+      }
+    ];
+
+    // 全域狀態管理
+    let teacherModeEnabled = false;
+    let ttsEnabled = true;
+    let selectedGame1Options = new Set(["01"]); // 預設粉紅色
+    let flippedCardsSet = new Set();
+    let currentGuidanceToRead = "我喜歡溫柔漂亮的粉紅色。顏色是自然的禮物，任何人都可以喜歡任何顏色。";
+
+    /* ============================================================
+       Web Audio API：合成悅耳的點擊與慶祝音效（免外部依賴音檔）
+       ============================================================ */
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playTone(freq, duration = 0.15, type = 'sine') {
+      try {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {
+        console.warn("Audio Context init pending user gesture");
+      }
+    }
+
+    function soundCardFlip() {
+      playTone(523.25, 0.08); // C5
+      setTimeout(() => playTone(659.25, 0.1), 60); // E5
+    }
+
+    function soundSelect() {
+      playTone(440, 0.06);
+      setTimeout(() => playTone(880, 0.12), 60);
+    }
+
+    function soundCelebrate() {
+      [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
+        setTimeout(() => playTone(freq, 0.25, 'triangle'), i * 110);
+      });
+    }
+
+    /* ============================================================
+       語音朗讀系統 (Web Speech API) - 二年級孩子最佳聽讀輔助
+       ============================================================ */
+    function speakText(text) {
+      if (!ttsEnabled || !('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel(); // 停止先前的朗讀
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'zh-TW';
+      utter.rate = 0.95; // 稍慢節奏適合低年級
+      utter.pitch = 1.1; // 稍微親切明朗的高音
+      window.speechSynthesis.speak(utter);
+    }
+
+    function toggleTTSVoice() {
+      ttsEnabled = !ttsEnabled;
+      const btn = document.getElementById('ttsGlobalBtn');
+      if (ttsEnabled) {
+        btn.innerHTML = `<i class="fa-solid fa-volume-high text-sm"></i>`;
+        btn.classList.replace('text-slate-400', 'text-pink-600');
+        speakText("語音朗讀已開啟");
+      } else {
+        btn.innerHTML = `<i class="fa-solid fa-volume-xmark text-sm"></i>`;
+        btn.classList.replace('text-pink-600', 'text-slate-400');
+        window.speechSynthesis.cancel();
+      }
+    }
+
+    /* ============================================================
+       分頁導航邏輯
+       ============================================================ */
+    function switchTab(tabKey) {
+      soundSelect();
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active-tab'));
+
+      const targetSection = document.getElementById(`section-${tabKey}`);
+      const targetBtn = document.getElementById(`tab-${tabKey}`);
+      if (targetSection) targetSection.classList.remove('hidden');
+      if (targetBtn) targetBtn.classList.add('active-tab');
+
+      // 捲動至平滑起點
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (tabKey === 'cert') {
+        updateCertPreview();
+      }
+    }
+
+    /* ============================================================
+       故事區渲染 (PDF 2)
+       ============================================================ */
+    function renderStoryCards() {
+      const grid = document.getElementById('storyCardsGrid');
+      grid.innerHTML = STORY_DISCUSSIONS.map((story) => `
+        <div class="bg-white rounded-2xl p-4 border-2 border-slate-100 hover:border-pink-300 shadow-sm hover:shadow-md transition flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between text-xs font-bold text-slate-400 mb-2">
+              <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">第 ${story.page} 頁</span>
+              <button onclick="speakText('${story.text} 魔法問句：${story.magicQuestion}')" class="text-pink-500 hover:scale-110 transition p-1" title="朗讀這頁">
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr ${story.color} flex items-center justify-center text-slate-700 text-lg mb-2 group-hover:rotate-6 transition">
+              <i class="${story.icon}"></i>
+            </div>
+            <h4 class="font-extrabold text-sm md:text-base text-slate-800 mb-1">${story.title}</h4>
+            <p class="text-xs text-slate-600 font-maru leading-relaxed mb-3">${story.text}</p>
+          </div>
+          <div class="bg-pink-50 p-2.5 rounded-xl border border-pink-200">
+            <div class="flex items-center gap-1 text-[11px] font-black text-rose-600 mb-0.5">
+              <i class="fa-solid fa-wand-sparkles"></i> 魔法問句：
+            </div>
+            <p class="text-xs font-bold text-slate-800 font-maru">${story.magicQuestion}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /* ============================================================
+       遊戲一邏輯：多元選擇庫與影子換色變裝 (PDF 1)
+       ============================================================ */
+    function renderGame1Options() {
+      const list = document.getElementById('game1OptionsList');
+      list.innerHTML = GAME1_OPTIONS.map(opt => {
+        const isSelected = selectedGame1Options.has(opt.id);
+        return `
+          <div onclick="toggleGame1Option('${opt.id}')" id="g1-opt-${opt.id}" 
+               class="p-3.5 rounded-2xl border-2 cursor-pointer transition flex items-start gap-3 relative select-none
+               ${isSelected ? 'bg-amber-50 border-amber-400 shadow-md ring-2 ring-amber-300' : 'bg-white border-slate-200 hover:border-amber-200'}">
+            
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center text-white shrink-0 text-lg shadow-sm" style="background-color: ${opt.colorTheme};">
+              <i class="${opt.icon}"></i>
+            </div>
+
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-400">#${opt.id}</span>
+                <span class="text-xs font-black px-2 py-0.5 rounded-md text-white" style="background-color: ${opt.colorTheme};">
+                  ${opt.badge}
+                </span>
+              </div>
+              <h4 class="font-black text-base text-slate-800 mt-0.5">${opt.name}</h4>
+              <p class="text-xs text-slate-600 mt-1 font-maru leading-snug">${opt.voiceText}</p>
+            </div>
+
+            <!-- 勾選標記 -->
+            <div class="w-5 h-5 rounded-full flex items-center justify-center text-xs ${isSelected ? 'bg-amber-500 text-white font-black' : 'border border-slate-300 text-transparent'}">
+              ✓
+            </div>
+          </div>
+        `;
+      }).join('');
+      updateShadowVisual();
+    }
+
+    function toggleGame1Option(id) {
+      soundSelect();
+      const option = GAME1_OPTIONS.find(o => o.id === id);
+      if (!option) return;
+
+      if (selectedGame1Options.has(id)) {
+        if (selectedGame1Options.size > 1) {
+          selectedGame1Options.delete(id);
+        } else {
+          // 至少保留一個喜好
+          speakText("你的影子至少要保留一個最喜歡的特色喔！");
+          return;
+        }
+      } else {
+        selectedGame1Options.add(id);
+        speakText(option.voiceText);
+      }
+
+      // 更新目前解說語音與重點
+      currentGuidanceToRead = `${option.voiceText} 老師悄悄話：${option.teacherFocus}`;
+      document.getElementById('shadowVoiceText').innerText = `「${option.voiceText}」`;
+      document.getElementById('teacherGuidanceText').innerText = option.teacherFocus;
+
+      renderGame1Options();
+      updateShadowCount();
+    }
+
+    function clearAllSelections() {
+      selectedGame1Options.clear();
+      selectedGame1Options.add("01"); // 重設為粉紅
+      soundSelect();
+      renderGame1Options();
+      updateShadowCount();
+      speakText("已重新挑選！先從溫柔的粉紅色開始吧！");
+    }
+
+    function updateShadowCount() {
+      document.getElementById('selectedCount').innerText = selectedGame1Options.size;
+    }
+
+    // 更新影子視覺造型（顏色、裙子、手勢與道具光環）
+    function updateShadowVisual() {
+      const head = document.getElementById('shadowHead');
+      const body = document.getElementById('shadowBody');
+      const legL = document.getElementById('shadowLegL');
+      const legR = document.getElementById('shadowLegR');
+      const armL = document.getElementById('shadowArmL');
+      const armR = document.getElementById('shadowArmR');
+      const skirt = document.getElementById('shadowSkirt');
+      const glow = document.getElementById('shadowGlow');
+      const ground = document.getElementById('groundShadow');
+      const propBubble = document.getElementById('propBubble');
+      const badgeText = document.getElementById('shadowBadgeText');
+
+      // 取得最後選取或當前主要的色彩
+      const selectedList = Array.from(selectedGame1Options).map(id => GAME1_OPTIONS.find(o => o.id === id));
+      const activeOpt = selectedList[selectedList.length - 1] || GAME1_OPTIONS[0];
+
+      const mainColor = activeOpt.colorTheme;
+
+      // 著色
+      [head, body, legL, legR, armL, armR].forEach(el => {
+        if (el) el.setAttribute('fill', mainColor);
+      });
+      if (armL) armL.setAttribute('stroke', mainColor);
+      if (armR) armR.setAttribute('stroke', mainColor);
+
+      if (glow) {
+        glow.style.backgroundColor = mainColor;
+        glow.style.boxShadow = `0 0 50px ${mainColor}`;
+      }
+      if (ground) ground.style.backgroundColor = mainColor;
+
+      // 如果有選擇「玩洋娃娃」或「粉紅色」或「唱歌跳舞」，讓裙子綻放！
+      const hasSkirtLover = selectedGame1Options.has("01") || selectedGame1Options.has("03") || selectedGame1Options.has("07");
+      if (skirt) {
+        if (hasSkirtLover) {
+          skirt.classList.remove('scale-0');
+          skirt.classList.add('scale-100');
+          skirt.setAttribute('fill', '#FCD34D'); // 繪本標誌性的黃色裙子
+        } else {
+          skirt.classList.remove('scale-100');
+          skirt.classList.add('scale-0');
+        }
+      }
+
+      // 氣泡文字反饋
+      if (propBubble) {
+        propBubble.innerHTML = `<i class="${activeOpt.icon}"></i> <span>${activeOpt.name}力量！</span>`;
+      }
+      if (badgeText) {
+        badgeText.innerText = activeOpt.badge;
+        badgeText.style.backgroundColor = mainColor;
+      }
+    }
+
+    function readCurrentGuidance() {
+      speakText(currentGuidanceToRead);
+    }
+
+    /* ============================================================
+       遊戲二邏輯：有人這樣說，我可以怎麼辦？（8道 3D 翻面反思卡）
+       ============================================================ */
+    function renderGame2Cards() {
+      const grid = document.getElementById('game2CardsGrid');
+      grid.innerHTML = GAME2_QUESTIONS.map(q => {
+        const isFlipped = flippedCardsSet.has(q.id);
+        return `
+          <div class="perspective-1000 w-full min-h-[310px]">
+            <div id="card-inner-${q.id}" onclick="flipCard(${q.id})" 
+                 class="relative w-full h-full transform-style-3d transition-transform duration-700 cursor-pointer rounded-3xl shadow-lg border-2 ${isFlipped ? 'rotate-y-180 border-emerald-300' : 'border-slate-200 hover:border-pink-300'}">
+              
+              <!-- 正面：他人這樣說（質疑與標籤） -->
+              <div class="absolute inset-0 backface-hidden bg-gradient-to-b from-rose-50 via-white to-pink-50 rounded-3xl p-5 flex flex-col justify-between select-none">
+                <div>
+                  <div class="flex justify-between items-center mb-3">
+                    <span class="px-2.5 py-1 rounded-full text-xs font-black bg-rose-100 text-rose-700">
+                      ${q.tag}・${q.topic}
+                    </span>
+                    <button onclick="event.stopPropagation(); speakText('${q.front}')" class="w-8 h-8 rounded-full bg-white shadow text-slate-500 hover:text-rose-600 flex items-center justify-center" title="朗讀">
+                      <i class="fa-solid fa-volume-high text-xs"></i>
+                    </button>
+                  </div>
+                  
+                  <div class="text-rose-500 text-xs font-extrabold flex items-center gap-1.5 mb-1.5">
+                    <i class="fa-solid fa-comment-dots"></i> 卡片正面【他人這樣說】：
+                  </div>
+                  <div class="bg-rose-100/70 p-3 rounded-2xl border border-rose-200">
+                    <p class="text-sm md:text-base font-black text-rose-950 font-maru leading-snug">
+                      「${q.front}」
+                    </p>
+                  </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-rose-100 flex items-center justify-between text-xs text-rose-600 font-bold">
+                  <span>點擊卡片看回應 ➔</span>
+                  <div class="w-7 h-7 rounded-full bg-rose-200 flex items-center justify-center text-rose-700">
+                    <i class="fa-solid fa-arrows-rotate text-xs"></i>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 背面：我的自信回應（自信心法） -->
+              <div class="absolute inset-0 backface-hidden rotate-y-180 bg-gradient-to-b from-emerald-50 via-teal-50 to-emerald-100 rounded-3xl p-5 flex flex-col justify-between select-none">
+                <div>
+                  <div class="flex justify-between items-center mb-2">
+                    <span class="px-2.5 py-1 rounded-full text-xs font-black bg-emerald-200 text-emerald-900">
+                      ✨ 自信防護盾
+                    </span>
+                    <button onclick="event.stopPropagation(); speakText('${q.back}')" class="w-8 h-8 rounded-full bg-white shadow text-emerald-600 hover:scale-110 flex items-center justify-center" title="朗讀我的回應">
+                      <i class="fa-solid fa-volume-high text-xs"></i>
+                    </button>
+                  </div>
+
+                  <div class="text-emerald-700 text-xs font-extrabold flex items-center gap-1.5 mb-1.5">
+                    <i class="fa-solid fa-shield-halved"></i> 卡片背面【我的自信回應】：
+                  </div>
+                  <div class="bg-white/90 p-3 rounded-2xl border-2 border-emerald-300 shadow-sm">
+                    <p class="text-sm md:text-base font-black text-emerald-950 font-maru leading-snug">
+                      「${q.back}」
+                    </p>
+                  </div>
+
+                  <!-- 教師教學引導說明（可根據模式切換顯示或在下方展示） -->
+                  <div class="teacher-guide-block ${teacherModeEnabled ? 'block' : 'hidden'} mt-2 p-2 bg-emerald-200/80 rounded-xl text-[11px] text-emerald-950 font-bold">
+                    <div class="text-emerald-900 font-black"><i class="fa-solid fa-chalkboard-user"></i> 教師引導：</div>
+                    ${q.guide}
+                  </div>
+                </div>
+
+                <div class="mt-2 pt-2 border-t border-emerald-200 flex items-center justify-between text-xs text-emerald-700 font-bold">
+                  <span class="flex items-center gap-1 text-emerald-800">
+                    <i class="fa-solid fa-star text-amber-500"></i> 學會自信回應！
+                  </span>
+                  <span class="text-[11px] underline">再點一次翻回</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function flipCard(id) {
+      soundCardFlip();
+      const cardInner = document.getElementById(`card-inner-${id}`);
+      const question = GAME2_QUESTIONS.find(q => q.id === id);
+
+      if (flippedCardsSet.has(id)) {
+        flippedCardsSet.delete(id);
+        cardInner.classList.remove('rotate-y-180');
+      } else {
+        flippedCardsSet.add(id);
+        cardInner.classList.add('rotate-y-180');
+        // 翻開時朗讀自信回應
+        if (question) speakText(`我的自信回應：${question.back}`);
+      }
+
+      document.getElementById('flippedCount').innerText = flippedCardsSet.size;
+
+      // 達成全翻開成就時放小彩花
+      if (flippedCardsSet.size === GAME2_QUESTIONS.length) {
+        setTimeout(triggerConfetti, 400);
+      }
+    }
+
+    function flipAllCards() {
+      soundCardFlip();
+      const allFlipped = flippedCardsSet.size === GAME2_QUESTIONS.length;
+      GAME2_QUESTIONS.forEach(q => {
+        const cardInner = document.getElementById(`card-inner-${q.id}`);
+        if (allFlipped) {
+          flippedCardsSet.clear();
+          cardInner.classList.remove('rotate-y-180');
+        } else {
+          flippedCardsSet.add(q.id);
+          cardInner.classList.add('rotate-y-180');
+        }
+      });
+      document.getElementById('flippedCount').innerText = flippedCardsSet.size;
+      if (!allFlipped) speakText("哇！所有的勇氣卡片都翻轉完成囉！");
+    }
+
+    /* ============================================================
+       教師模式切換與說明視窗
+       ============================================================ */
+    function toggleTeacherMode() {
+      teacherModeEnabled = !teacherModeEnabled;
+      const statusText = document.getElementById('teacherStatus');
+      const teacherBoxG1 = document.getElementById('teacherCardBoxGame1');
+      const guideBlocks = document.querySelectorAll('.teacher-guide-block');
+
+      if (teacherModeEnabled) {
+        statusText.innerText = "已開啟";
+        statusText.classList.add('text-indigo-600', 'underline');
+        teacherBoxG1.classList.remove('hidden');
+        guideBlocks.forEach(b => b.classList.remove('hidden'));
+        document.getElementById('teacherModal').classList.remove('hidden');
+        soundSelect();
+      } else {
+        statusText.innerText = "關閉";
+        statusText.classList.remove('text-indigo-600', 'underline');
+        teacherBoxG1.classList.add('hidden');
+        guideBlocks.forEach(b => b.classList.add('hidden'));
+      }
+    }
+
+    function closeTeacherModal() {
+      document.getElementById('teacherModal').classList.add('hidden');
+    }
+
+    /* ============================================================
+       證書系統與紙花動畫
+       ============================================================ */
+    function updateCertPreview() {
+      const sClass = document.getElementById('studentClass').value || '二年';
+      const sName = document.getElementById('studentName').value || '小勇士';
+      
+      document.getElementById('certClassDisplay').innerText = `${sClass} 班`;
+      document.getElementById('certNameDisplay').innerText = sName;
+
+      // 日期填寫
+      const now = new Date();
+      document.getElementById('certDate').innerText = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
+
+      // 呈現遊戲一選取的愛好標籤
+      const tagsContainer = document.getElementById('certFavoriteTags');
+      const selectedOpts = Array.from(selectedGame1Options).map(id => GAME1_OPTIONS.find(o => o.id === id)).filter(Boolean);
+      
+      if (selectedOpts.length > 0) {
+        tagsContainer.innerHTML = selectedOpts.map(o => `
+          <span class="px-3 py-1 rounded-full text-xs font-bold text-white shadow-sm flex items-center gap-1" style="background-color: ${o.colorTheme};">
+            <i class="${o.icon}"></i> ${o.name}
+          </span>
+        `).join('');
+      } else {
+        tagsContainer.innerHTML = `<span class="text-xs text-slate-400">尚未挑選最愛的影子特質</span>`;
+      }
+    }
+
+    function triggerConfetti() {
+      soundCelebrate();
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.warn(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    /* ============================================================
+       頁面載入初始化
+       ============================================================ */
+    window.onload = function() {
+      renderStoryCards();
+      renderGame1Options();
+      renderGame2Cards();
+      updateCertPreview();
+      console.log("粉紅色影子的男孩 - 國小二年級互動教材已就緒！");
+    };
+  </script>
+</body>
+</html>
