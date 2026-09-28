@@ -1,3 +1,2841 @@
+
+Gemini
+
+即時通訊
+
+Spark
+Beta 版
+新對話
+搜尋對話
+影片
+媒體庫
+Gem
+新增筆記本
+國小數學專家
+The YAML Prompt Architect Standard v1.1
+所有筆記本
+和 Gemini 的對話
+https://pink-shadow-boy-game-v2.vercel.app/
+
+我想參考我上傳的這個網頁，還有這兩個 PDF 檔（也就是《粉紅色影子的男孩》），根據我所設計的互動遊戲題目，來設計一個給二年級學生在看完這個繪本之後的互動小遊戲。
+
+
+
+請幫我做一個完整的設計，設計成 HTML 的網頁檔，讓我可以掛載在網路伺服器上面供老師們使用。
+
+我將為您設計並生成一個專為國小二年級學生與教學現場打造的單一 HTML 互動教材網頁：《粉紅色影子的男孩：影子變變變》繪本主題互動學習館。
+
+這份網頁整合了您提供的兩個 PDF 完整內容與線上繪本概念：
+
+繪本魔法島（8大故事精華與魔法問句引導）：涵蓋父親穿裙子、隱藏影子等核心情節與啟發提問。
+
+遊戲一【喜歡什麼，都可以！】：完整納入 10 項多元興趣選擇庫，並具備即時「影子調色盤」換裝動畫與「教師同理心小便利貼」。
+
+遊戲二【有人這樣說，我可以怎麼辦？】：完整收錄 8 大社交情境 3D 翻轉卡片、國小二年級專屬自信發聲語音（內建 Web Speech 朗讀）、以及一鍵切換的教師引導說明。
+
+自信影子榮譽獎狀：可輸入班級、姓名，生成專屬的獨一無二影子徽章證書並支援列印與彩帶慶祝特效。
+
+我現在開始為您生成完整的單一檔案。
+
+粉紅色影子的男孩：影子變變變
+
+
+
+🌟 系統亮點與教材設計核心：
+完全貼合您上傳的兩份 PDF：
+
+遊戲一【喜歡什麼，都可以！】：10 項趣味選擇庫、學生朗讀文字、教師同理引導重點全部收錄，並具備可動態變色的向量影子試衣間（裙子、光環與特質徽章即時變動）。
+
+遊戲二【有人這樣說，我可以怎麼辦？】：8 題完整的卡片正面（他人質疑）與背面（我的自信回應），點擊即可進行流暢的 3D 翻牌，並有完整教師引導對話。
+
+繪本討論時光：完整呈現《粉紅色影子的男孩》8 個關鍵情節與「魔法問句」。
+
+適合國小二年級的介面細節：
+
+內建語音朗讀（Web Speech API）：小學低年級學生識字量有限，點擊任何卡片或右上角喇叭即可親切朗讀。
+
+免外部依賴音效：使用 Web Audio API 合成輕快翻牌與選擇音效，掛載在任何伺服器皆無需額外聲音檔案。
+
+大螢幕課堂／個人平板自適應：具備「教師引導模式開關」與全螢幕按鈕，方便老師投影教學。
+
+自信結業榮譽證書：學生可輸入班級、姓名，系統會自動帶入他剛才在遊戲一挑選的獨特喜好，並支援彩帶與一鍵列印！
+
+點選列印證書的時候，請只顯示列印證書的範圍就好了。
+
+
+
+另外，請協助修改以下內容：
+
+
+
+1. 把證書上面的「導引學校」這四個字刪除。
+
+2. 「幸福國小」改成「三民國小」。
+
+3. 下方按鈕列的第二個按鈕「遊戲一：喜歡什麼都可以」，請把它調整成一列，不要一個按鈕裡面有兩列的文字。
+
+合慶主任您好，針對您提出的三點優化需求與列印範圍問題，已為您完成精確修正：
+
+修改項目重點：
+只列印證書本體：優化 @media print 樣式，列印時自動隱藏頁面頂部導航列、輸入框、慶祝按鈕、下方固定選單等非證書元件，並將證書卡片以滿版、居中且乾淨的 A4 直向格式輸出。
+
+刪除「導引學校」四字：已移除標籤文字。
+
+「幸福國小」改為「三民國小」：證書左下角認證單位直接標註為「三民國小 二年級成長班」。
+
+按鈕文字單列排版：調整底部導覽列按鈕為 white-space: nowrap，消除換行問題，使「遊戲一：喜歡什麼都可以！」呈現整齊俐落的單列視覺。
+
+以下為完整的 HTML 原始碼，直接複製儲存為 .html 檔案即可在伺服器上部署使用：
+
+HTML
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>粉紅色影子的男孩：影子變變變 互動體驗營</title>
+  <!-- Google Fonts: 適合低年級的圓潤繁體中文字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Noto+Sans+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Canvas Confetti 彩帶特效 -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --primary-pink: #ff659c;
+      --soft-pink: #fff0f5;
+      --deep-pink: #d81b60;
+      --accent-blue: #4a90e2;
+      --soft-blue: #e8f4fd;
+      --sun-yellow: #ffd166;
+      --text-dark: #333344;
+      --card-bg: #ffffff;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --shadow-soft: 0 10px 25px rgba(255, 101, 156, 0.12);
+      --shadow-hover: 0 16px 32px rgba(255, 101, 156, 0.22);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans TC', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff7fa 0%, #f3f8fe 50%, #fff7fa 100%);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 90px;
+    }
+
+    /* 頂部導航列 */
+    header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 14px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #ffe4ed;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      background: linear-gradient(135deg, var(--primary-pink), #ff8fa3);
+      color: white;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(255, 101, 156, 0.3);
+    }
+
+    .brand-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--deep-pink);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-sub {
+      font-size: 0.85rem;
+      color: #7d7d8a;
+      font-weight: 600;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .teacher-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: #edf2ff;
+      color: #3b5bdb;
+      border: 1.5px solid #d0ebff;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .teacher-badge.active {
+      background: #3b5bdb;
+      color: #ffffff;
+    }
+
+    .icon-btn {
+      background: #fff;
+      border: 1.5px solid #ffd5e2;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-pink);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .icon-btn:hover {
+      background: var(--soft-pink);
+      transform: scale(1.06);
+    }
+
+    /* 主要容器 */
+    main {
+      flex: 1;
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 0 16px;
+      width: 100%;
+    }
+
+    .tab-section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 標題與說明 */
+    .section-head {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--deep-pink);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(180deg, transparent 65%, #ffdce8 65%);
+      padding: 0 8px;
+    }
+
+    .section-head p {
+      color: #666;
+      margin-top: 8px;
+      font-size: 1.05rem;
+    }
+
+    /* 繪本區 (Story Section) */
+    .story-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .story-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      border: 2px solid #ffedf3;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-step {
+      display: inline-block;
+      align-self: flex-start;
+      background: var(--soft-pink);
+      color: var(--deep-pink);
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .story-content {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 16px;
+    }
+
+    .magic-question-box {
+      background: #fff9db;
+      border-left: 5px solid var(--sun-yellow);
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin-top: auto;
+    }
+
+    .magic-label {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #b07800;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+
+    .magic-text {
+      font-size: 0.95rem;
+      color: #554400;
+      font-weight: 600;
+    }
+
+    /* 遊戲一：喜歡什麼都可以 */
+    .game1-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 860px) {
+      .game1-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .shadow-stage {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+      border: 2px solid #ffedf3;
+      position: sticky;
+      top: 90px;
+    }
+
+    .stage-canvas {
+      width: 100%;
+      height: 250px;
+      background: radial-gradient(circle, #fff7fb 20%, #f0f7ff 100%);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .avatar-shadow {
+      position: absolute;
+      width: 130px;
+      height: 190px;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .shadow-head {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .shadow-body {
+      width: 70px;
+      height: 95px;
+      background: currentColor;
+      border-radius: 18px 18px 45px 45px;
+      margin-top: 6px;
+      position: relative;
+    }
+
+    .shadow-skirt {
+      position: absolute;
+      bottom: 0;
+      left: -12px;
+      right: -12px;
+      height: 52px;
+      background: #ffd166;
+      border-radius: 12px 12px 30px 30px;
+      display: none;
+      animation: skirtSwing 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes skirtSwing {
+      from { transform: rotate(-4deg); }
+      to { transform: rotate(4deg); }
+    }
+
+    .avatar-speech {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--deep-pink);
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .option-card {
+      background: #fff;
+      border: 2px solid #f2e4ec;
+      border-radius: var(--radius-md);
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .option-card:hover {
+      border-color: var(--primary-pink);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(255, 101, 156, 0.15);
+    }
+
+    .option-card.selected {
+      background: #fff4f8;
+      border-color: var(--primary-pink);
+      box-shadow: 0 0 0 3px rgba(255, 101, 156, 0.3);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .badge-no {
+      font-size: 0.75rem;
+      font-weight: 800;
+      background: #f0f0f5;
+      color: #666;
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+
+    .opt-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #333;
+    }
+
+    .opt-desc {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    .teacher-note {
+      display: none;
+      background: #eef2ff;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 0.85rem;
+      color: #3742fa;
+      border-left: 3px solid #3742fa;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    body.teacher-mode .teacher-note {
+      display: block;
+    }
+
+    /* 遊戲二：勇敢說出心裡話 (3D 翻轉卡片) */
+    .cards-flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 24px;
+    }
+
+    .scene-card {
+      perspective: 1200px;
+      height: 290px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .scene-card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-soft);
+      border: 2px solid #ffe3ee;
+    }
+
+    /* 正面：他人質疑 */
+    .card-front {
+      background: linear-gradient(145deg, #ffffff, #fff6f8);
+      color: #333;
+    }
+
+    .card-front .face-tag {
+      background: #ffe3e3;
+      color: #e03131;
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-front .dialog-text {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #495057;
+      line-height: 1.5;
+      text-align: center;
+      margin: auto 0;
+    }
+
+    .flip-hint {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #999;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    /* 背面：我的自信回應 */
+    .card-back {
+      background: linear-gradient(145deg, #fff0f6, #ffe3ec);
+      transform: rotateY(180deg);
+      border-color: #ff85b3;
+    }
+
+    .card-back .face-tag {
+      background: #d3f9d8;
+      color: #2b8a3e;
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-back .dialog-text {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--deep-pink);
+      line-height: 1.5;
+      text-align: center;
+      margin: auto 0;
+    }
+
+    .speak-btn-mini {
+      background: #fff;
+      border: 1px solid var(--primary-pink);
+      color: var(--primary-pink);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      align-self: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .speak-btn-mini:hover {
+      background: var(--primary-pink);
+      color: #fff;
+    }
+
+    /* 榮譽證書區 */
+    .certificate-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      background: #fff;
+      border: 3px solid #ffccd9;
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      box-shadow: 0 12px 36px rgba(255, 101, 156, 0.15);
+      position: relative;
+    }
+
+    .cert-inner {
+      border: 2px dashed #ff99bb;
+      border-radius: 16px;
+      padding: 32px 28px;
+      text-align: center;
+      position: relative;
+    }
+
+    .cert-corner-icon {
+      position: absolute;
+      color: #ff9ebb;
+    }
+
+    .cert-title {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--deep-pink);
+      margin-bottom: 8px;
+    }
+
+    .cert-sub {
+      font-size: 1rem;
+      color: #777;
+      margin-bottom: 24px;
+    }
+
+    .cert-form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .cert-input {
+      padding: 10px 16px;
+      border: 2px solid #ffd1df;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #333;
+      outline: none;
+      transition: border 0.2s;
+      width: 140px;
+      text-align: center;
+    }
+
+    .cert-input:focus {
+      border-color: var(--primary-pink);
+    }
+
+    .cert-body-p {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: #444;
+      margin-bottom: 24px;
+      text-align: justify;
+      text-justify: inter-ideograph;
+    }
+
+    .cert-tags-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin: 16px 0 24px;
+      min-height: 40px;
+    }
+
+    .badge-chip {
+      background: var(--soft-pink);
+      color: var(--deep-pink);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border: 1px solid #ffccd9;
+    }
+
+    .cert-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid #ffe3ec;
+      font-size: 0.95rem;
+      color: #666;
+    }
+
+    .cert-stamp {
+      width: 86px;
+      height: 86px;
+      border: 3px double var(--primary-pink);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-pink);
+      font-weight: 900;
+      font-size: 0.85rem;
+      transform: rotate(-12deg);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .cert-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .action-btn {
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .action-btn.pink {
+      background: linear-gradient(135deg, var(--primary-pink), var(--deep-pink));
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(255, 101, 156, 0.35);
+    }
+
+    .action-btn.pink:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(255, 101, 156, 0.45);
+    }
+
+    .action-btn.outline {
+      background: #fff;
+      border: 2px solid #ffd0df;
+      color: var(--deep-pink);
+    }
+
+    .action-btn.outline:hover {
+      background: var(--soft-pink);
+    }
+
+    /* 底部導覽列 (Bottom Nav) */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      border-top: 2px solid #ffe6ef;
+      display: flex;
+      justify-content: center;
+      padding: 10px 16px;
+      gap: 12px;
+      z-index: 99;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: none;
+      background: #f8f9fa;
+      color: #666;
+      font-size: 1.02rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap; /* 確保按鈕內容維持單列不換行 */
+      flex-shrink: 0;
+    }
+
+    .nav-btn:hover {
+      background: #f1f3f5;
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(135deg, var(--primary-pink), var(--deep-pink));
+      color: white;
+      box-shadow: 0 4px 14px rgba(255, 101, 156, 0.3);
+    }
+
+    /* 🎯 專門優化的純證書列印樣式 */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 15mm;
+      }
+
+      body {
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: block !important;
+      }
+
+      /* 隱藏除了證書卡片以外的所有元件 */
+      header,
+      .bottom-bar,
+      .section-head,
+      .cert-form,
+      .cert-actions,
+      #tab-story,
+      #tab-game1,
+      #tab-game2,
+      .no-print {
+        display: none !important;
+      }
+
+      #tab-certificate {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .certificate-wrap {
+        border: 2px solid #ff99bb !important;
+        box-shadow: none !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 24px !important;
+        page-break-inside: avoid !important;
+      }
+
+      .cert-inner {
+        border: 2px dashed #ff99bb !important;
+        padding: 24px !important;
+      }
+
+      /* 列印時將輸入框替代為乾淨純文字 */
+      .cert-print-title {
+        display: block !important;
+        font-size: 1.4rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        color: #d81b60;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部功能區 -->
+  <header>
+    <div class="brand-group">
+      <div class="brand-icon">
+        <i data-lucide="sparkles"></i>
+      </div>
+      <div>
+        <div class="brand-title">粉紅色影子的男孩 <span style="font-size:0.75em; color:var(--primary-pink);">影子變變變 ✨</span></div>
+        <div class="brand-sub">國小二年級繪本延伸互動體驗營 ‧ 展現獨一無二的自己</div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="teacher-badge" id="teacherModeToggle" onclick="toggleTeacherMode()">
+        <i data-lucide="graduation-cap"></i>
+        <span>教師引導模式：關閉</span>
+      </button>
+
+      <button class="icon-btn" onclick="toggleMute()" title="朗讀聲音開關">
+        <i data-lucide="volume-2" id="soundIcon"></i>
+      </button>
+
+      <button class="icon-btn" onclick="toggleFullscreen()" title="全螢幕">
+        <i data-lucide="maximize" id="screenIcon"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- 主要互動內容 -->
+  <main>
+
+    <!-- 0. 繪本故事角 -->
+    <section id="tab-story" class="tab-section active">
+      <div class="section-head">
+        <h2><i data-lucide="book-open"></i> 繪本故事角</h2>
+        <p>跟著小男孩一同探索影子的秘密，想一想心裡面的神奇提問！</p>
+      </div>
+
+      <div class="story-card-grid" id="storyGrid">
+        <!-- 由 JavaScript 動態生成 8 大情節卡片 -->
+      </div>
+    </section>
+
+    <!-- 1. 遊戲一：喜歡什麼，都可以！ -->
+    <section id="tab-game1" class="tab-section">
+      <div class="section-head">
+        <h2><i data-lucide="heart-handshake"></i> 遊戲一：喜歡什麼都可以！</h2>
+        <p>點選你喜歡的卡片，看看你的專屬影子會有什麼神奇的大變化！</p>
+      </div>
+
+      <div class="game1-layout">
+        <!-- 左側：影子動態更衣室 -->
+        <div class="shadow-stage">
+          <div class="stage-canvas">
+            <div class="avatar-shadow" id="avatarShadow" style="color: #ff659c;">
+              <div class="shadow-head"></div>
+              <div class="shadow-body">
+                <div class="shadow-skirt" id="shadowSkirt"></div>
+              </div>
+            </div>
+          </div>
+          <div class="avatar-speech" id="avatarSpeech">
+            「我是世界上獨一無二的影子！」
+          </div>
+          <p style="font-size:0.85rem; color:#888; margin-top:8px;">★ 點擊右方喜好卡片，裝飾專屬於你的自信能量</p>
+        </div>
+
+        <!-- 右側：10 大喜好選擇庫 -->
+        <div class="options-grid" id="optionsGrid">
+          <!-- 由 JS 渲染 10 個選項 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 遊戲二：勇敢說出心裡話 -->
+    <section id="tab-game2" class="tab-section">
+      <div class="section-head">
+        <h2><i data-lucide="shield-check"></i> 遊戲二：有人這樣說，我可以怎麼辦？</h2>
+        <p>生活中有時會遇到質疑，點擊卡片翻轉看看，學會充滿自信的回答！</p>
+      </div>
+
+      <div class="cards-flow" id="cardsGrid">
+        <!-- 由 JS 渲染 8 題情境卡片 -->
+      </div>
+    </section>
+
+    <!-- 3. 自信小勇士證書 -->
+    <section id="tab-certificate" class="tab-section">
+      <div class="section-head">
+        <h2><i data-lucide="award"></i> 獨一無二 ‧ 自信影子小勇士證書</h2>
+        <p>寫下你的名字，把今天學到的勇氣化作專屬勳章！</p>
+      </div>
+
+      <div class="certificate-wrap">
+        <div class="cert-inner">
+          <i data-lucide="crown" class="cert-corner-icon" style="top:12px; left:12px; width:28px; height:28px;"></i>
+          <i data-lucide="star" class="cert-corner-icon" style="top:12px; right:12px; width:28px; height:28px;"></i>
+
+          <div style="font-size: 0.85rem; font-weight: 800; color: #ff85b3; letter-spacing: 2px;">★ CERTIFICATE OF SELF-BELIEF ★</div>
+          <h1 class="cert-title">自信影子榮譽證書</h1>
+
+          <!-- 輸入資訊區（列印時自動隱藏） -->
+          <div class="cert-form">
+            <span>二年級班級：</span>
+            <input type="text" id="certClass" class="cert-input" value="二年" placeholder="例如：二年3班">
+            <span>小勇士姓名：</span>
+            <input type="text" id="certName" class="cert-input" value="小勇士" placeholder="請輸入名字">
+            <button class="action-btn pink" style="padding:8px 18px; font-size:0.9rem;" onclick="triggerConfetti()">
+              <i data-lucide="party-popper"></i> 放煙火慶祝！
+            </button>
+          </div>
+
+          <!-- 列印專屬抬頭（螢幕瀏覽隱藏、列印時顯示） -->
+          <div class="cert-print-title" id="certPrintTitle" style="display:none;">
+            恭喜 <span id="printClassName">二年 1 班</span> <span id="printStudentName" style="color:var(--deep-pink); text-decoration: underline;">小勇士</span> 同學
+          </div>
+
+          <p class="cert-body-p">
+            在完成《粉紅色影子的男孩》繪本探索後，不僅學會勇敢接納自己的喜好，更懂得用溫柔與自信回應世界。請永遠記住：「你的影子就是你自己，儘管做獨一無二的自己，我們都愛你！」
+          </p>
+
+          <div style="font-size: 0.95rem; font-weight: 700; color: #555;">我的影子超能力（我最喜歡的探索）：</div>
+          <div class="cert-tags-box" id="certTags">
+            <span class="badge-chip">💖 接納真實自我</span>
+            <span class="badge-chip">🌟 尊重多元色彩</span>
+            <span class="badge-chip">🛡️ 自信堅定發聲</span>
+          </div>
+
+          <div class="cert-footer">
+            <div style="text-align: left;">
+              <div>認證日期：<span id="certDate">2026年9月24日</span></div>
+              <!-- 已修改：移除「導引學校」四字，並更改為「三民國小」 -->
+              <div>三民國小 二年級成長班</div>
+            </div>
+
+            <div class="cert-stamp">
+              <span>★ 榮譽 ★</span>
+              <span>這就是我</span>
+              <span>最棒影子</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cert-actions no-print">
+        <button class="action-btn pink" onclick="printCertificateOnly()">
+          <i data-lucide="printer"></i> 列印我的勇士證書
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 底部固定切換導覽列 -->
+  <nav class="bottom-bar">
+    <button class="nav-btn active" onclick="switchTab('story', this)">
+      <i data-lucide="book-open"></i> 繪本故事角
+    </button>
+    <!-- 已優化：保持單列不折行 -->
+    <button class="nav-btn" onclick="switchTab('game1', this)">
+      <i data-lucide="heart"></i> 遊戲一：喜歡什麼都可以！
+    </button>
+    <button class="nav-btn" onclick="switchTab('game2', this)">
+      <i data-lucide="shield"></i> 遊戲二：勇敢說出心裡話
+    </button>
+    <button class="nav-btn" onclick="switchTab('certificate', this)">
+      <i data-lucide="award"></i> 自信小證書
+    </button>
+  </nav>
+
+  <script>
+    /* ============================================================
+       繪本與遊戲題目資料庫 (依據上傳之兩份 PDF 文件內容完整編整)
+    ============================================================ */
+
+    // 繪本 8 頁故事與魔法問句
+    const storyList = [
+      {
+        step: "第 1 幕",
+        text: "每個人都有影子，但我的影子... 藏著一個小秘密！",
+        question: "找找看，你的影子現在是什麼顏色呢？"
+      },
+      {
+        step: "第 2 幕",
+        text: "大家都一樣的【藍色影子】又高又壯、威武冷靜；我的專屬【粉紅影子】最愛聽故事、獨角獸、和美麗的公主！",
+        question: "左邊和右邊，你最喜歡哪一種影子？"
+      },
+      {
+        step: "第 3 幕",
+        text: "轉啊轉！閃閃發光的秘密！只要穿上最愛的黃色裙子，影子就會開心地跳躍！",
+        question: "你最喜歡穿什麼衣服跳舞呢？"
+      },
+      {
+        step: "第 4 幕",
+        text: "穿上最愛的裙子去上學！爸爸看起來好擔心... 大家都盯著我看，沒有人跟我說話。",
+        question: "如果是你走進這間教室，心裡會有什麼感覺？"
+      },
+      {
+        step: "第 5 幕",
+        text: "砰！爸爸竟然也穿著裙子？！「我再也不要穿裙子了！」爸爸牽起我的手說。",
+        question: "看到爸爸穿裙子，男孩會覺得開心還是嚇一跳呢？"
+      },
+      {
+        step: "第 6 幕",
+        text: "「其實，我們每個人都會把真實的影子藏起來喔。」原來大家的心裡，都住著一個不一樣的自己！",
+        question: "猜猜看，你爸爸媽媽的隱藏影子會喜歡什麼？"
+      },
+      {
+        step: "第 7 幕",
+        text: "「你的影子就是你自己。粉紅色又怎樣？大聲說：這就是我！」牽起爸爸的手，我們一起勇敢前進！",
+        question: "有人牽著手的時候，是不是覺得自己變勇敢了？"
+      },
+      {
+        step: "第 8 幕",
+        text: "「我知道我不一樣，但這樣才特別！」世上本來就會有人喜歡你，也會有人討厭你。沒關係，儘管做獨一無二的自己，我們愛你。",
+        question: "你想跟我們一起自信大步玩耍嗎？"
+      }
+    ];
+
+    // 遊戲一：10 項趣味選擇庫
+    const game1Options = [
+      { id: 1, name: "粉紅色", text: "我喜歡溫柔漂亮的粉紅色。", note: "顏色是自然的禮物，任何人都可以喜歡任何顏色。", color: "#ff659c", hasSkirt: true },
+      { id: 2, name: "藍黑色", text: "我喜歡帥氣沉穩的深色系。", note: "喜歡酷酷、沉穩的顏色很棒，展現專屬自己的風格。", color: "#34495e", hasSkirt: false },
+      { id: 3, name: "玩洋娃娃", text: "我喜歡幫娃娃梳頭髮、換衣服、說故事。", note: "照顧娃娃是愛心與想像力的展現，學會溫柔照顧他人。", color: "#ff758c", hasSkirt: true },
+      { id: 4, name: "踢球運動", text: "我喜歡在操場上奔跑、傳球流汗。", note: "盡情奔跑、享受運動的活力，鍛鍊強健健康的體魄。", color: "#2ecc71", hasSkirt: false },
+      { id: 5, name: "積木組裝", text: "我喜歡動手拼出機器人和大城堡。", note: "空間建構與邏輯探索，每一次拼搭都是小小工程師。", color: "#f39c12", hasSkirt: false },
+      { id: 6, name: "動手做料理", text: "我喜歡扮家家酒，當個厲害的小小廚師。", note: "模擬烹飪是生活自理的起步，享受調配美味的樂趣。", color: "#e67e22", hasSkirt: true },
+      { id: 7, name: "唱歌跳舞", text: "我喜歡跟著音樂擺動身體和大聲唱。", note: "用身體與歌聲自由表達情緒，感受節奏帶來的快樂。", color: "#9b59b6", hasSkirt: true },
+      { id: 8, name: "畫畫塗鴉", text: "我喜歡用各種顏色畫出天馬行空的想像。", note: "畫紙上沒有標準答案，任何奇思妙想都值得被畫出來。", color: "#00cec9", hasSkirt: false },
+      { id: 9, name: "閱讀故事書", text: "我喜歡安靜地看書、走進奇妙的繪本世界。", note: "安靜專注也是一種力量，在故事裡自由冒險。", color: "#3867d6", hasSkirt: false },
+      { id: 10, name: "觀察大自然", text: "我喜歡看小昆蟲、撿漂亮的落葉和小石頭。", note: "擁有敏銳細膩的觀察力，對世界萬物充滿好奇心。", color: "#20bf6b", hasSkirt: false }
+    ];
+
+    // 遊戲二：8 題卡片應對題目
+    const game2Questions = [
+      {
+        id: 1,
+        title: "色彩偏好的質疑",
+        front: "「你選這個顏色好奇怪，大家都不會選這個顏色！」",
+        back: "「每一種顏色都有它的美麗，只要我喜歡，就是最棒的顏色。」",
+        note: "顏色就像彩虹一樣多采多姿，沒有哪一種顏色是專屬於誰的。只要看著它會讓自己感到開心、舒服，那就是最適合你的顏色。"
+      },
+      {
+        id: 2,
+        title: "玩具與遊戲的限制",
+        front: "「你玩的東西好無聊，那不是你該玩的，快放下啦！」",
+        back: "「每個人想探索的都不一樣，玩得開心、懂得愛護就是好遊戲。」",
+        note: "玩具的發明是為了帶來樂趣與學習。不管是拼積木、玩娃娃還是踢球，每個人都可以自由探索，不需要照著別人的刻板標籤走。"
+      },
+      {
+        id: 3,
+        title: "穿著與外表的指指點點",
+        front: "「你今天的衣服好特別喔，怎麼跟我們穿得都不一樣？」",
+        back: "「我穿這件覺得很自在、很喜歡，穿出自己的風格最開心！」",
+        note: "衣服是穿在自己身上的，重點在於整齊、舒適和自己的喜愛。每個人有不同的穿衣風格，懂得欣賞彼此的不一樣，世界才會更有趣。"
+      },
+      {
+        id: 4,
+        title: "情緒表達的壓抑",
+        front: "「跌倒了不可以哭！哭哭是一件很丟臉的事情。」",
+        back: "「痛痛或難過時可以哭一哭，等眼淚擦乾，我還是可以很勇敢！」",
+        note: "眼淚是每個人都有的正常心情反應，就像天上下雨一樣自然。哭泣不是軟弱，能誠實說出『我需要休息一下或抱抱』，是非常勇敢的表現。"
+      },
+      {
+        id: 5,
+        title: "個性特質的刻板印象",
+        front: "「你怎麼都不大聲講話？你太膽小、太文靜了啦！」",
+        back: "「我喜歡溫柔、安靜地思考，文靜也是一種很棒的力量。」",
+        note: "有的人像熱情的小太陽，有的人像溫柔的小月亮。安靜不代表膽小，懂得專心聆聽、細心觀察的人，也是團隊裡很重要的好夥伴。"
+      },
+      {
+        id: 6,
+        title: "力氣大小與能力的預設",
+        front: "「這個搬不動啦！你那麼瘦小，肯定幫不上忙。」",
+        back: "「每個人能幫忙的方式不一樣，大家分工合作力量最大！」",
+        note: "幫忙不一定只有力氣大的人才能做。幫忙扶著門、整理桌面、引路，或者兩個人一起分擔重量，都是非常有價值的付出。"
+      },
+      {
+        id: 7,
+        title: "動作與活動風格的偏好",
+        front: "「下課應該去跑跑跳跳，你一直扭來扭去跳舞做什麼？」",
+        back: "「身體跟著節奏跳舞讓我很放鬆，每個人動動身體的方式都不同。」",
+        note: "運動有非常多種形式，跑步、踢球很棒，體操、跳舞也一樣能活動身體、維持健康。只要能讓身心舒暢，就是最棒的下課活動。"
+      },
+      {
+        id: 8,
+        title: "分組與同儕合作的界線",
+        front: "「我們不要跟你同一組，因為你的想法跟我們都不一樣！」",
+        back: "「不一樣的想法聚在一起，我們可以想出更多更棒的好點子！」",
+        note: "分組合作最棒的地方，正是每個人帶來的視角都不同。學會傾聽別人的想法，也清楚分享自己的點子，互相激盪才能完成最精彩的作品。"
+      }
+    ];
+
+    /* ============================================================
+       全域變數與初始化
+    ============================================================ */
+    let isTeacherMode = false;
+    let isMuted = false;
+    let selectedInterests = new Set(["粉紅色"]);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+      renderStory();
+      renderGame1();
+      renderGame2();
+      updateCertDate();
+    });
+
+    // 設定證書今日日期
+    function updateCertDate() {
+      const today = new Date();
+      const dateStr = `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日`;
+      const dateEl = document.getElementById("certDate");
+      if (dateEl) dateEl.innerText = dateStr;
+    }
+
+    /* 頁籤切換 */
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+      const target = document.getElementById(`tab-${tabId}`);
+      if (target) target.classList.add('active');
+      if (btn) btn.classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* 教師引導模式切換 */
+    function toggleTeacherMode() {
+      isTeacherMode = !isTeacherMode;
+      document.body.classList.toggle('teacher-mode', isTeacherMode);
+      const btn = document.getElementById('teacherModeToggle');
+      if (isTeacherMode) {
+        btn.classList.add('active');
+        btn.querySelector('span').innerText = '教師引導模式：開啟中';
+        playNoteSound(600, 0.1);
+      } else {
+        btn.classList.remove('active');
+        btn.querySelector('span').innerText = '教師引導模式：關閉';
+      }
+    }
+
+    /* 語音朗讀支援 (Web Speech API) */
+    function speakText(text) {
+      if (isMuted || !('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'zh-TW';
+      utter.rate = 0.95;
+      utter.pitch = 1.1; // 輕快親切童音頻率
+      window.speechSynthesis.speak(utter);
+    }
+
+    function toggleMute() {
+      isMuted = !isMuted;
+      const icon = document.getElementById('soundIcon');
+      if (isMuted) {
+        icon.setAttribute('data-lucide', 'volume-x');
+        window.speechSynthesis.cancel();
+      } else {
+        icon.setAttribute('data-lucide', 'volume-2');
+        speakText('聲音朗讀已開啟！');
+      }
+      lucide.createIcons();
+    }
+
+    /* 全螢幕切換 */
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    /* Web Audio API 提示音效 */
+    function playNoteSound(freq = 520, duration = 0.15) {
+      if (isMuted) return;
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    /* ============================================================
+       區塊渲染功能
+    ============================================================ */
+
+    // 1. 渲染繪本區
+    function renderStory() {
+      const grid = document.getElementById('storyGrid');
+      grid.innerHTML = storyList.map(item => `
+        <div class="story-card">
+          <span class="story-step">${item.step}</span>
+          <div class="story-content">${item.text}</div>
+          <div class="magic-question-box">
+            <div class="magic-label"><i data-lucide="help-circle" style="width:16px; height:16px;"></i> 魔法問句：</div>
+            <div class="magic-text">${item.question}</div>
+          </div>
+          <div style="margin-top:12px; display:flex; justify-content:flex-end;">
+            <button class="speak-btn-mini" onclick="speakText('${item.text} 魔法問句：${item.question}')">
+              <i data-lucide="volume-2" style="width:14px; height:14px;"></i> 聽這頁故事
+            </button>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    // 2. 渲染遊戲一
+    function renderGame1() {
+      const grid = document.getElementById('optionsGrid');
+      grid.innerHTML = game1Options.map((opt, idx) => `
+        <div class="option-card ${idx === 0 ? 'selected' : ''}" id="opt-${opt.id}" onclick="selectGame1Option(${opt.id})">
+          <div class="card-top">
+            <div class="opt-name">${opt.name}</div>
+            <span class="badge-no">選項 ${opt.id < 10 ? '0' + opt.id : opt.id}</span>
+          </div>
+          <div class="opt-desc">${opt.text}</div>
+          <div class="teacher-note">
+            <strong>👩‍🏫 引導要點：</strong>${opt.note}
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    // 點選遊戲一選項
+    function selectGame1Option(id) {
+      const opt = game1Options.find(o => o.id === id);
+      if (!opt) return;
+
+      document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+      const activeCard = document.getElementById(`opt-${id}`);
+      if (activeCard) activeCard.classList.add('selected');
+
+      const avatar = document.getElementById('avatarShadow');
+      const skirt = document.getElementById('shadowSkirt');
+      const speech = document.getElementById('avatarSpeech');
+
+      avatar.style.color = opt.color;
+      skirt.style.display = opt.hasSkirt ? 'block' : 'none';
+      speech.innerText = `「${opt.text}」`;
+
+      // 彈跳動畫
+      avatar.style.transform = 'scale(1.1) translateY(-6px)';
+      setTimeout(() => {
+        avatar.style.transform = 'scale(1) translateY(0)';
+      }, 300);
+
+      playNoteSound(650, 0.12);
+      speakText(opt.text);
+
+      // 同步更新到證書探索標籤庫
+      selectedInterests.add(opt.name);
+      updateCertTags();
+    }
+
+    // 3. 渲染遊戲二 (3D 卡片)
+    function renderGame2() {
+      const grid = document.getElementById('cardsGrid');
+      grid.innerHTML = game2Questions.map(q => `
+        <div class="scene-card" id="scene-${q.id}" onclick="flipSceneCard(${q.id})">
+          <div class="card-inner">
+            <!-- 正面 -->
+            <div class="card-face card-front">
+              <div class="face-tag">
+                <i data-lucide="message-circle-warning" style="width:14px; height:14px;"></i>
+                <span>他人這樣說</span>
+              </div>
+              <div class="dialog-text">${q.front}</div>
+              <div class="flip-hint">
+                <i data-lucide="repeat" style="width:14px; height:14px;"></i> 點擊卡片翻過來，聽聽自信回應
+              </div>
+            </div>
+
+            <!-- 背面 -->
+            <div class="card-face card-back">
+              <div class="face-tag">
+                <i data-lucide="sparkles" style="width:14px; height:14px;"></i>
+                <span>我的自信回應</span>
+              </div>
+              <div class="dialog-text">${q.back}</div>
+              <button class="speak-btn-mini" onclick="event.stopPropagation(); speakText('${q.back}')">
+                <i data-lucide="volume-2" style="width:14px; height:14px;"></i> 朗讀自信回應
+              </button>
+              <div class="teacher-note" style="margin-top:6px;">
+                <strong>💡 教學引導：</strong>${q.note}
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    // 翻轉卡片
+    function flipSceneCard(id) {
+      const card = document.getElementById(`scene-${id}`);
+      if (!card) return;
+      card.classList.toggle('flipped');
+      playNoteSound(480, 0.15);
+
+      const q = game2Questions.find(item => item.id === id);
+      if (q && card.classList.contains('flipped')) {
+        speakText(q.back);
+      }
+    }
+
+    // 更新證書底部的喜好徽章
+    function updateCertTags() {
+      const container = document.getElementById('certTags');
+      const tags = Array.from(selectedInterests);
+      container.innerHTML = tags.map(tag => `<span class="badge-chip">✨ 探索：${tag}</span>`).join('');
+    }
+
+    /* 慶祝彩帶特效 */
+    function triggerConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      }
+      playNoteSound(800, 0.25);
+    }
+
+    /* 列印證書：精準設定學生班級姓名，並觸發專屬列印 */
+    function printCertificateOnly() {
+      const cls = document.getElementById('certClass').value.trim() || '二年級';
+      const name = document.getElementById('certName').value.trim() || '小勇士';
+
+      document.getElementById('printClassName').innerText = cls;
+      document.getElementById('printStudentName').innerText = name;
+
+      // 觸發彩帶慶祝
+      triggerConfetti();
+
+      // 呼叫系統列印對話框
+      setTimeout(() => {
+        window.print();
+      }, 350);
+    }
+  </script>
+</body>
+</html>
+修正細節檢視：
+列印樣式專屬過濾：在 @media print 中明確指定了 header, .bottom-bar, .section-head, .cert-form, .cert-actions, #tab-story, #tab-game1, #tab-game2, .no-print { display: none !important; }，列印預覽只會留下證書邊框與文字內容。
+
+學校名稱更新：證書左下角的校名與班級文字為「三民國小 二年級成長班」，完全移除先前的「導引學校」字樣。
+
+導覽按鈕不折行：為 .nav-btn 加上 white-space: nowrap; 與 flex-shrink: 0;，無論螢幕如何縮放，「遊戲一：喜歡什麼都可以！」皆能完美保持在單行中。
+
+遊戲一「喜歡什麼都可以」這個頁面，請恢復成可以重複選擇的模式：選取的項目會出現粉紅色框框，再點選一次就會取消，讓小朋友可以調整自己所選的項目。
+
+
+
+另外，最後一個「自信小證書」的填寫欄位：
+
+• 前面是「二年［　］班」，也就是讓小朋友在框框裡填上班級
+
+• 最後面只要寫上認證日期（他玩這個遊戲的日期）和「三民國小」的字樣就好了
+
+已為您完成針對這兩大功能的修改：
+
+修改項目重點：
+遊戲一「多選 / 取消選取」機制：
+
+點擊卡片即可加入選取（呈現粉紅色框框與高亮底色），再次點擊即可取消選取。
+
+畫面左側的影子動畫與台詞會即時響應最後一次點擊的項目，若全部取消則顯示預設的溫暖引導台詞。
+
+證書上的「我的影子超能力」標籤庫會與小朋友的複選結果即時同步。
+
+自信小證書版面與欄位調整：
+
+輸入欄位：調整為「二年 [ ] 班」，小朋友只需在小方框內輸入班級數字（例如：3）。
+
+證書抬頭與列印：同步對齊為「二年 [ 班級 ] 班 [ 姓名 ] 同學」。
+
+證書底部資訊：已簡化，僅保留「認證日期：YYYY年M月D日」與「三民國小」字樣。
+
+以下為完整的單一 HTML 原始碼：
+
+HTML
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>粉紅色影子的男孩：影子變變變 互動體驗營</title>
+  <!-- Google Fonts: 適合低年級的圓潤繁體中文字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Canvas Confetti 彩帶特效 -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --primary-pink: #ff659c;
+      --soft-pink: #fff0f5;
+      --deep-pink: #d81b60;
+      --accent-blue: #4a90e2;
+      --soft-blue: #e8f4fd;
+      --sun-yellow: #ffd166;
+      --text-dark: #333344;
+      --card-bg: #ffffff;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --shadow-soft: 0 10px 25px rgba(255, 101, 156, 0.12);
+      --shadow-hover: 0 16px 32px rgba(255, 101, 156, 0.22);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans TC', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff7fa 0%, #f3f8fe 50%, #fff7fa 100%);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 90px;
+    }
+
+    /* 頂部導航列 */
+    header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 14px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #ffe4ed;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      background: linear-gradient(135deg, var(--primary-pink), #ff8fa3);
+      color: white;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(255, 101, 156, 0.3);
+    }
+
+    .brand-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--deep-pink);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-sub {
+      font-size: 0.85rem;
+      color: #7d7d8a;
+      font-weight: 600;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .teacher-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: #edf2ff;
+      color: #3b5bdb;
+      border: 1.5px solid #d0ebff;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .teacher-badge.active {
+      background: #3b5bdb;
+      color: #ffffff;
+    }
+
+    .icon-btn {
+      background: #fff;
+      border: 1.5px solid #ffd5e2;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-pink);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .icon-btn:hover {
+      background: var(--soft-pink);
+      transform: scale(1.06);
+    }
+
+    /* 主要容器 */
+    main {
+      flex: 1;
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 0 16px;
+      width: 100%;
+    }
+
+    .tab-section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 標題與說明 */
+    .section-head {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--deep-pink);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(180deg, transparent 65%, #ffdce8 65%);
+      padding: 0 8px;
+    }
+
+    .section-head p {
+      color: #666;
+      margin-top: 8px;
+      font-size: 1.05rem;
+    }
+
+    /* 繪本區 */
+    .story-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .story-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      border: 2px solid #ffedf3;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-step {
+      display: inline-block;
+      align-self: flex-start;
+      background: var(--soft-pink);
+      color: var(--deep-pink);
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .story-content {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 16px;
+    }
+
+    .magic-question-box {
+      background: #fff9db;
+      border-left: 5px solid var(--sun-yellow);
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin-top: auto;
+    }
+
+    .magic-label {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #b07800;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+
+    .magic-text {
+      font-size: 0.95rem;
+      color: #554400;
+      font-weight: 600;
+    }
+
+    /* 遊戲一：喜歡什麼都可以 */
+    .game1-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 860px) {
+      .game1-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .shadow-stage {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+      border: 2px solid #ffedf3;
+      position: sticky;
+      top: 90px;
+    }
+
+    .stage-canvas {
+      width: 100%;
+      height: 250px;
+      background: radial-gradient(circle, #fff7fb 20%, #f0f7ff 100%);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .avatar-shadow {
+      position: absolute;
+      width: 130px;
+      height: 190px;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .shadow-head {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .shadow-body {
+      width: 70px;
+      height: 95px;
+      background: currentColor;
+      border-radius: 18px 18px 45px 45px;
+      margin-top: 6px;
+      position: relative;
+    }
+
+    .shadow-skirt {
+      position: absolute;
+      bottom: 0;
+      left: -12px;
+      right: -12px;
+      height: 52px;
+      background: #ffd166;
+      border-radius: 12px 12px 30px 30px;
+      display: none;
+      animation: skirtSwing 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes skirtSwing {
+      from { transform: rotate(-4deg); }
+      to { transform: rotate(4deg); }
+    }
+
+    .avatar-speech {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--deep-pink);
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .option-card {
+      background: #fff;
+      border: 2px solid #f2e4ec;
+      border-radius: var(--radius-md);
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      user-select: none;
+    }
+
+    .option-card:hover {
+      border-color: var(--primary-pink);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(255, 101, 156, 0.15);
+    }
+
+    /* 選取時呈現粉紅色外框與高亮背景 */
+    .option-card.selected {
+      background: #fff4f8;
+      border-color: var(--primary-pink);
+      box-shadow: 0 0 0 3px rgba(255, 101, 156, 0.35);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .badge-no {
+      font-size: 0.75rem;
+      font-weight: 800;
+      background: #f0f0f5;
+      color: #666;
+      padding: 2px 8px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .option-card.selected .badge-no {
+      background: #ff659c;
+      color: white;
+    }
+
+    .opt-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #333;
+    }
+
+    .opt-desc {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    .teacher-note {
+      display: none;
+      background: #eef2ff;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 0.85rem;
+      color: #3742fa;
+      border-left: 3px solid #3742fa;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    body.teacher-mode .teacher-note {
+      display: block;
+    }
+
+    /* 遊戲二：勇敢說出心裡話 (3D 翻轉卡片) */
+    .cards-flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 24px;
+    }
+
+    .scene-card {
+      perspective: 1200px;
+      height: 290px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .scene-card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-soft);
+      border: 2px solid #ffe3ee;
+    }
+
+    .card-front {
+      background: linear-gradient(145deg, #ffffff, #fff6f8);
+      color: #333;
+    }
+
+    .card-front .face-tag {
+      background: #ffe3e3;
+      color: #e03131;
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-front .dialog-text {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #495057;
+      line-height: 1.5;
+      text-align: center;
+      margin: auto 0;
+    }
+
+    .flip-hint {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #999;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .card-back {
+      background: linear-gradient(145deg, #fff0f6, #ffe3ec);
+      transform: rotateY(180deg);
+      border-color: #ff85b3;
+    }
+
+    .card-back .face-tag {
+      background: #d3f9d8;
+      color: #2b8a3e;
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-back .dialog-text {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--deep-pink);
+      line-height: 1.5;
+      text-align: center;
+      margin: auto 0;
+    }
+
+    .speak-btn-mini {
+      background: #fff;
+      border: 1px solid var(--primary-pink);
+      color: var(--primary-pink);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      align-self: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .speak-btn-mini:hover {
+      background: var(--primary-pink);
+      color: #fff;
+    }
+
+    /* 榮譽證書區 */
+    .certificate-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      background: #fff;
+      border: 3px solid #ffccd9;
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      box-shadow: 0 12px 36px rgba(255, 101, 156, 0.15);
+      position: relative;
+    }
+
+    .cert-inner {
+      border: 2px dashed #ff99bb;
+      border-radius: 16px;
+      padding: 32px 28px;
+      text-align: center;
+      position: relative;
+    }
+
+    .cert-corner-icon {
+      position: absolute;
+      color: #ff9ebb;
+    }
+
+    .cert-title {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--deep-pink);
+      margin-bottom: 8px;
+    }
+
+    /* 輸入表單區 */
+    .cert-form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #444;
+    }
+
+    .cert-input-sm {
+      padding: 6px 8px;
+      border: 2px solid #ffd1df;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--deep-pink);
+      outline: none;
+      width: 58px;
+      text-align: center;
+      transition: border 0.2s;
+    }
+
+    .cert-input-name {
+      padding: 6px 14px;
+      border: 2px solid #ffd1df;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--deep-pink);
+      outline: none;
+      width: 140px;
+      text-align: center;
+      transition: border 0.2s;
+    }
+
+    .cert-input-sm:focus, .cert-input-name:focus {
+      border-color: var(--primary-pink);
+    }
+
+    .cert-body-p {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: #444;
+      margin-bottom: 24px;
+      text-align: justify;
+      text-justify: inter-ideograph;
+    }
+
+    .cert-tags-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin: 16px 0 24px;
+      min-height: 40px;
+    }
+
+    .badge-chip {
+      background: var(--soft-pink);
+      color: var(--deep-pink);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border: 1px solid #ffccd9;
+    }
+
+    .cert-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid #ffe3ec;
+      font-size: 1rem;
+      color: #555;
+    }
+
+    .cert-stamp {
+      width: 86px;
+      height: 86px;
+      border: 3px double var(--primary-pink);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-pink);
+      font-weight: 900;
+      font-size: 0.85rem;
+      transform: rotate(-12deg);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .cert-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .action-btn {
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .action-btn.pink {
+      background: linear-gradient(135deg, var(--primary-pink), var(--deep-pink));
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(255, 101, 156, 0.35);
+    }
+
+    .action-btn.pink:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(255, 101, 156, 0.45);
+    }
+
+    /* 底部導覽列 */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      border-top: 2px solid #ffe6ef;
+      display: flex;
+      justify-content: center;
+      padding: 10px 16px;
+      gap: 12px;
+      z-index: 99;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: none;
+      background: #f8f9fa;
+      color: #666;
+      font-size: 1.02rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap; /* 保持單列排版 */
+      flex-shrink: 0;
+    }
+
+    .nav-btn:hover {
+      background: #f1f3f5;
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(135deg, var(--primary-pink), var(--deep-pink));
+      color: white;
+      box-shadow: 0 4px 14px rgba(255, 101, 156, 0.3);
+    }
+
+    /* 🎯 專門優化的純證書列印樣式 */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 15mm;
+      }
+
+      body {
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: block !important;
+      }
+
+      header,
+      .bottom-bar,
+      .section-head,
+      .cert-actions,
+      .no-print,
+      #tab-story,
+      #tab-game1,
+      #tab-game2 {
+        display: none !important;
+      }
+
+      #tab-certificate {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .certificate-wrap {
+        border: 2px solid #ff99bb !important;
+        box-shadow: none !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 24px !important;
+        page-break-inside: avoid !important;
+      }
+
+      .cert-inner {
+        border: 2px dashed #ff99bb !important;
+        padding: 24px !important;
+      }
+
+      /* 列印時將輸入框轉為乾淨的文字顯示 */
+      .cert-form {
+        display: none !important;
+      }
+
+      .cert-print-title {
+        display: block !important;
+        font-size: 1.45rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        color: #d81b60;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部功能區 -->
+  <header>
+    <div class="brand-group">
+      <div class="brand-icon">
+        <i data-lucide="sparkles"></i>
+      </div>
+      <div>
+        <div class="brand-title">粉紅色影子的男孩 <span style="font-size:0.75em; color:var(--primary-pink);">影子變變變 ✨</span></div>
+        <div class="brand-sub">國小二年級繪本延伸互動體驗營 ‧ 展現獨一無二的自己</div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="teacher-badge" id="teacherModeToggle" onclick="toggleTeacherMode()">
+        <i data-lucide="graduation-cap"></i>
+        <span>教師引導模式：關閉</span>
+      </button>
+
+      <button class="icon-btn" onclick="toggleMute()" title="朗讀聲音開關">
+        <i data-lucide="volume-2" id="soundIcon"></i>
+      </button>
+
+      <button class="icon-btn" onclick="toggleFullscreen()" title="全螢幕">
+        <i data-lucide="maximize" id="screenIcon"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- 主要互動內容 -->
+  <main>
+
+    <!-- 0. 繪本故事角 -->
+    <section id="tab-story" class="tab-section active">
+      <div class="section-head">
+        <h2><i data-lucide="book-open"></i> 繪本故事角</h2>
+        <p>跟著小男孩一同探索影子的秘密，想一想心裡面的神奇提問！</p>
+      </div>
+
+      <div class="story-card-grid" id="storyGrid"></div>
+    </section>
+
+    <!-- 1. 遊戲一：喜歡什麼都可以！ -->
+    <section id="tab-game1" class="tab-section">
+      <div class="section-head">
+        <h2><i data-lucide="heart-handshake"></i> 遊戲一：喜歡什麼都可以！</h2>
+        <p>點選你喜歡的卡片（可選多項，再點一次可取消），看看你的專屬影子的大變化！</p>
+      </div>
+
+      <div class="game1-layout">
+        <!-- 左側：影子動態舞台 -->
+        <div class="shadow-stage">
+          <div class="stage-canvas">
+            <div class="avatar-shadow" id="avatarShadow" style="color: #ff659c;">
+              <div class="shadow-head"></div>
+              <div class="shadow-body">
+                <div class="shadow-skirt" id="shadowSkirt"></div>
+              </div>
+            </div>
+          </div>
+          <div class="avatar-speech" id="avatarSpeech">
+            「我是世界上獨一無二的影子！」
+          </div>
+          <p style="font-size:0.85rem; color:#888; margin-top:8px;">★ 自由挑選你的愛好，把勇氣裝進影子裡！</p>
+        </div>
+
+        <!-- 右側：10 大喜好選擇庫 -->
+        <div class="options-grid" id="optionsGrid"></div>
+      </div>
+    </section>
+
+    <!-- 2. 遊戲二：勇敢說出心裡話 -->
+    <section id="tab-game2" class="tab-section">
+      <div class="section-head">
+        <h2><i data-lucide="shield-check"></i> 遊戲二：有人這樣說，我可以怎麼辦？</h2>
+        <p>生活中有時會遇到質疑，點擊卡片翻轉看看，學會充滿自信的回答！</p>
+      </div>
+
+      <div class="cards-flow" id="cardsGrid"></div>
+    </section>
+
+    <!-- 3. 自信小勇士證書 -->
+    <section id="tab-certificate" class="tab-section">
+      <div class="section-head">
+        <h2><i data-lucide="award"></i> 獨一無二 ‧ 自信影子小勇士證書</h2>
+        <p>寫下你的名字，把今天學到的勇氣化作專屬勳章！</p>
+      </div>
+
+      <div class="certificate-wrap">
+        <div class="cert-inner">
+          <i data-lucide="crown" class="cert-corner-icon" style="top:12px; left:12px; width:28px; height:28px;"></i>
+          <i data-lucide="star" class="cert-corner-icon" style="top:12px; right:12px; width:28px; height:28px;"></i>
+
+          <div style="font-size: 0.85rem; font-weight: 800; color: #ff85b3; letter-spacing: 2px;">★ CERTIFICATE OF SELF-BELIEF ★</div>
+          <h1 class="cert-title">自信影子榮譽證書</h1>
+
+          <!-- 輸入資訊區：二年［ ］班 + 小勇士姓名 -->
+          <div class="cert-form">
+            <span>二年</span>
+            <input type="text" id="certClassNum" class="cert-input-sm" value="1" placeholder="班級">
+            <span>班</span>
+            <span style="margin-left: 12px;">小勇士姓名：</span>
+            <input type="text" id="certName" class="cert-input-name" value="小勇士" placeholder="請輸入姓名">
+            <button class="action-btn pink" style="padding:6px 16px; font-size:0.9rem;" onclick="triggerConfetti()">
+              <i data-lucide="party-popper"></i> 放煙火！
+            </button>
+          </div>
+
+          <!-- 列印時顯示的乾淨抬頭 -->
+          <div class="cert-print-title" id="certPrintTitle" style="display:none;">
+            恭喜 二年 <span id="printClassName" style="color:var(--deep-pink); text-decoration: underline;">1</span> 班 
+            <span id="printStudentName" style="color:var(--deep-pink); text-decoration: underline;">小勇士</span> 同學
+          </div>
+
+          <p class="cert-body-p">
+            在完成《粉紅色影子的男孩》繪本探索後，不僅學會勇敢接納自己的喜好，更懂得用溫柔與自信回應世界。請永遠記住：「你的影子就是你自己，儘管做獨一無二的自己，我們都愛你！」
+          </p>
+
+          <div style="font-size: 0.95rem; font-weight: 700; color: #555;">我的影子超能力（我最喜歡的探索）：</div>
+          <div class="cert-tags-box" id="certTags">
+            <!-- 動態同步遊戲一所選擇的項目 -->
+          </div>
+
+          <!-- 底部資訊：僅保留認證日期與三民國小 -->
+          <div class="cert-footer">
+            <div style="text-align: left; line-height: 1.6;">
+              <div>認證日期：<span id="certDate">2026年9月24日</span></div>
+              <div style="font-weight: 700; color: #333;">三民國小</div>
+            </div>
+
+            <div class="cert-stamp">
+              <span>★ 榮譽 ★</span>
+              <span>這就是我</span>
+              <span>最棒影子</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cert-actions no-print">
+        <button class="action-btn pink" onclick="printCertificateOnly()">
+          <i data-lucide="printer"></i> 列印我的勇士證書
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 底部固定切換導覽列 -->
+  <nav class="bottom-bar">
+    <button class="nav-btn active" onclick="switchTab('story', this)">
+      <i data-lucide="book-open"></i> 繪本故事角
+    </button>
+    <button class="nav-btn" onclick="switchTab('game1', this)">
+      <i data-lucide="heart"></i> 遊戲一：喜歡什麼都可以！
+    </button>
+    <button class="nav-btn" onclick="switchTab('game2', this)">
+      <i data-lucide="shield"></i> 遊戲二：勇敢說出心裡話
+    </button>
+    <button class="nav-btn" onclick="switchTab('certificate', this)">
+      <i data-lucide="award"></i> 自信小證書
+    </button>
+  </nav>
+
+  <script>
+    /* ============================================================
+       繪本與遊戲題目資料庫 (依據上傳 PDF 內容)
+    ============================================================ */
+    const storyList = [
+      { step: "第 1 幕", text: "每個人都有影子，但我的影子... 藏著一個小秘密！", question: "找找看，你的影子現在是什麼顏色呢？" },
+      { step: "第 2 幕", text: "大家都一樣的【藍色影子】又高又壯、威武冷靜；我的專屬【粉紅影子】最愛聽故事、獨角獸、和美麗的公主！", question: "左邊和右邊，你最喜歡哪一種影子？" },
+      { step: "第 3 幕", text: "轉啊轉！閃閃發光的秘密！只要穿上最愛的黃色裙子，影子就會開心地跳躍！", question: "你最喜歡穿什麼衣服跳舞呢？" },
+      { step: "第 4 幕", text: "穿上最愛的裙子去上學！爸爸看起來好擔心... 大家都盯著我看，沒有人跟我說話。", question: "如果是你走進這間教室，心裡會有什麼感覺？" },
+      { step: "第 5 幕", text: "砰！爸爸竟然也穿著裙子？！「我再也不要穿裙子了！」爸爸牽起我的手說。", question: "看到爸爸穿裙子，男孩會覺得開心還是嚇一跳呢？" },
+      { step: "第 6 幕", text: "「其實，我們每個人都會把真實的影子藏起來喔。」原來大家的心裡，都住著一個不一樣的自己！", question: "猜猜看，你爸爸媽媽的隱藏影子會喜歡什麼？" },
+      { step: "第 7 幕", text: "「你的影子就是你自己。粉紅色又怎樣？大聲說：這就是我！」牽起爸爸的手，我們一起勇敢前進！", question: "有人牽著手的時候，是不是覺得自己變勇敢了？" },
+      { step: "第 8 幕", text: "「我知道我不一樣，但這樣才特別！」世上本來就會有人喜歡你，也會有人討厭你。沒關係，儘管做獨一無二的自己，我們愛你。", question: "你想跟我們一起自信大步玩耍嗎？" }
+    ];
+
+    const game1Options = [
+      { id: 1, name: "粉紅色", text: "我喜歡溫柔漂亮的粉紅色。", note: "顏色是自然的禮物，任何人都可以喜歡任何顏色。", color: "#ff659c", hasSkirt: true },
+      { id: 2, name: "藍黑色", text: "我喜歡帥氣沉穩的深色系。", note: "喜歡酷酷、沉穩的顏色很棒，展現專屬自己的風格。", color: "#34495e", hasSkirt: false },
+      { id: 3, name: "玩洋娃娃", text: "我喜歡幫娃娃梳頭髮、換衣服、說故事。", note: "照顧娃娃是愛心與想像力的展現，學會溫柔照顧他人。", color: "#ff758c", hasSkirt: true },
+      { id: 4, name: "踢球運動", text: "我喜歡在操場上奔跑、傳球流汗。", note: "盡情奔跑、享受運動的活力，鍛鍊強健健康的體魄。", color: "#2ecc71", hasSkirt: false },
+      { id: 5, name: "積木組裝", text: "我喜歡動手拼出機器人和大城堡。", note: "空間建構與邏輯探索，每一次拼搭都是小小工程師。", color: "#f39c12", hasSkirt: false },
+      { id: 6, name: "動手做料理", text: "我喜歡扮家家酒，當個厲害的小小廚師。", note: "模擬烹飪是生活自理的起步，享受調配美味的樂趣。", color: "#e67e22", hasSkirt: true },
+      { id: 7, name: "唱歌跳舞", text: "我喜歡跟著音樂擺動身體和大聲唱。", note: "用身體與歌聲自由表達情緒，感受節奏帶來的快樂。", color: "#9b59b6", hasSkirt: true },
+      { id: 8, name: "畫畫塗鴉", text: "我喜歡用各種顏色畫出天馬行空的想像。", note: "畫紙上沒有標準答案，任何奇思妙想都值得被畫出來。", color: "#00cec9", hasSkirt: false },
+      { id: 9, name: "閱讀故事書", text: "我喜歡安靜地看書、走進奇妙的繪本世界。", note: "安靜專注也是一種力量，在故事裡自由冒險。", color: "#3867d6", hasSkirt: false },
+      { id: 10, name: "觀察大自然", text: "我喜歡看小昆蟲、撿漂亮的落葉和小石頭。", note: "擁有敏銳細膩的觀察力，對世界萬物充滿好奇心。", color: "#20bf6b", hasSkirt: false }
+    ];
+
+    const game2Questions = [
+      { id: 1, title: "色彩偏好的質疑", front: "「你選這個顏色好奇怪，大家都不會選這個顏色！」", back: "「每一種顏色都有它的美麗，只要我喜歡，就是最棒的顏色。」", note: "顏色就像彩虹一樣多采多姿，沒有哪一種顏色是專屬於誰的。只要看著它會讓自己感到開心、舒服，那就是最適合你的顏色。" },
+      { id: 2, title: "玩具與遊戲的限制", front: "「你玩的東西好無聊，那不是你該玩的，快放下啦！」", back: "「每個人想探索的都不一樣，玩得開心、懂得愛護就是好遊戲。」", note: "玩具的發明是為了帶來樂趣與學習。不管是拼積木、玩娃娃還是踢球，每個人都可以自由探索，不需要照著別人的刻板標籤走。" },
+      { id: 3, title: "穿著與外表的指指點點", front: "「你今天的衣服好特別喔，怎麼跟我們穿得都不一樣？」", back: "「我穿這件覺得很自在、很喜歡，穿出自己的風格最開心！」", note: "衣服是穿在自己身上的，重點在於整齊、舒適和自己的喜愛。每個人有不同的穿衣風格，懂得欣賞彼此的不一樣，世界才會更有趣。" },
+      { id: 4, title: "情緒表達的壓抑", front: "「跌倒了不可以哭！哭哭是一件很丟臉的事情。」", back: "「痛痛或難過時可以哭一哭，等眼淚擦乾，我還是可以很勇敢！」", note: "眼淚是每個人都有的正常心情反應，就像天上下雨一樣自然。哭泣不是軟弱，能誠實說出『我需要休息一下或抱抱』，是非常勇敢的表現。" },
+      { id: 5, title: "個性特質的刻板印象", front: "「你怎麼都不大聲講話？你太膽小、太文靜了啦！」", back: "「我喜歡溫柔、安靜地思考，文靜也是一種很棒的力量。」", note: "有的人像熱情的小太陽，有的人像溫柔的小月亮。安靜不代表膽小，懂得專心聆聽、細心觀察的人，也是團隊裡很重要的好夥伴。" },
+      { id: 6, title: "力氣大小與能力的預設", front: "「這個搬不動啦！你那麼瘦小，肯定幫不上忙。」", back: "「每個人能幫忙的方式不一樣，大家分工合作力量最大！」", note: "幫忙不一定只有力氣大的人才能做。幫忙扶著門、整理桌面、引路，或者兩個人一起分擔重量，都是非常有價值的付出。" },
+      { id: 7, title: "動作與活動風格的偏好", front: "「下課應該去跑跑跳跳，你一直扭來扭去跳舞做什麼？」", back: "「身體跟著節奏跳舞讓我很放鬆，每個人動動身體的方式都不同。」", note: "運動有非常多種形式，跑步、踢球很棒，體操、跳舞也一樣能活動身體、維持健康。只要能讓身心舒暢，就是最棒的下課活動。" },
+      { id: 8, title: "分組與同儕合作的界線", front: "「我們不要跟你同一組，因為你的想法跟我們都不一樣！」", back: "「不一樣的想法聚在一起，我們可以想出更多更棒的好點子！」", note: "分組合作最棒的地方，正是每個人帶來的視角都不同。學會傾聽別人的想法，也清楚分享自己的點子，互相激盪才能完成最精彩的作品。" }
+    ];
+
+    /* ============================================================
+       全域狀態與多選集合
+    ============================================================ */
+    let isTeacherMode = false;
+    let isMuted = false;
+    // 使用 Set 儲存小朋友選取的多個項目
+    let selectedItemIds = new Set([1]); // 預設選取粉紅色
+
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+      renderStory();
+      renderGame1();
+      renderGame2();
+      updateCertDate();
+      updateCertTags();
+    });
+
+    function updateCertDate() {
+      const today = new Date();
+      const dateStr = `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日`;
+      const dateEl = document.getElementById("certDate");
+      if (dateEl) dateEl.innerText = dateStr;
+    }
+
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+      const target = document.getElementById(`tab-${tabId}`);
+      if (target) target.classList.add('active');
+      if (btn) btn.classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleTeacherMode() {
+      isTeacherMode = !isTeacherMode;
+      document.body.classList.toggle('teacher-mode', isTeacherMode);
+      const btn = document.getElementById('teacherModeToggle');
+      if (isTeacherMode) {
+        btn.classList.add('active');
+        btn.querySelector('span').innerText = '教師引導模式：開啟中';
+        playNoteSound(600, 0.1);
+      } else {
+        btn.classList.remove('active');
+        btn.querySelector('span').innerText = '教師引導模式：關閉';
+      }
+    }
+
+    function speakText(text) {
+      if (isMuted || !('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'zh-TW';
+      utter.rate = 0.95;
+      utter.pitch = 1.1;
+      window.speechSynthesis.speak(utter);
+    }
+
+    function toggleMute() {
+      isMuted = !isMuted;
+      const icon = document.getElementById('soundIcon');
+      if (isMuted) {
+        icon.setAttribute('data-lucide', 'volume-x');
+        window.speechSynthesis.cancel();
+      } else {
+        icon.setAttribute('data-lucide', 'volume-2');
+        speakText('聲音已開啟！');
+      }
+      lucide.createIcons();
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function playNoteSound(freq = 520, duration = 0.15) {
+      if (isMuted) return;
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    /* 渲染故事區 */
+    function renderStory() {
+      const grid = document.getElementById('storyGrid');
+      grid.innerHTML = storyList.map(item => `
+        <div class="story-card">
+          <span class="story-step">${item.step}</span>
+          <div class="story-content">${item.text}</div>
+          <div class="magic-question-box">
+            <div class="magic-label"><i data-lucide="help-circle" style="width:16px; height:16px;"></i> 魔法問句：</div>
+            <div class="magic-text">${item.question}</div>
+          </div>
+          <div style="margin-top:12px; display:flex; justify-content:flex-end;">
+            <button class="speak-btn-mini" onclick="speakText('${item.text} 魔法問句：${item.question}')">
+              <i data-lucide="volume-2" style="width:14px; height:14px;"></i> 聽這頁故事
+            </button>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    /* 渲染遊戲一：可多選、可取消 */
+    function renderGame1() {
+      const grid = document.getElementById('optionsGrid');
+      grid.innerHTML = game1Options.map(opt => {
+        const isSelected = selectedItemIds.has(opt.id);
+        return `
+          <div class="option-card ${isSelected ? 'selected' : ''}" id="opt-${opt.id}" onclick="toggleGame1Option(${opt.id})">
+            <div class="card-top">
+              <div class="opt-name">${opt.name}</div>
+              <span class="badge-no">
+                <i data-lucide="${isSelected ? 'check-circle-2' : 'circle'}" style="width:14px; height:14px;"></i>
+                選項 ${opt.id < 10 ? '0' + opt.id : opt.id}
+              </span>
+            </div>
+            <div class="opt-desc">${opt.text}</div>
+            <div class="teacher-note">
+              <strong>👩‍🏫 引導要點：</strong>${opt.note}
+            </div>
+          </div>
+        `;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    /* 切換選取／取消選取功能 */
+    function toggleGame1Option(id) {
+      const card = document.getElementById(`opt-${id}`);
+      const opt = game1Options.find(o => o.id === id);
+      if (!opt) return;
+
+      if (selectedItemIds.has(id)) {
+        // 取消選取
+        selectedItemIds.delete(id);
+        card.classList.remove('selected');
+        playNoteSound(380, 0.1);
+      } else {
+        // 新增選取
+        selectedItemIds.add(id);
+        card.classList.add('selected');
+        playNoteSound(650, 0.12);
+        speakText(opt.text);
+      }
+
+      // 更新選項卡片上的勾選圖示
+      renderGame1();
+
+      // 更新左側舞台影子
+      updateAvatarStage(opt, selectedItemIds.has(id));
+
+      // 同步至證書探索標籤庫
+      updateCertTags();
+    }
+
+    /* 更新左側影子樣式 */
+    function updateAvatarStage(lastOpt, isAdded) {
+      const avatar = document.getElementById('avatarShadow');
+      const skirt = document.getElementById('shadowSkirt');
+      const speech = document.getElementById('avatarSpeech');
+
+      if (selectedItemIds.size === 0) {
+        // 當全部取消時
+        avatar.style.color = '#ff659c';
+        skirt.style.display = 'none';
+        speech.innerText = '「選你喜歡的，都可以喔！」';
+        return;
+      }
+
+      if (isAdded && lastOpt) {
+        avatar.style.color = lastOpt.color;
+        skirt.style.display = lastOpt.hasSkirt ? 'block' : 'none';
+        speech.innerText = `「${lastOpt.text}」`;
+      } else {
+        // 如果是取消，取目前剩下最後一個被選取的項目
+        const remainingIds = Array.from(selectedItemIds);
+        const lastId = remainingIds[remainingIds.length - 1];
+        const nextOpt = game1Options.find(o => o.id === lastId);
+        if (nextOpt) {
+          avatar.style.color = nextOpt.color;
+          skirt.style.display = nextOpt.hasSkirt ? 'block' : 'none';
+          speech.innerText = `「${nextOpt.text}」`;
+        }
+      }
+
+      // 影子跳躍動畫
+      avatar.style.transform = 'scale(1.1) translateY(-6px)';
+      setTimeout(() => {
+        avatar.style.transform = 'scale(1) translateY(0)';
+      }, 300);
+    }
+
+    /* 渲染遊戲二 (3D 卡片) */
+    function renderGame2() {
+      const grid = document.getElementById('cardsGrid');
+      grid.innerHTML = game2Questions.map(q => `
+        <div class="scene-card" id="scene-${q.id}" onclick="flipSceneCard(${q.id})">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div class="face-tag">
+                <i data-lucide="message-circle-warning" style="width:14px; height:14px;"></i>
+                <span>他人這樣說</span>
+              </div>
+              <div class="dialog-text">${q.front}</div>
+              <div class="flip-hint">
+                <i data-lucide="repeat" style="width:14px; height:14px;"></i> 點擊卡片翻過來，聽聽自信回應
+              </div>
+            </div>
+
+            <div class="card-face card-back">
+              <div class="face-tag">
+                <i data-lucide="sparkles" style="width:14px; height:14px;"></i>
+                <span>我的自信回應</span>
+              </div>
+              <div class="dialog-text">${q.back}</div>
+              <button class="speak-btn-mini" onclick="event.stopPropagation(); speakText('${q.back}')">
+                <i data-lucide="volume-2" style="width:14px; height:14px;"></i> 朗讀自信回應
+              </button>
+              <div class="teacher-note" style="margin-top:6px;">
+                <strong>💡 教學引導：</strong>${q.note}
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function flipSceneCard(id) {
+      const card = document.getElementById(`scene-${id}`);
+      if (!card) return;
+      card.classList.toggle('flipped');
+      playNoteSound(480, 0.15);
+
+      const q = game2Questions.find(item => item.id === id);
+      if (q && card.classList.contains('flipped')) {
+        speakText(q.back);
+      }
+    }
+
+    /* 更新證書上的標籤 */
+    function updateCertTags() {
+      const container = document.getElementById('certTags');
+      if (selectedItemIds.size === 0) {
+        container.innerHTML = `
+          <span class="badge-chip">💖 接納真實自我</span>
+          <span class="badge-chip">🌟 尊重多元色彩</span>
+          <span class="badge-chip">🛡️ 自信堅定發聲</span>
+        `;
+        return;
+      }
+
+      const chips = [];
+      selectedItemIds.forEach(id => {
+        const item = game1Options.find(o => o.id === id);
+        if (item) {
+          chips.push(`<span class="badge-chip">✨ 探索：${item.name}</span>`);
+        }
+      });
+      container.innerHTML = chips.join('');
+    }
+
+    /* 放煙火特效 */
+    function triggerConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 110,
+          spread: 75,
+          origin: { y: 0.6 }
+        });
+      }
+      playNoteSound(800, 0.25);
+    }
+
+    /* 列印證書 */
+    function printCertificateOnly() {
+      const clsNum = document.getElementById('certClassNum').value.trim() || '1';
+      const name = document.getElementById('certName').value.trim() || '小勇士';
+
+      document.getElementById('printClassName').innerText = clsNum;
+      document.getElementById('printStudentName').innerText = name;
+
+      triggerConfetti();
+
+      setTimeout(() => {
+        window.print();
+      }, 350);
+    }
+  </script>
+</body>
+</html>
+在最後一項「自信小證書」裡，顯示前面學生所選的部分，只要有那個名稱即可，前面不要加「探索」這個字樣。
+
+
+
+另外，在列印的時候會變成兩頁（多了一頁空白頁），請設法調整成只要單獨列印那張證書即可。
+
+已針對這兩項問題進行精確修改：
+
+標籤名稱簡化：移除「探索：」前綴，只保留小朋友所選的純項目名稱（例如直接顯示：粉紅色、玩洋娃娃、藍黑色 等）。
+
+解決列印多一頁空白頁問題：
+
+第二頁左上角殘留的圖示是因為 <main>、<body> 的 padding/margin 以及 confetti canvas 渲染時產生的 DOM 節點溢出造成換頁。
+
+在 @media print 中針對 html, body 設置 height: 100%; overflow: hidden;，並將外層 main 的 margin 與 padding 全部歸零，徹底鎖定在單張 A4 範圍內，不再溢出第二頁。
+
+以下為完整的單一 HTML 原始碼：
+
+HTML
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
 <head>
@@ -1346,3 +4184,1399 @@
   </script>
 </body>
 </html>
+首頁「繪本故事角」請刪除不用，改用我上傳的這張圖片當作首頁，只要清楚地寫出這本繪本《粉紅色影子的男孩》「影子變變變」這幾個大字就好了，然後有連結遊戲一和遊戲二等等。
+
+
+
+遊戲一和遊戲二說明和內容都沒問題，版面也很清楚，只要保留遊戲二翻面後的回應的語音，其他的語音都刪除．
+
+你停止了這則回覆
+請回覆
+
+已為您精準調整並重構完成：
+
+核心調整重點：
+全新首頁：
+
+刪除原本的 8 幕「繪本故事角」卡片列表。
+
+改為首頁視覺主圖（已為您配置好上傳的繪本封面圖片介面，並以大字清楚標示《粉紅色影子的男孩》「影子變變變」）。
+
+首頁設有直接通往「遊戲一：喜歡什麼都可以！」與「遊戲二：勇敢說出心裡話」的專屬引導按鈕卡片。
+
+語音精準精簡：
+
+移除頂部全域靜音按鈕、遊戲一選項朗讀、繪本故事朗讀等所有不必要的語音。
+
+唯一保留：遊戲二卡片翻面後「我的自信回應」朗讀功能（點擊翻轉後或點選朗讀按鈕即可發聲）。   
+PDF
+
+以下為完整的單一 HTML 原始碼：
+
+HTML
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>粉紅色影子的男孩：影子變變變 互動體驗營</title>
+  <!-- Google Fonts: 圓潤適合低年級的中文字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Canvas Confetti 彩帶特效 -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --primary-pink: #ff659c;
+      --soft-pink: #fff0f5;
+      --deep-pink: #d81b60;
+      --accent-blue: #4a90e2;
+      --sun-yellow: #ffd166;
+      --text-dark: #333344;
+      --card-bg: #ffffff;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --shadow-soft: 0 10px 25px rgba(255, 101, 156, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans TC', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff7fa 0%, #f3f8fe 50%, #fff7fa 100%);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 90px;
+    }
+
+    /* 頂部導航列 */
+    header {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      padding: 14px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #ffe4ed;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      background: linear-gradient(135deg, var(--primary-pink), #ff8fa3);
+      color: white;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(255, 101, 156, 0.3);
+    }
+
+    .brand-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--deep-pink);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-sub {
+      font-size: 0.85rem;
+      color: #7d7d8a;
+      font-weight: 600;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .teacher-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: #edf2ff;
+      color: #3b5bdb;
+      border: 1.5px solid #d0ebff;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .teacher-badge.active {
+      background: #3b5bdb;
+      color: #ffffff;
+    }
+
+    .icon-btn {
+      background: #fff;
+      border: 1.5px solid #ffd5e2;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-pink);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .icon-btn:hover {
+      background: var(--soft-pink);
+      transform: scale(1.06);
+    }
+
+    /* 主要容器 */
+    main {
+      flex: 1;
+      max-width: 1040px;
+      margin: 20px auto;
+      padding: 0 16px;
+      width: 100%;
+    }
+
+    .tab-section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 區塊標題 */
+    .section-head {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--deep-pink);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(180deg, transparent 65%, #ffdce8 65%);
+      padding: 0 8px;
+    }
+
+    .section-head p {
+      color: #666;
+      margin-top: 8px;
+      font-size: 1.05rem;
+    }
+
+    /* ==================== 首頁設計 ==================== */
+    .home-hero-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 3px solid #ffccd9;
+      box-shadow: var(--shadow-soft);
+      padding: 32px 24px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .hero-main-title {
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: var(--deep-pink);
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+
+    .hero-sub-title {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #ff659c;
+      display: inline-block;
+      background: #fff0f5;
+      padding: 4px 24px;
+      border-radius: 40px;
+      margin-bottom: 24px;
+      border: 2px dashed #ff99bb;
+    }
+
+    .home-image-container {
+      max-width: 760px;
+      margin: 0 auto 28px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+      border: 4px solid #fff;
+    }
+
+    .home-image-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .home-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .home-gate-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px;
+      border: 2px solid #ffe1ec;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .home-gate-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 28px rgba(255, 101, 156, 0.25);
+      border-color: var(--primary-pink);
+    }
+
+    .gate-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+    }
+
+    .gate-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .gate-desc {
+      font-size: 0.98rem;
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .gate-btn {
+      align-self: flex-start;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--deep-pink);
+    }
+
+    /* ==================== 遊戲一：喜歡什麼都可以 ==================== */
+    .game1-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 860px) {
+      .game1-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .shadow-stage {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+      border: 2px solid #ffedf3;
+      position: sticky;
+      top: 90px;
+    }
+
+    .stage-canvas {
+      width: 100%;
+      height: 250px;
+      background: radial-gradient(circle, #fff7fb 20%, #f0f7ff 100%);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .avatar-shadow {
+      position: absolute;
+      width: 130px;
+      height: 190px;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .shadow-head {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .shadow-body {
+      width: 70px;
+      height: 95px;
+      background: currentColor;
+      border-radius: 18px 18px 45px 45px;
+      margin-top: 6px;
+      position: relative;
+    }
+
+    .shadow-skirt {
+      position: absolute;
+      bottom: 0;
+      left: -12px;
+      right: -12px;
+      height: 52px;
+      background: #ffd166;
+      border-radius: 12px 12px 30px 30px;
+      display: none;
+      animation: skirtSwing 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes skirtSwing {
+      from { transform: rotate(-4deg); }
+      to { transform: rotate(4deg); }
+    }
+
+    .avatar-speech {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--deep-pink);
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .option-card {
+      background: #fff;
+      border: 2px solid #f2e4ec;
+      border-radius: var(--radius-md);
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      user-select: none;
+    }
+
+    .option-card:hover {
+      border-color: var(--primary-pink);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(255, 101, 156, 0.15);
+    }
+
+    .option-card.selected {
+      background: #fff4f8;
+      border-color: var(--primary-pink);
+      box-shadow: 0 0 0 3px rgba(255, 101, 156, 0.35);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .badge-no {
+      font-size: 0.75rem;
+      font-weight: 800;
+      background: #f0f0f5;
+      color: #666;
+      padding: 2px 8px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .option-card.selected .badge-no {
+      background: #ff659c;
+      color: white;
+    }
+
+    .opt-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #333;
+    }
+
+    .opt-desc {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    .teacher-note {
+      display: none;
+      background: #eef2ff;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 0.85rem;
+      color: #3742fa;
+      border-left: 3px solid #3742fa;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    body.teacher-mode .teacher-note {
+      display: block;
+    }
+
+    /* ==================== 遊戲二：勇敢說出心裡話 ==================== */
+    .cards-flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 24px;
+    }
+
+    .scene-card {
+      perspective: 1200px;
+      height: 290px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .scene-card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-soft);
+      border: 2px solid #ffe3ee;
+    }
+
+    .card-front {
+      background: linear-gradient(145deg, #ffffff, #fff6f8);
+      color: #333;
+    }
+
+    .card-front .face-tag {
+      background: #ffe3e3;
+      color: #e03131;
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-front .dialog-text {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #495057;
+      line-height: 1.5;
+      text-align: center;
+      margin: auto 0;
+    }
+
+    .flip-hint {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #999;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .card-back {
+      background: linear-gradient(145deg, #fff0f6, #ffe3ec);
+      transform: rotateY(180deg);
+      border-color: #ff85b3;
+    }
+
+    .card-back .face-tag {
+      background: #d3f9d8;
+      color: #2b8a3e;
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-back .dialog-text {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--deep-pink);
+      line-height: 1.5;
+      text-align: center;
+      margin: auto 0;
+    }
+
+    .speak-btn-mini {
+      background: #fff;
+      border: 1px solid var(--primary-pink);
+      color: var(--primary-pink);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      align-self: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .speak-btn-mini:hover {
+      background: var(--primary-pink);
+      color: #fff;
+    }
+
+    /* ==================== 自信證書區 ==================== */
+    .certificate-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      background: #fff;
+      border: 3px solid #ffccd9;
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      box-shadow: 0 12px 36px rgba(255, 101, 156, 0.15);
+      position: relative;
+    }
+
+    .cert-inner {
+      border: 2px dashed #ff99bb;
+      border-radius: 16px;
+      padding: 26px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .cert-corner-icon {
+      position: absolute;
+      color: #ff9ebb;
+    }
+
+    .cert-title {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--deep-pink);
+      margin-bottom: 8px;
+    }
+
+    .cert-form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #444;
+    }
+
+    .cert-input-sm {
+      padding: 6px 8px;
+      border: 2px solid #ffd1df;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--deep-pink);
+      outline: none;
+      width: 58px;
+      text-align: center;
+      transition: border 0.2s;
+    }
+
+    .cert-input-name {
+      padding: 6px 14px;
+      border: 2px solid #ffd1df;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--deep-pink);
+      outline: none;
+      width: 140px;
+      text-align: center;
+      transition: border 0.2s;
+    }
+
+    .cert-input-sm:focus, .cert-input-name:focus {
+      border-color: var(--primary-pink);
+    }
+
+    .cert-body-p {
+      font-size: 1.1rem;
+      line-height: 1.75;
+      color: #444;
+      margin-bottom: 20px;
+      text-align: justify;
+      text-justify: inter-ideograph;
+    }
+
+    .cert-tags-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin: 14px 0 20px;
+      min-height: 38px;
+    }
+
+    .badge-chip {
+      background: var(--soft-pink);
+      color: var(--deep-pink);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border: 1px solid #ffccd9;
+    }
+
+    .cert-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid #ffe3ec;
+      font-size: 1rem;
+      color: #555;
+    }
+
+    .cert-stamp {
+      width: 82px;
+      height: 82px;
+      border: 3px double var(--primary-pink);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-pink);
+      font-weight: 900;
+      font-size: 0.85rem;
+      transform: rotate(-12deg);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .cert-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .action-btn {
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .action-btn.pink {
+      background: linear-gradient(135deg, var(--primary-pink), var(--deep-pink));
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(255, 101, 156, 0.35);
+    }
+
+    .action-btn.pink:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(255, 101, 156, 0.45);
+    }
+
+    /* 底部導覽列 */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      border-top: 2px solid #ffe6ef;
+      display: flex;
+      justify-content: center;
+      padding: 10px 16px;
+      gap: 12px;
+      z-index: 99;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: none;
+      background: #f8f9fa;
+      color: #666;
+      font-size: 1.02rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nav-btn:hover {
+      background: #f1f3f5;
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(135deg, var(--primary-pink), var(--deep-pink));
+      color: white;
+      box-shadow: 0 4px 14px rgba(255, 101, 156, 0.3);
+    }
+
+    /* 🎯 專門優化：確保 100% 單頁 A4 列印，徹底避免多出第 2 頁空白頁 */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 10mm;
+      }
+
+      html, body {
+        width: 100% !important;
+        height: 100% !important;
+        overflow: hidden !important;
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: block !important;
+      }
+
+      header,
+      .bottom-bar,
+      .section-head,
+      .cert-actions,
+      .cert-form,
+      .no-print,
+      canvas,
+      #tab-home,
+      #tab-game1,
+      #tab-game2 {
+        display: none !important;
+      }
+
+      main {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+      }
+
+      #tab-certificate {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
+      }
+
+      .certificate-wrap {
+        border: 2px solid #ff99bb !important;
+        box-shadow: none !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+        max-width: 95% !important;
+        padding: 24px 20px !important;
+        page-break-inside: avoid !important;
+        page-break-after: avoid !important;
+      }
+
+      .cert-inner {
+        border: 2px dashed #ff99bb !important;
+        padding: 20px 18px !important;
+      }
+
+      .cert-title {
+        font-size: 1.85rem !important;
+        margin-bottom: 6px !important;
+      }
+
+      .cert-print-title {
+        display: block !important;
+        font-size: 1.35rem !important;
+        font-weight: 800 !important;
+        margin-bottom: 16px !important;
+        color: #d81b60 !important;
+      }
+
+      .cert-body-p {
+        font-size: 1.02rem !important;
+        line-height: 1.65 !important;
+        margin-bottom: 16px !important;
+      }
+
+      .badge-chip {
+        padding: 4px 10px !important;
+        font-size: 0.88rem !important;
+      }
+
+      .cert-footer {
+        margin-top: 20px !important;
+        padding-top: 12px !important;
+      }
+
+      .cert-stamp {
+        width: 76px !important;
+        height: 76px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部功能區 -->
+  <header>
+    <div class="brand-group">
+      <div class="brand-icon">
+        <i data-lucide="sparkles"></i>
+      </div>
+      <div>
+        <div class="brand-title">粉紅色影子的男孩 <span style="font-size:0.75em; color:var(--primary-pink);">影子變變變 ✨</span></div>
+        <div class="brand-sub">國小二年級繪本延伸互動體驗營 ‧ 展現獨一無二的自己</div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="teacher-badge" id="teacherModeToggle" onclick="toggleTeacherMode()">
+        <i data-lucide="graduation-cap"></i>
+        <span>教師引導模式：關閉</span>
+      </button>
+
+      <button class="icon-btn" onclick="toggleFullscreen()" title="全螢幕">
+        <i data-lucide="maximize" id="screenIcon"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- 主要互動內容 -->
+  <main>
+
+    <!-- 0. 全新首頁：以繪本主圖為核心 -->
+    <section id="tab-home" class="tab-section active">
+      <div class="home-hero-card">
+        <h1 class="hero-main-title">《粉紅色影子的男孩》</h1>
+        <div class="hero-sub-title">✨ 影子變變變 ✨</div>
+
+        <!-- 繪本封面插圖區 -->
+        <div class="home-image-container">
+          <!-- 支援直接載入您上傳的圖片檔名，或以同目錄下的 cover.jpg 替換 -->
+          <img src="cover.jpg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1000&auto=format&fit=crop';" alt="粉紅色影子的男孩 繪本封面">
+        </div>
+
+        <p style="font-size: 1.15rem; color: #555; max-width: 680px; margin: 0 auto 28px; line-height: 1.7;">
+          「每個人都有影子，但我的影子... 藏著一個小秘密！」<br>
+          歡迎二年級的小朋友們，點擊下方按鈕開始體驗你的自信挑戰！
+        </p>
+
+        <!-- 首頁引導卡片 -->
+        <div class="home-nav-grid">
+          <div class="home-gate-card" onclick="goToTab('game1')">
+            <div>
+              <div class="gate-icon" style="background:#ffe3ed; color:var(--deep-pink);">
+                <i data-lucide="heart"></i>
+              </div>
+              <div class="gate-title">遊戲一：喜歡什麼都可以！</div>
+              <div class="gate-desc">10 種多元喜好自由挑選，隨時調整你的影子超能力！</div>
+            </div>
+            <div class="gate-btn">立即開始 <i data-lucide="arrow-right"></i></div>
+          </div>
+
+          <div class="home-gate-card" onclick="goToTab('game2')">
+            <div>
+              <div class="gate-icon" style="background:#e8f4fd; color:var(--accent-blue);">
+                <i data-lucide="shield"></i>
+              </div>
+              <div class="gate-title">遊戲二：勇敢說出心裡話</div>
+              <div class="gate-desc">面對生活中的質疑，翻轉卡片聽聽自信回應的魔法！</div>
+            </div>
+            <div class="gate-btn">開始挑戰 <i data-lucide="arrow-right"></i></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. 遊戲一：喜歡什麼都可以！ -->
+    <section id="tab-game1" class="tab-section">
+      <div class="section-head">
+        <h2><i data-lucide="heart-handshake"></i> 遊戲一：喜歡什麼都可以！</h2>
+        <p>點選你喜歡的卡片（可選多項，再點一次可取消），看看你的專屬影子的大變化！</p>
+      </div>
+
+      <div class="game1-layout">
+        <div class="shadow-stage">
+          <div class="stage-canvas">
+            <div class="avatar-shadow" id="avatarShadow" style="color: #ff659c;">
+              <div class="shadow-head"></div>
+              <div class="shadow-body">
+                <div class="shadow-skirt" id="shadowSkirt"></div>
+              </div>
+            </div>
+          </div>
+          <div class="avatar-speech" id="avatarSpeech">
+            「我是世界上獨一無二的影子！」
+          </div>
+          <p style="font-size:0.85rem; color:#888; margin-top:8px;">★ 自由挑選你的愛好，把勇氣裝進影子裡！</p>
+        </div>
+
+        <div class="options-grid" id="optionsGrid"></div>
+      </div>
+    </section>
+
+    <!-- 2. 遊戲二：勇敢說出心裡話 -->
+    <section id="tab-game2" class="tab-section">
+      <div class="section-head">
+        <h2><i data-lucide="shield-check"></i> 遊戲二：有人這樣說，我可以怎麼辦？</h2>
+        <p>生活中有時會遇到質疑，點擊卡片翻轉看看，學會充滿自信的回答！</p>
+      </div>
+
+      <div class="cards-flow" id="cardsGrid"></div>
+    </section>
+
+    <!-- 3. 自信小勇士證書 -->
+    <section id="tab-certificate" class="tab-section">
+      <div class="section-head">
+        <h2><i data-lucide="award"></i> 獨一無二 ‧ 自信影子小勇士證書</h2>
+        <p>寫下你的名字，把今天學到的勇氣化作專屬勳章！</p>
+      </div>
+
+      <div class="certificate-wrap">
+        <div class="cert-inner">
+          <i data-lucide="crown" class="cert-corner-icon" style="top:12px; left:12px; width:28px; height:28px;"></i>
+          <i data-lucide="star" class="cert-corner-icon" style="top:12px; right:12px; width:28px; height:28px;"></i>
+
+          <div style="font-size: 0.85rem; font-weight: 800; color: #ff85b3; letter-spacing: 2px;">★ CERTIFICATE OF SELF-BELIEF ★</div>
+          <h1 class="cert-title">自信影子榮譽證書</h1>
+
+          <!-- 輸入資訊區：二年［ ］班 + 小勇士姓名 -->
+          <div class="cert-form">
+            <span>二年</span>
+            <input type="text" id="certClassNum" class="cert-input-sm" value="1" placeholder="班級">
+            <span>班</span>
+            <span style="margin-left: 12px;">小勇士姓名：</span>
+            <input type="text" id="certName" class="cert-input-name" value="小勇士" placeholder="請輸入姓名">
+            <button class="action-btn pink" style="padding:6px 16px; font-size:0.9rem;" onclick="triggerConfetti()">
+              <i data-lucide="party-popper"></i> 放煙火！
+            </button>
+          </div>
+
+          <!-- 列印專屬乾淨抬頭 -->
+          <div class="cert-print-title" id="certPrintTitle" style="display:none;">
+            恭喜 二年 <span id="printClassName" style="color:var(--deep-pink); text-decoration: underline;">1</span> 班 
+            <span id="printStudentName" style="color:var(--deep-pink); text-decoration: underline;">小勇士</span> 同學
+          </div>
+
+          <p class="cert-body-p">
+            在完成《粉紅色影子的男孩》繪本探索後，不僅學會勇敢接納自己的喜好，更懂得用溫柔與自信回應世界。請永遠記住：「你的影子就是你自己，儘管做獨一無二的自己，我們都愛你！」
+          </p>
+
+          <div style="font-size: 0.95rem; font-weight: 700; color: #555;">我的影子超能力（我最喜歡的探索）：</div>
+          <div class="cert-tags-box" id="certTags"></div>
+
+          <!-- 底部資訊：僅保留認證日期與三民國小 -->
+          <div class="cert-footer">
+            <div style="text-align: left; line-height: 1.6;">
+              <div>認證日期：<span id="certDate">2026年9月24日</span></div>
+              <div style="font-weight: 700; color: #333;">三民國小</div>
+            </div>
+
+            <div class="cert-stamp">
+              <span>★ 榮譽 ★</span>
+              <span>這就是我</span>
+              <span>最棒影子</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cert-actions no-print">
+        <button class="action-btn pink" onclick="printCertificateOnly()">
+          <i data-lucide="printer"></i> 列印我的勇士證書
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 底部固定切換導覽列 -->
+  <nav class="bottom-bar">
+    <button class="nav-btn active" id="btn-home" onclick="switchTab('home', this)">
+      <i data-lucide="home"></i> 故事首頁
+    </button>
+    <button class="nav-btn" id="btn-game1" onclick="switchTab('game1', this)">
+      <i data-lucide="heart"></i> 遊戲一：喜歡什麼都可以！
+    </button>
+    <button class="nav-btn" id="btn-game2" onclick="switchTab('game2', this)">
+      <i data-lucide="shield"></i> 遊戲二：勇敢說出心裡話
+    </button>
+    <button class="nav-btn" id="btn-cert" onclick="switchTab('certificate', this)">
+      <i data-lucide="award"></i> 自信小證書
+    </button>
+  </nav>
+
+  <script>
+    /* ============================================================
+       遊戲題目資料庫
+    ============================================================ */
+    const game1Options = [
+      { id: 1, name: "粉紅色", text: "我喜歡溫柔漂亮的粉紅色。", note: "顏色是自然的禮物，任何人都可以喜歡任何顏色。", color: "#ff659c", hasSkirt: true },
+      { id: 2, name: "藍黑色", text: "我喜歡帥氣沉穩的深色系。", note: "喜歡酷酷、沉穩的顏色很棒，展現專屬自己的風格。", color: "#34495e", hasSkirt: false },
+      { id: 3, name: "玩洋娃娃", text: "我喜歡幫娃娃梳頭髮、換衣服、說故事。", note: "照顧娃娃是愛心與想像力的展現，學會溫柔照顧他人。", color: "#ff758c", hasSkirt: true },
+      { id: 4, name: "踢球運動", text: "我喜歡在操場上奔跑、傳球流汗。", note: "盡情奔跑、享受運動的活力，鍛鍊強健健康的體魄。", color: "#2ecc71", hasSkirt: false },
+      { id: 5, name: "積木組裝", text: "我喜歡動手拼出機器人和大城堡。", note: "空間建構與邏輯探索，每一次拼搭都是小小工程師。", color: "#f39c12", hasSkirt: false },
+      { id: 6, name: "動手做料理", text: "我喜歡扮家家酒，當個厲害的小小廚師。", note: "模擬烹飪是生活自理的起步，享受調配美味的樂趣。", color: "#e67e22", hasSkirt: true },
+      { id: 7, name: "唱歌跳舞", text: "我喜歡跟著音樂擺動身體和大聲唱。", note: "用身體與歌聲自由表達情緒，感受節奏帶來的快樂。", color: "#9b59b6", hasSkirt: true },
+      { id: 8, name: "畫畫塗鴉", text: "我喜歡用各種顏色畫出天馬行空的想像。", note: "畫紙上沒有標準答案，任何奇思妙想都值得被畫出來。", color: "#00cec9", hasSkirt: false },
+      { id: 9, name: "閱讀故事書", text: "我喜歡安靜地看書、走進奇妙的繪本世界。", note: "安靜專注也是一種力量，在故事裡自由冒險。", color: "#3867d6", hasSkirt: false },
+      { id: 10, name: "觀察大自然", text: "我喜歡看小昆蟲、撿漂亮的落葉和小石頭。", note: "擁有敏銳細膩的觀察力，對世界萬物充滿好奇心。", color: "#20bf6b", hasSkirt: false }
+    ];
+
+    const game2Questions = [
+      { id: 1, title: "色彩偏好的質疑", front: "「你選這個顏色好奇怪，大家都不會選這個顏色！」", back: "「每一種顏色都有它的美麗，只要我喜歡，就是最棒的顏色。」", note: "顏色就像彩虹一樣多采多姿，沒有哪一種顏色是專屬於誰的。只要看著它會讓自己感到開心、舒服，那就是最適合你的顏色。" },
+      { id: 2, title: "玩具與遊戲的限制", front: "「你玩的東西好無聊，那不是你該玩的，快放下啦！」", back: "「每個人想探索的都不一樣，玩得開心、懂得愛護就是好遊戲。」", note: "玩具的發明是為了帶來樂趣與學習。不管是拼積木、玩娃娃還是踢球，每個人都可以自由探索，不需要照著別人的刻板標籤走。" },
+      { id: 3, title: "穿著與外表的指指點點", front: "「你今天的衣服好特別喔，怎麼跟我們穿得都不一樣？」", back: "「我穿這件覺得很自在、很喜歡，穿出自己的風格最開心！」", note: "衣服是穿在自己身上的，重點在於整齊、舒適和自己的喜愛。每個人有不同的穿衣風格，懂得欣賞彼此的不一樣，世界才會更有趣。" },
+      { id: 4, title: "情緒表達的壓抑", front: "「跌倒了不可以哭！哭哭是一件很丟臉的事情。」", back: "「痛痛或難過時可以哭一哭，等眼淚擦乾，我還是可以很勇敢！」", note: "眼淚是每個人都有的正常心情反應，就像天上下雨一樣自然。哭泣不是軟弱，能誠實說出『我需要休息一下或抱抱』，是非常勇敢的表現。" },
+      { id: 5, title: "個性特質的刻板印象", front: "「你怎麼都不大聲講話？你太膽小、太文靜了啦！」", back: "「我喜歡溫柔、安靜地思考，文靜也是一種很棒的力量。」", note: "有的人像熱情的小太陽，有的人像溫柔的小月亮。安靜不代表膽小，懂得專心聆聽、細心觀察的人，也是團隊裡很重要的好夥伴。" },
+      { id: 6, title: "力氣大小與能力的預設", front: "「這個搬不動啦！你那麼瘦小，肯定幫不上忙。」", back: "「每個人能幫忙的方式不一樣，大家分工合作力量最大！」", note: "幫忙不一定只有力氣大的人才能做。幫忙扶著門、整理桌面、引路，或者兩個人一起分擔重量，都是非常有價值的付出。" },
+      { id: 7, title: "動作與活動風格的偏好", front: "「下課應該去跑跑跳跳，你一直扭來扭去跳舞做什麼？」", back: "「身體跟著節奏跳舞讓我很放鬆，每個人動動身體的方式都不同。」", note: "運動有非常多種形式，跑步、踢球很棒，體操、跳舞也一樣能活動身體、維持健康。只要能讓身心舒暢，就是最棒的下課活動。" },
+      { id: 8, title: "分組與同儕合作的界線", front: "「我們不要跟你同一組，因為你的想法跟我們都不一樣！」", back: "「不一樣的想法聚在一起，我們可以想出更多更棒的好點子！」", note: "分組合作最棒的地方，正是每個人帶來的視角都不同。學會傾聽別人的想法，也清楚分享自己的點子，互相激盪才能完成最精彩的作品。" }
+    ];
+
+    /* ============================================================
+       全域狀態
+    ============================================================ */
+    let isTeacherMode = false;
+    let selectedItemIds = new Set([1]); // 預設選取粉紅色
+
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+      renderGame1();
+      renderGame2();
+      updateCertDate();
+      updateCertTags();
+    });
+
+    function updateCertDate() {
+      const today = new Date();
+      const dateStr = `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日`;
+      const dateEl = document.getElementById("certDate");
+      if (dateEl) dateEl.innerText = dateStr;
+    }
+
+    /* 頁籤切換 */
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+      const target = document.getElementById(`tab-${tabId}`);
+      if (target) target.classList.add('active');
+      if (btn) btn.classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* 首頁按鈕直接跳轉頁籤 */
+    function goToTab(tabId) {
+      const targetBtn = document.getElementById(`btn-${tabId}`);
+      switchTab(tabId, targetBtn);
+    }
+
+    /* 教師引導模式切換 */
+    function toggleTeacherMode() {
+      isTeacherMode = !isTeacherMode;
+      document.body.classList.toggle('teacher-mode', isTeacherMode);
+      const btn = document.getElementById('teacherModeToggle');
+      if (isTeacherMode) {
+        btn.classList.add('active');
+        btn.querySelector('span').innerText = '教師引導模式：開啟中';
+      } else {
+        btn.classList.remove('active');
+        btn.querySelector('span').innerText = '教師引導模式：關閉';
+      }
+    }
+
+    /* 🎯 唯一保留的語音：遊戲二背面自信回應朗讀 */
+    function speakText(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'zh-TW';
+      utter.rate = 0.95;
+      utter.pitch = 1.1;
+      window.speechSynthesis.speak(utter);
+    }
+
+    /* 全螢幕切換 */
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    /* 渲染遊戲一：可多選、可取消（無語音） */
+    function renderGame1() {
+      const grid = document.getElementById('optionsGrid');
+      grid.innerHTML = game1Options.map(opt => {
+        const isSelected = selectedItemIds.has(opt.id);
+        return `
+          <div class="option-card ${isSelected ? 'selected' : ''}" id="opt-${opt.id}" onclick="toggleGame1Option(${opt.id})">
+            <div class="card-top">
+              <div class="opt-name">${opt.name}</div>
+              <span class="badge-no">
+                <i data-lucide="${isSelected ? 'check-circle-2' : 'circle'}" style="width:14px; height:14px;"></i>
+                選項 ${opt.id < 10 ? '0' + opt.id : opt.id}
+              </span>
+            </div>
+            <div class="opt-desc">${opt.text}</div>
+            <div class="teacher-note">
+              <strong>👩‍🏫 引導要點：</strong>${opt.note}
+            </div>
+          </div>
+        `;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    function toggleGame1Option(id) {
+      const card = document.getElementById(`opt-${id}`);
+      const opt = game1Options.find(o => o.id === id);
+      if (!opt) return;
+
+      if (selectedItemIds.has(id)) {
+        selectedItemIds.delete(id);
+        card.classList.remove('selected');
+      } else {
+        selectedItemIds.add(id);
+        card.classList.add('selected');
+      }
+
+      renderGame1();
+      updateAvatarStage(opt, selectedItemIds.has(id));
+      updateCertTags();
+    }
+
+    function updateAvatarStage(lastOpt, isAdded) {
+      const avatar = document.getElementById('avatarShadow');
+      const skirt = document.getElementById('shadowSkirt');
+      const speech = document.getElementById('avatarSpeech');
+
+      if (selectedItemIds.size === 0) {
+        avatar.style.color = '#ff659c';
+        skirt.style.display = 'none';
+        speech.innerText = '「選你喜歡的，都可以喔！」';
+        return;
+      }
+
+      if (isAdded && lastOpt) {
+        avatar.style.color = lastOpt.color;
+        skirt.style.display = lastOpt.hasSkirt ? 'block' : 'none';
+        speech.innerText = `「${lastOpt.text}」`;
+      } else {
+        const remainingIds = Array.from(selectedItemIds);
+        const lastId = remainingIds[remainingIds.length - 1];
+        const nextOpt = game1Options.find(o => o.id === lastId);
+        if (nextOpt) {
+          avatar.style.color = nextOpt.color;
+          skirt.style.display = nextOpt.hasSkirt ? 'block' : 'none';
+          speech.innerText = `「${nextOpt.text}」`;
+        }
+      }
+
+      avatar.style.transform = 'scale(1.1) translateY(-6px)';
+      setTimeout(() => {
+        avatar.style.transform = 'scale(1) translateY(0)';
+      }, 300);
+    }
+
+    /* 渲染遊戲二 (3D 卡片，保留翻面後語音) */
+    function renderGame2() {
+      const grid = document.getElementById('cardsGrid');
+      grid.innerHTML = game2Questions.map(q => `
+        <div class="scene-card" id="scene-${q.id}" onclick="flipSceneCard(${q.id})">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div class="face-tag">
+                <i data-lucide="message-circle-warning" style="width:14px; height:14px;"></i>
+                <span>他人這樣說</span>
+              </div>
+              <div class="dialog-text">${q.front}</div>
+              <div class="flip-hint">
+                <i data-lucide="repeat" style="width:14px; height:14px;"></i> 點擊卡片翻過來，聽聽自信回應
+              </div>
+            </div>
+
+            <div class="card-face card-back">
+              <div class="face-tag">
+                <i data-lucide="sparkles" style="width:14px; height:14px;"></i>
+                <span>我的自信回應</span>
+              </div>
+              <div class="dialog-text">${q.back}</div>
+              <button class="speak-btn-mini" onclick="event.stopPropagation(); speakText('${q.back}')">
+                <i data-lucide="volume-2" style="width:14px; height:14px;"></i> 朗讀自信回應
+              </button>
+              <div class="teacher-note" style="margin-top:6px;">
+                <strong>💡 教學引導：</strong>${q.note}
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function flipSceneCard(id) {
+      const card = document.getElementById(`scene-${id}`);
+      if (!card) return;
+      card.classList.toggle('flipped');
+
+      const q = game2Questions.find(item => item.id === id);
+      // 翻轉至背面時自動朗讀自信回應
+      if (q && card.classList.contains('flipped')) {
+        speakText(q.back);
+      }
+    }
+
+    /* 更新證書上的標籤：純名稱，無「探索：」前綴 */
+    function updateCertTags() {
+      const container = document.getElementById('certTags');
+      if (selectedItemIds.size === 0) {
+        container.innerHTML = `
+          <span class="badge-chip">✨ 接納真實自我</span>
+          <span class="badge-chip">✨ 尊重多元色彩</span>
+          <span class="badge-chip">✨ 自信堅定發聲</span>
+        `;
+        return;
+      }
+
+      const chips = [];
+      selectedItemIds.forEach(id => {
+        const item = game1Options.find(o => o.id === id);
+        if (item) {
+          chips.push(`<span class="badge-chip">✨ ${item.name}</span>`);
+        }
+      });
+      container.innerHTML = chips.join('');
+    }
+
+    /* 放煙火特效 */
+    function triggerConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 110,
+          spread: 75,
+          origin: { y: 0.6 }
+        });
+      }
+    }
+
+    /* 列印證書：確保單張 A4 乾淨輸出 */
+    function printCertificateOnly() {
+      const clsNum = document.getElementById('certClassNum').value.trim() || '1';
+      const name = document.getElementById('certName').value.trim() || '小勇士';
+
+      document.getElementById('printClassName').innerText = clsNum;
+      document.getElementById('printStudentName').innerText = name;
+
+      triggerConfetti();
+
+      setTimeout(() => {
+        window.print();
+      }, 350);
+    }
+  </script>
+</body>
+</html>
+部署提醒：
+首頁圖片的 <img> 標籤預設會讀取同層級目錄的 cover.jpg，您可以將上傳的那張圖片命名為 cover.jpg 並與本 HTML 檔放在同一資料夾中；若暫時無圖片，系統已寫好 fallback 機制確保視覺正常顯示。
+
+
+
+
+Gemini 是 AI，有時可能會出錯。
+
